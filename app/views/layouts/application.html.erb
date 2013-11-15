@@ -13,6 +13,28 @@
 	<script src='//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js' type='text/javascript'></script>
 </head>
 <body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="<%= locations_path %>"><div class="span2"><%= image_tag("bytemap.png", :alt => "bytemap") %></div></a>
+      <div class="nav-collapse collapse">
+
+        <ul class="nav">
+        </ul>
+        <ul class="nav pull-right">
+            <li>
+              <p class="navbar-text">
+                Logged in as No Users
+              </p>
+            </li>
+        </ul>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
 
 <%= yield %>
 
