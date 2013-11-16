@@ -8,7 +8,8 @@
       <th>Latitude</th>
       <th>Longitude</th>
       <th>Address</th>
-      <th>Title</th>
+      <th>Custom ID</th>
+      <th>Name</th>
       <th>Description</th>
       <th></th>
       <th></th>
@@ -22,6 +23,7 @@
         <td><%= location.latitude %></td>
         <td><%= location.longitude %></td>
         <td><%= location.address %></td>
+        <td><%= location.customid %></td>
         <td><%= location.title %></td>
         <td><%= location.description %></td>
         <td><%= link_to 'Show', location %></td>
@@ -34,7 +36,11 @@
 
 <br>
 
-<%= link_to 'New Location', new_location_path %>
+<!--<%= link_to 'New Location', new_location_path %>-->
+
+
+<%= text_field_tag "query", nil, :placeholder => "i.e. Stata", :id => "queryField" %>
+<%= submit_tag "search", :id => "search" %>
 
 <div style='width: 100%;'>
   <div id="map" style='width: 100%; height: 500px;'></div>
@@ -50,4 +56,63 @@ handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
   handler.bounds.extendWith(markers);
   handler.fitMapToBounds();
 });
+
+
+
+/*
+  Sends user's search query to whereis.mit.edu and gets back information for this potential location.
+*/
+$(document).ready(function(){
+  $("#search").click(function(){
+    var query = $("#queryField").val();
+    $.ajax({
+      url: "http://whereis.mit.edu/search",
+      type: 'GET',
+      data: {type: 'query', q: query, output: 'json'},
+      dataType: 'jsonp',
+      success: function(res){
+        handle_search_result(res[0]);
+
+      }
+
+  });
+  });
+});
+
+function handle_search_result(result){
+  console.log(result);
+  if (result == undefined){
+    handle_null_result();
+  }else{
+
+    var latitude = result.lat_wgs84;
+    var longitude = result.long_wgs84;
+    var image = result.bldgimg;
+    var address = result.address;
+    var name = result["name"];
+    var mitlocation_id = result["id"];
+    create_location(latitude, longitude, mitlocation_id, name, address);
+  }
+
+}
+
+/*
+  Creates this location if it didn't already exist.
+*/
+function create_location(lat, lng, mitlocation_id, location_name, addr){
+  $.ajax({
+    url: "/locations",
+    type: 'POST',
+    data: {location: {latitude: lat, longitude: lng, address: addr, title: location_name, description: "sample description", customid: mitlocation_id}},
+    success: function(res){
+
+
+    }
+  })
+}
+
+
+function handle_null_result(){
+  alert("no MIT location found for your query");
+}
 </script>
