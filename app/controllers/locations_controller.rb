@@ -27,18 +27,26 @@ class LocationsController < ApplicationController
 
   # POST /locations
   # POST /locations.json
+  # creates an MIT-location unless this location already exists 
   def create
+
     @location = Location.new(location_params)
 
     respond_to do |format|
-      if @location.save
-        format.html { redirect_to @location, notice: 'Location was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @location }
-      else
+      if Location.exists?(:customid => location_params[:customid])
         format.html { render action: 'new' }
-        format.json { render json: @location.errors, status: :unprocessable_entity }
+      else
+        if @location.save
+          format.html { redirect_to @location, notice: 'Location was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @location }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @location.errors, status: :unprocessable_entity }
+        end
+
       end
     end
+
   end
 
   # PATCH/PUT /locations/1
@@ -73,6 +81,6 @@ class LocationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def location_params
-      params.require(:location).permit(:latitude, :longitude, :address, :title, :description)
+      params.require(:location).permit(:latitude, :longitude, :customid, :address, :title, :description)
     end
 end
