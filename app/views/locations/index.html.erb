@@ -46,9 +46,11 @@
   <div id="map" style='width: 100%; height: 500px;'></div>
 </div>
 
+centerAtLatLng(new GPoint(X,Y))
 <script type="text/javascript">
 handler = Gmaps.build('Google', { markers: { maxRandomDistance: null } });
 console.log(<%=raw @hash.to_json %>)
+
 handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
   markers = handler.addMarkers(<%=raw @hash.to_json %>);
   handler.bounds.extendWith(markers);
