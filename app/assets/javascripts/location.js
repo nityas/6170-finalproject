@@ -6,7 +6,6 @@ $(document).ready( function () {
   });
 
   function create_search(query){
-    alert("a");
     $.ajax({
         url: "http://whereis.mit.edu/search",
         type: 'GET',
@@ -46,7 +45,7 @@ $(document).ready( function () {
       type: 'POST',
       data: {location: {latitude: lat, longitude: lng, address: addr, title: location_name, description: "sample description", customid: mitlocation_id}},
       success: function(res){
-
+        console.log("location created: " + location_name)
 
       }
     })

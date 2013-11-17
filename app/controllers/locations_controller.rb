@@ -8,7 +8,7 @@ class LocationsController < ApplicationController
     @hash = Gmaps4rails.build_markers(@locations) do |location, marker|
       marker.lat location.latitude
       marker.lng location.longitude
-      #marker.infowindow render_to_string(:partial => "/offerings/form")
+    #  marker.infowindow render_to_string(:partial => "/offerings/form")
       marker.infowindow location.title
       marker.picture({
        "url" => "assets/pin.png",
@@ -16,6 +16,7 @@ class LocationsController < ApplicationController
        "height" => 68})
 
     end
+
   end
 
   # GET /locations/1
