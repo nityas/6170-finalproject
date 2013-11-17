@@ -45,6 +45,8 @@
 <%= render partial: 'map.html.erb'%>
 
 <script type="text/javascript">
+
+
 handler = Gmaps.build('Google', { markers: { maxRandomDistance: null } });
 console.log(<%=raw @hash.to_json %>)
 
@@ -55,10 +57,6 @@ handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
 });
 
 
-
-/*
-  Sends user's search query to whereis.mit.edu and gets back information for this potential location.
-*/
 $(document).ready(function(){
   $("#search").click(function(){
     var query = $("#queryField").val();
@@ -74,44 +72,74 @@ $(document).ready(function(){
       }
 
 
+    });
+
   });
-  });
-});
 
-function handle_search_result(result){
-  console.log(result);
-  if (result == undefined){
-    handle_null_result();
-  }else{
 
-    var latitude = result.lat_wgs84;
-    var longitude = result.long_wgs84;
-    var image = result.bldgimg;
-    var address = result.address;
-    var name = result["name"];
-    var mitlocation_id = result["id"];
-    create_location(latitude, longitude, mitlocation_id, name, address);
-  }
 
-}
 
-/*
-  Creates this location if it didn't already exist.
-*/
-function create_location(lat, lng, mitlocation_id, location_name, addr){
-  $.ajax({
-    url: "/locations",
-    type: 'POST',
-    data: {location: {latitude: lat, longitude: lng, address: addr, title: location_name, description: "sample description", customid: mitlocation_id}},
-    success: function(res){
+    function handle_search_result(result){
+      console.log(result);
+      if (result == undefined){
+        handle_null_result();
+      }else{
+
+        var latitude = result.lat_wgs84;
+        var longitude = result.long_wgs84;
+        var image = result.bldgimg;
+        var address = result.address;
+        var name = result["name"];
+        var mitlocation_id = result["id"];
+
+
+        show_temp_marker(latitude, longitude, mitlocation_id, name);
+
+       // create_location(latitude, longitude, mitlocation_id, name);
+      }
+
+    }
+
+    function show_temp_marker(latitude, longitude, mitlocation_id, name){
+      var tempmarker = {lat: latitude, lng: longitude, "infowindow": "hello"}
+      handler.addMarker(tempmarker);
+        handler.map.centerOn({lat: latitude, lng: longitude});
+
+
+
 
 
     }
-  })
-}
+
+    /*
+      Creates this location if it didn't already exist.
+    */
+    function create_location(lat, lng, mitlocation_id, location_name){
+
+      $.ajax({
+        url: "/locations",
+        type: 'POST',
+        data: {location: {latitude: lat, longitude: lng, title: location_name, description: "sample description", customid: mitlocation_id}},
+        success: function(res){
+
+        }
+      })
+    }
 
 
-function handle_null_result(){
-  alert("no MIT location found for your query");
-}
+    function handle_null_result(){
+      alert("no MIT location found for your query");
+    }
+
+
+});
+
+
+
+
+
+
 </script>
+
+
+
