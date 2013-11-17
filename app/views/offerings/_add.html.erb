@@ -16,7 +16,7 @@
   <h2> Add Offering To This Location </h2>
 
   <div class="field">
-    <%= f.hidden_field_tag(:location, @offering.location_id) %>
+    <%= f.hidden_field :location, :value => @offering.location_id %>
   </div>
 
   
