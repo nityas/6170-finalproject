@@ -19,13 +19,3 @@
 //= require bootstrap
 //= require_tree .
 
-
-/*
-  Sends user's search query to whereis.mit.edu and gets back information for this potential location.
-*/
-
-
-
-
-
-

@@ -42,104 +42,43 @@
 <%= text_field_tag "query", nil, :placeholder => "i.e. Stata", :id => "queryField" %>
 <%= submit_tag "search", :id => "search" %>
 
+
 <%= render partial: 'map.html.erb'%>
+
 
 <script type="text/javascript">
 
+options = 
+{
+    maxZoom:19,
+    minZoom:15,
+};
 
-handler = Gmaps.build('Google', { markers: { maxRandomDistance: null } });
-console.log(<%=raw @hash.to_json %>)
+var allowedbound = new google.maps.LatLngBounds(new google.maps.LatLng(42.340, -71.20), new google.maps.LatLng(42.370, -71.0));
 
+handler = Gmaps.build('Google', {markers: { maxRandomDistance: null} });
 handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
   markers = handler.addMarkers(<%=raw @hash.to_json %>);
   handler.bounds.extendWith(markers);
   handler.fitMapToBounds();
+  handler.getMap().setCenter(new google.maps.LatLng(42.359, -71.090413));
+  handler.getMap().setOptions(options);
 });
 
+var map = handler.getMap();
+var lastValidCenter = map.getCenter();
 
-$(document).ready(function(){
-  $("#search").click(function(){
-    var query = $("#queryField").val();
-    $.ajax({
-      url: "http://whereis.mit.edu/search",
-      type: 'GET',
-      data: {type: 'query', q: query, output: 'json'},
-      dataType: 'jsonp',
-      success: function(res){
-        handle_search_result(res[0]);
-       // $('#map').html('<%= j(render partial: 'map') %>');
-
-      }
-
-
-    });
-
-  });
-
-
-
-
-    function handle_search_result(result){
-      console.log(result);
-      if (result == undefined){
-        handle_null_result();
-      }else{
-
-        var latitude = result.lat_wgs84;
-        var longitude = result.long_wgs84;
-        var image = result.bldgimg;
-        var address = result.address;
-        var name = result["name"];
-        var mitlocation_id = result["id"];
-
-
-        show_temp_marker(latitude, longitude, mitlocation_id, name);
-
-       // create_location(latitude, longitude, mitlocation_id, name);
-      }
-
+map.event.addListener(map, 'center_changed', function() {
+    if (allowedBounds.contains(map.getCenter())) {
+        // still within valid bounds, so save the last valid position
+        lastValidCenter = map.getCenter();
+        return; 
+    }else{
+      alert();
     }
 
-    function show_temp_marker(latitude, longitude, mitlocation_id, name){
-      var tempmarker = {lat: latitude, lng: longitude, "infowindow": "hello"}
-      handler.addMarker(tempmarker);
-        handler.map.centerOn({lat: latitude, lng: longitude});
-
-
-
-
-
-    }
-
-    /*
-      Creates this location if it didn't already exist.
-    */
-    function create_location(lat, lng, mitlocation_id, location_name){
-
-      $.ajax({
-        url: "/locations",
-        type: 'POST',
-        data: {location: {latitude: lat, longitude: lng, title: location_name, description: "sample description", customid: mitlocation_id}},
-        success: function(res){
-
-        }
-      })
-    }
-
-
-    function handle_null_result(){
-      alert("no MIT location found for your query");
-    }
-
-
+    // not valid anymore => return to last valid position
+    map.panTo(lastValidCenter);
 });
-
-
-
-
-
-
 </script>
-
-
 
