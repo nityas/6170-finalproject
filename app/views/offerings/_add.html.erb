@@ -9,15 +9,18 @@
         <li><%= msg %></li>
       <% end %>
       </ul>
-  
+    
     </div>
   <% end %>
 
+  <h2> Add Offering To This Location </h2>
+
   <div class="field">
-    <%= f.label "Building" %>
-    <%= f.text_field :location %>
+    <%= f.hidden_field_tag(:location, @offering.location_id) %>
   </div>
 
+  
+  
   <div class="field">
     <%= f.label "Location Detail" %>
     <%= f.text_field :sub_location %>

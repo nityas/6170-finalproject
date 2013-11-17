@@ -8,8 +8,8 @@ class LocationsController < ApplicationController
     @hash = Gmaps4rails.build_markers(@locations) do |location, marker|
       marker.lat location.latitude
       marker.lng location.longitude
-      marker.infowindow location.title #this should be removed once nitya figure out how to do the partials
-      #marker.infowindow #Nitya
+      marker.infowindow location.title
+      marker.infowindow render_to_string(:partial => "offerings/add", :locals => {:@offering => Offering.new} )
 
 
 
