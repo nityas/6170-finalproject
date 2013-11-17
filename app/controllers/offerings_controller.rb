@@ -25,7 +25,8 @@ class OfferingsController < ApplicationController
   # POST /offerings.json
   def create
     @offering = Offering.new(offering_params)
-    @offering.location_id = Location.get_or_create_id(params[:location])
+    location = Location.find(params[:offering][:location])
+    @offering.location_id = Location.get_or_create_id(location)
     respond_to do |format|
       if @offering.save
         format.html { redirect_to @offering, notice: 'Offering was successfully created.' }
@@ -35,6 +36,7 @@ class OfferingsController < ApplicationController
         format.json { render json: @offering.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # PATCH/PUT /offerings/1
