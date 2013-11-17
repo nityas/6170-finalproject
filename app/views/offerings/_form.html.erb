@@ -1,0 +1,34 @@
+<%= form_for(@offering) do |f| %>
+  <% if @offering.errors.any? %>
+    <div id="error_explanation">
+      
+      <h2><%= pluralize(@offering.errors.count, "error") %> prohibited this offering from being saved:</h2>
+
+      <ul>
+      <% @offering.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Building" %>
+    <%= f.text_field :location_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Location Detail" %>
+    <%= f.text_field :sub_location %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Food Description" %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
