@@ -46,14 +46,36 @@
 <%= render partial: 'map.html.erb'%>
 
 <script type="text/javascript">
-handler = Gmaps.build('Google', { map_options: { minzoom: 3}, markers: { maxRandomDistance: null} });
+options = 
+{
+    maxZoom:19,
+    minZoom:15,
+};
+
+var allowedbound = new google.maps.LatLngBounds(new google.maps.LatLng(42.340, -71.20), new google.maps.LatLng(42.370, -71.0));
+
+handler = Gmaps.build('Google', options);
 handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
   markers = handler.addMarkers(<%=raw @hash.to_json %>);
   handler.bounds.extendWith(markers);
   handler.fitMapToBounds();
+  handler.getMap().setCenter(new google.maps.LatLng(42.359, -71.090413));
+  handler.getMap().setOptions(options);
 });
+var lastValidCenter = map.getCenter();
+var map = handler.getMap();
+map.event.addListener(map, 'center_changed', function() {
+    if (allowedBounds.contains(map.getCenter())) {
+        // still within valid bounds, so save the last valid position
+        lastValidCenter = map.getCenter();
+        return; 
+    }else{
+      alert();
+    }
 
-
+    // not valid anymore => return to last valid position
+    map.panTo(lastValidCenter);
+});
 
 
 /*
