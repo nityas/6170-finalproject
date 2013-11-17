@@ -2,6 +2,7 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
   resources :offerings
 
   resources :locations
+  resources :incomingemails
   root 'locations#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
