@@ -9,7 +9,7 @@ class LocationsController < ApplicationController
       marker.lat location.latitude
       marker.lng location.longitude
       marker.infowindow location.title #this should be removed once nitya figure out how to do the partials
-      #marker.infowindow #Nitya
+     # marker.infowindow render :action => "/offerings/form"
 
 
 
