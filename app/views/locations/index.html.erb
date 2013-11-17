@@ -55,7 +55,7 @@ options =
 
 var allowedbound = new google.maps.LatLngBounds(new google.maps.LatLng(42.340, -71.20), new google.maps.LatLng(42.370, -71.0));
 
-handler = Gmaps.build('Google', options);
+handler = Gmaps.build('Google', {markers: { maxRandomDistance: null} });
 handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
   markers = handler.addMarkers(<%=raw @hash.to_json %>);
   handler.bounds.extendWith(markers);
