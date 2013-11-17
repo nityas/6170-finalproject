@@ -1,4 +1,6 @@
 IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
+  resources :offerings
+
   resources :locations
   resources :incomingemails
   root 'locations#index'
