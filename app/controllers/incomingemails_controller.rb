@@ -14,8 +14,8 @@ class IncomingemailsController < ApplicationController
 		#if !location.nil?
 		#	create_search(location)
 		#end
-		#format.js {  render :js =>  "create_search(location);" }
-		format.js window.alert("Test")
+		format.js {  render :js =>  "create_search(location);" }
+		#format.js window.alert("Test")
 	end
   end
 end

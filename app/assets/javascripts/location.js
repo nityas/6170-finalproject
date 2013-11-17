@@ -6,7 +6,6 @@ $(document).ready( function () {
   });
 
   function create_search(query){
-    alert("a");
     $.ajax({
         url: "http://whereis.mit.edu/search",
         type: 'GET',
