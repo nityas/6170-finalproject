@@ -47,12 +47,17 @@
 
 
 <script type="text/javascript">
+<<<<<<< HEAD
    var strictBounds = new google.maps.LatLngBounds(
      new google.maps.LatLng(42.340, -71.20), 
      new google.maps.LatLng(42.370, -71.0)
    );
 
 var mapOptions = 
+=======
+
+options = 
+>>>>>>> b83a632185c9011fee86f095cdcc272deca5742c
 {
     maxZoom:19,
     minZoom:15,
@@ -65,6 +70,7 @@ handler.buildMap({ provider: mapOptions, internal: {id: 'map'}}, function(){
   handler.fitMapToBounds();
   handler.getMap().setCenter(new google.maps.LatLng(42.359, -71.090413));
 });
+<<<<<<< HEAD
    var map = handler.getMap();
 
    // Listen for the dragend event
@@ -90,6 +96,12 @@ handler.buildMap({ provider: mapOptions, internal: {id: 'map'}}, function(){
    });
 //var lastValidCenter = map.getCenter();
 /*var map = handler.getMap();
+=======
+
+var map = handler.getMap();
+var lastValidCenter = map.getCenter();
+
+>>>>>>> b83a632185c9011fee86f095cdcc272deca5742c
 map.event.addListener(map, 'center_changed', function() {
     if (allowedBounds.contains(map.getCenter())) {
         // still within valid bounds, so save the last valid position
@@ -101,5 +113,11 @@ map.event.addListener(map, 'center_changed', function() {
 
     // not valid anymore => return to last valid position
     map.panTo(lastValidCenter);
+<<<<<<< HEAD
 });*/
 </script>
+=======
+});
+</script>
+
+>>>>>>> b83a632185c9011fee86f095cdcc272deca5742c

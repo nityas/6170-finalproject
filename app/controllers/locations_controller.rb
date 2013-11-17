@@ -10,22 +10,26 @@ class LocationsController < ApplicationController
       marker.lng location.longitude
       marker.infowindow location.title #this should be removed once nitya figure out how to do the partials
      # marker.infowindow render :action => "/offerings/form"
-
-
-
       marker.picture({
        "url" => "assets/pin.png",
        "width" =>  50,
        "height" => 68})
-
 
     end
   end
 
   # GET /locations/1
   # GET /locations/1.json
-  def show
-  end
+  # def show
+  #   @temp_location = params
+  #   @json = @temp_location.to_gmaps4rails do |location, marker|
+  #     marker.infowindow render_to_string(:partial => "/layouts/partials/_carrietest.html.erb")
+  #   end
+
+  #   respond_to do |format|
+  #     index.html
+  #   end
+  # end
 
   # GET /locations/new
   def new
