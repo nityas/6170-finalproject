@@ -8,7 +8,17 @@ class LocationsController < ApplicationController
     @hash = Gmaps4rails.build_markers(@locations) do |location, marker|
       marker.lat location.latitude
       marker.lng location.longitude
-      marker.infowindow location.description
+      marker.infowindow location.title #this should be removed once nitya figure out how to do the partials
+      #marker.infowindow #Nitya
+
+
+
+      marker.picture({
+       "url" => "assets/pin.png",
+       "width" =>  50,
+       "height" => 68})
+
+
     end
   end
 

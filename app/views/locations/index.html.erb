@@ -45,6 +45,7 @@
 
 <%= render partial: 'map.html.erb'%>
 
+
 <script type="text/javascript">
 options = 
 {
@@ -76,9 +77,4 @@ map.event.addListener(map, 'center_changed', function() {
     // not valid anymore => return to last valid position
     map.panTo(lastValidCenter);
 });
-
-
-/*
-  Sends user's search query to whereis.mit.edu and gets back information for this potential location.
-*/
 </script>
