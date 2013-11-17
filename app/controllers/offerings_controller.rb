@@ -14,7 +14,7 @@ class OfferingsController < ApplicationController
 
   # GET /offerings/new
   def new
-    @offering = Offering.new
+    @offering = Offering.new()
   end
 
   # GET /offerings/1/edit
@@ -25,7 +25,7 @@ class OfferingsController < ApplicationController
   # POST /offerings.json
   def create
     @offering = Offering.new(offering_params)
-
+    @offering.location_id = Location.get_or_create_id(params[:location])
     respond_to do |format|
       if @offering.save
         format.html { redirect_to @offering, notice: 'Offering was successfully created.' }
@@ -69,6 +69,6 @@ class OfferingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def offering_params
-      params[:offering]
+      params.permit(:offering, :location, :sub_location, :description)
     end
 end
