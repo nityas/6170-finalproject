@@ -14,10 +14,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :location, "Building" %>
-    <%= f.text_field :location %>
+    <%= f.hidden_field :location, :value => @offering.location_id %>
   </div>
 
+  
+  
   <div class="field">
     <%= f.label :sub_location, "Location Detail" %>
     <%= f.text_field :sub_location %>
