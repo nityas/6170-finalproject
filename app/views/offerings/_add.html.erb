@@ -10,37 +10,29 @@
   <div class="tab-content" id="myTabContent">
     <div id="tabs-1" class="tab-pane fade active in">
       <%= form_for(@offering) do |f| %>
-
         <% if @offering.errors.any? %>
           <div id="error_explanation">
-            
-            <h2><%= pluralize(@offering.errors.count, "error") %> prohibited this offering from being saved:</h2>
-            <ul>
-            <% @offering.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-            <% end %>
-            </ul>
-          
-          </div>
-        <% end %>
+          <h2><%= pluralize(@offering.errors.count, "error") %> prohibited this offering from being saved:</h2>
+          <ul>
+          <% @offering.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-
+      <h2> Post A New Byte </h2>
         <div class="field">
           <%= f.hidden_field :location, :value => @offering.location_id %>
-        </div>
-
-        
-        
+        </div>        
         <div class="field">
           <%= f.label :sub_location, "Location Detail" %>
           <%= f.text_field :sub_location,  :placeholder => "i.e. 3rd floor" %>
         </div>
-
         <div class="field">
           <%= f.label :description, "Food Description" %>
           <%= f.text_field :description, :placeholder => "i.e. chips & cookies" %>
         </div>
-
         <div class="actions">
           <%= f.submit "Post byte" %>
         </div>
@@ -48,14 +40,14 @@
     </div>
 
     <div id="tabs-2"  class="tab-pane fade">
-    <b>
-    <tr>
-      <th>Where</th>
-      <th>What</th>
-      <th>Give an update</th>
-      <br>
-    </tr>
-    </b>
+      <b>
+      <tr>
+        <th>Where</th>
+        <th>What</th>
+        <th>Give an update</th>
+        <br>
+      </tr>
+      </b>
       <% Location.find(@offering.location_id).offerings.each do |offering| %>
         <tr>
           <td><%= offering.sub_location %></td>
