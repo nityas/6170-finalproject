@@ -3,13 +3,15 @@ class Location < ActiveRecord::Base
 	after_validation :geocode, :if => :address_changed?
 	has_many :offerings, dependent: :destroy
 
-	def get_or_create_id(location) 
+	def self.get_or_create_id(location) 
+		puts "GET OR CREATE ID: LOCATION"
+		puts location.customid
 		if !Location.exists?(customid: location.customid)
 			newlocation = Location.new(location)
 			newlocation.save()
 			locationid = newlocation.id
 		else
-			locationid = Location.where(:customid => location.customid).id
+			locationid = Location.where(:customid => location.customid).first.id
 		end
 		return locationid
 	end
