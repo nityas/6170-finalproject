@@ -1,67 +1,69 @@
 <h2><b><%= Location.find(@offering.location_id).title %></b></h2>
 <div id="tabs">
-  <ul>
-    <li><a href="#tabs-1">New Offering</a></li>
-    <li><a href="#tabs-2">All Existing Offerings</a></li>
+  <ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a data-toggle="tab" href="#tabs-1">New Offering</a></li>
+    <li class=""><a data-toggle="tab" href="#tabs-2">All Existing Offerings</a></li>
   </ul>
-  <div id="tabs-1">
-    <%= form_for(@offering) do |f| %>
-      <% if @offering.errors.any? %>
-        <div id="error_explanation">
-          
-          <h2><%= pluralize(@offering.errors.count, "error") %> prohibited this offering from being saved:</h2>
+  <div class="tab-content" id="myTabContent">
+    <div id="tabs-1" class="tab-pane fade active in">
+      <%= form_for(@offering) do |f| %>
+        <% if @offering.errors.any? %>
+          <div id="error_explanation">
+            
+            <h2><%= pluralize(@offering.errors.count, "error") %> prohibited this offering from being saved:</h2>
 
-          <ul>
-          <% @offering.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-          </ul>
+            <ul>
+            <% @offering.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+            </ul>
+          
+          </div>
+        <% end %>
+
+        <h2> Add New Offering To Location </h2>
+
+        <div class="field">
+          <%= f.hidden_field :location, :value => @offering.location_id %>
+        </div>
+
         
+        
+        <div class="field">
+          <%= f.label :sub_location, "Location Detail" %>
+          <%= f.text_field :sub_location %>
+        </div>
+
+        <div class="field">
+          <%= f.label :description, "Food Description" %>
+          <%= f.text_field :description %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit %>
         </div>
       <% end %>
+    </div>
 
-      <h2> Add New Offering To Location </h2>
+    <div id="tabs-2"  class="tab-pane fade">
 
-      <div class="field">
-        <%= f.hidden_field :location, :value => @offering.location_id %>
-      </div>
-
-      
-      
-      <div class="field">
-        <%= f.label :sub_location, "Location Detail" %>
-        <%= f.text_field :sub_location %>
-      </div>
-
-      <div class="field">
-        <%= f.label :description, "Food Description" %>
-        <%= f.text_field :description %>
-      </div>
-
-      <div class="actions">
-        <%= f.submit %>
-      </div>
-    <% end %>
-  </div>
-
-  <div id="tabs-2">
-
-    <h2> All Existing Offerings </h2>
-    <tr>
-      <b>
-      <td>Location Detail</td>
-      <td>Food Description</td>
-      </b>
-      <br>
-    </tr>
-    <% Location.find(@offering.location_id).offerings.each do |offering| %>
+      <h2> All Existing Offerings </h2>
       <tr>
-        <td><%= offering.sub_location %></td>
-        <td><%= offering.description %></td>
-        <td><%= link_to 'All Gone!', offering, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <b>
+        <td>Location Detail</td>
+        <td>Food Description</td>
+        </b>
+        <br>
       </tr>
-      <br>
-    <% end %>  
+      <% Location.find(@offering.location_id).offerings.each do |offering| %>
+        <tr>
+          <td><%= offering.sub_location %></td>
+          <td><%= offering.description %></td>
+          <td><%= link_to 'All Gone!', offering, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        <br>
+      <% end %>  
+    </div>
   </div>
   
 </div>
