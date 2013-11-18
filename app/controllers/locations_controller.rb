@@ -16,7 +16,6 @@ class LocationsController < ApplicationController
        "url" => "assets/pin.png",
        "width" =>  50,
        "height" => 68})
-
     end
 
   end
