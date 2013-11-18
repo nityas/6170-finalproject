@@ -5,6 +5,11 @@ http://still-earth-6642.herokuapp.com/
 
 To use our app:
 1) Search and make a location
+
 2) Click on location(the beaver pin)
+
 3) To add an offering, enter location description and food description
+
 4) To see all offerings at location, click on tab
+
+Our design doc has been updated.
