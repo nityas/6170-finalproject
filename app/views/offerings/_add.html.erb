@@ -2,7 +2,7 @@
 <h2><b>Building <%= Location.find(@offering.location_id).building_number %> - <%= Location.find(@offering.location_id).title %></b></h2>
 <div id="tabs">
   <ul class="nav nav-tabs" id="myTab">
-    <li class="active"><a data-toggle="tab" href="#tabs-1">Poste a Byte</a></li>
+    <li class="active"><a data-toggle="tab" href="#tabs-1">Post a Byte</a></li>
     <li class=""><a data-toggle="tab" href="#tabs-2">View Bytes</a></li>
   </ul>
 
@@ -42,7 +42,7 @@
         </div>
 
         <div class="actions">
-          <%= f.submit %>
+          <%= f.submit "Post byte" %>
         </div>
       <% end %>
     </div>

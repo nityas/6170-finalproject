@@ -21,7 +21,6 @@ $(document).ready( function () {
         dataType: 'jsonp',
         success: function(res){
           handle_search_result(res[0]);
-         // $('#map').html('<%= j(render partial: 'map') %>');
           location.reload()
 
         }
@@ -63,7 +62,7 @@ $(document).ready( function () {
     Sends user's search query to whereis.mit.edu and gets back information for this potential location.
   */
   function handle_null_result(){
-    alert("no MIT location found for your query");
+    alert("Sorry, no MIT location found for your query");
   }
 
 });
