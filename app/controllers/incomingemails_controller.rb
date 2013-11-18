@@ -16,6 +16,7 @@ class IncomingemailsController < ApplicationController
     if location.nil?
     	location = ""
     end
+    puts location
     respond_to do |format|
       format.html{render :text => 'success', :status => 200}
     	format.js {}
