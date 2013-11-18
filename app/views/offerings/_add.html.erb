@@ -1,9 +1,9 @@
 
-<h2><b><%= Location.find(@offering.location_id).title %></b></h2>
+<h2><b>Building <%= Location.find(@offering.location_id).building_number %> - <%= Location.find(@offering.location_id).title %></b></h2>
 <div id="tabs">
   <ul class="nav nav-tabs" id="myTab">
-    <li class="active"><a data-toggle="tab" href="#tabs-1">New Offering</a></li>
-    <li class=""><a data-toggle="tab" href="#tabs-2">All Existing Offerings</a></li>
+    <li class="active"><a data-toggle="tab" href="#tabs-1">Post a Byte</a></li>
+    <li class=""><a data-toggle="tab" href="#tabs-2">View Bytes</a></li>
   </ul>
 
   <center>
@@ -27,24 +27,24 @@
         </div>        
         <div class="field">
           <%= f.label :sub_location, "Location Detail" %>
-          <%= f.text_field :sub_location %>
+          <%= f.text_field :sub_location,  :placeholder => "i.e. 3rd floor" %>
         </div>
         <div class="field">
           <%= f.label :description, "Food Description" %>
-          <%= f.text_field :description %>
+          <%= f.text_field :description, :placeholder => "i.e. chips & cookies" %>
         </div>
         <div class="actions">
-          <%= f.submit %>
+          <%= f.submit "Post byte" %>
         </div>
       <% end %>
     </div>
 
     <div id="tabs-2"  class="tab-pane fade">
-      <h2>Current Bytes</h2>
       <b>
       <tr>
-        <td>Location Detail</td>
-        <td>Food Description</td>
+        <th>Where</th>
+        <th>What</th>
+        <th>Give an update</th>
         <br>
       </tr>
       </b>
@@ -52,7 +52,7 @@
         <tr>
           <td><%= offering.sub_location %></td>
           <td><%= offering.description %></td>
-          <td><%= link_to 'All Gone!', offering, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Click if all gone', offering, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
         <br>
       <% end %>

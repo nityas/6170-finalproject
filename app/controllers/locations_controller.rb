@@ -49,20 +49,15 @@ class LocationsController < ApplicationController
 
     @location = Location.new(location_params)
 
-    respond_to do |format|
-      if Location.exists?(:customid => location_params[:customid])
-        format.html { render action: 'new' }
+    unless Location.exists?(:customid => location_params[:customid])    
+      if @location.save
+        flash[:notice] = "hurray"
       else
-        if @location.save
-          format.html { redirect_to @location, notice: 'Location was successfully created.' }
-          format.json { render action: 'show', status: :created, location: @location }
-        else
-          format.html { render action: 'new' }
-          format.json { render json: @location.errors, status: :unprocessable_entity }
-        end
-
+        flash[:alert] = "Problem saving this location"
       end
+
     end
+    redirect_to root_path
 
   end
 
@@ -98,6 +93,8 @@ class LocationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def location_params
-      params.require(:location).permit(:latitude, :longitude, :customid,  :title,)
+
+      params.require(:location).permit(:latitude, :longitude, :customid,  :title, :building_number)
+
     end
 end
