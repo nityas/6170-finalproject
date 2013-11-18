@@ -6,7 +6,6 @@ $(document).ready( function () {
     }
   });
 
-
   /*
     Handles when user hits "submit" to make a location
     Currently displayed externally as "make a location" but internally as a location search,
@@ -15,7 +14,6 @@ $(document).ready( function () {
   $("#search").click(function(){
     var query = $("#queryField").val();
     create_search(query);
-    
   });
 
   /*
@@ -31,7 +29,6 @@ $(document).ready( function () {
         success: function(res){
           handle_search_result(res[0]);
           location.reload()
-
         }
     });
   }
@@ -44,7 +41,6 @@ $(document).ready( function () {
     if (result == undefined){
       handle_null_result();
     }else{
-
       var latitude = result.lat_wgs84;
       var longitude = result.long_wgs84;
       var image = result.bldgimg;
@@ -53,7 +49,6 @@ $(document).ready( function () {
       var bldgnum = result["bldgnum"]
       create_location(latitude, longitude, mitlocation_id, name, bldgnum);
     }
-
   }
 
   /*
@@ -76,5 +71,4 @@ $(document).ready( function () {
   function handle_null_result(){
     alert("Sorry, no MIT location found for your query");
   }
-
 });
