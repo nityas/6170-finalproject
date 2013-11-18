@@ -37,7 +37,7 @@
 
 <%= text_field_tag "query", nil, :placeholder => "i.e. Stata", :id => "queryField" %>
 <%= submit_tag "make a location", :id => "search" %>
-
+<%= render partial: 'layouts/partials/flash'%>
 
 <%= render partial: 'map.html.erb'%>
 
