@@ -19,7 +19,7 @@ class IncomingemailsController < ApplicationController
     respond_to do |format|
       format.html{render :text => 'success', :status => 200}
     	format.js {}
-      format.json{}      
+      format.json{}
     end
   end
 end
