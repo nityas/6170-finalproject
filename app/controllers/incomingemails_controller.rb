@@ -12,10 +12,9 @@ class IncomingemailsController < ApplicationController
     	location = ""
     end
     respond_to do |format|
-      format.html{render :text => 'success', :status => 200}
-    	format.js {}
-      puts "Hello, logs!"
+    	format.js {render :content_type => 'text/javascript'}
       format.json{}
+      format.html{render :text => 'success', :status => 200}
     end
   end
 end
