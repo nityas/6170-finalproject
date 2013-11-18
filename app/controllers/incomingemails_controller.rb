@@ -2,6 +2,11 @@ class IncomingemailsController < ApplicationController
   require 'mail'
   skip_before_filter :verify_authenticity_token
 
+  # GET /locations/new
+  def new
+    @incomingemails = Incomingemail.new
+  end
+
   def create
     #Get the subject line and parse for location
     subjectString = params[:headers]['Subject']
@@ -12,9 +17,9 @@ class IncomingemailsController < ApplicationController
     	location = ""
     end
     respond_to do |format|
-    	format.js {render :content_type => 'text/javascript'}
-      format.json{}
       format.html{render :text => 'success', :status => 200}
+    	format.js {}
+      format.json{}      
     end
   end
 end
