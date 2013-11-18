@@ -8,14 +8,14 @@ class IncomingemailsController < ApplicationController
     location = subjectString.match(/(\w?\d{1,2}\w?[-]?\d{0,3})/)
     #if the regex found a building location, call the js querry
 
-
+    if location.nil?
+    	location = ""
+    end
     respond_to do |format|
-		format.html {}
-		#if !location.nil?
-		#	create_search(location)
-		#end
-		format.js {  render :js =>  "create_search(location);" }
-		#format.js window.alert("Test")
-	end
+    	format.js {}
+        format.html { render :text => 'success', :status => 200}
+        format.json {}
+        
+    end
   end
 end
