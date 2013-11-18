@@ -21,7 +21,6 @@ $(document).ready( function () {
     Gets back the most likely MIT location based on this query, along with its associated information.
   */
   function create_search(query){
-    console.log("aaaaaaaaaaaaaaaaaab");
     $.ajax({
         url: "http://whereis.mit.edu/search",
         type: 'GET',
