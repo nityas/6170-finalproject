@@ -45,7 +45,6 @@ $(document).ready( function () {
       data: {location: {latitude: lat, longitude: lng, title: location_name,  customid: mitlocation_id}},
       success: function(res){
         console.log("location created: " + location_name)
-
       }
     })
   }
