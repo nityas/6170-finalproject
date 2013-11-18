@@ -1,4 +1,12 @@
 $(document).ready( function () {
+
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
+
   $("#search").click(function(){
     var query = $("#queryField").val();
     create_search(query);
@@ -46,7 +54,6 @@ $(document).ready( function () {
       data: {location: {latitude: lat, longitude: lng, address: addr, title: location_name, description: "sample description", customid: mitlocation_id}},
       success: function(res){
         console.log("location created: " + location_name)
-
       }
     })
   }
