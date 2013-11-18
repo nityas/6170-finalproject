@@ -13,8 +13,8 @@ class IncomingemailsController < ApplicationController
     end
     respond_to do |format|
       format.html{}
-    	format.js {}
-      format.json{render :status => 200}
+    	format.js {render :text => 'success', :status => 200}
+      format.json{}
       #format.html { render :text => 'success', :status => 200}
     end
   end
