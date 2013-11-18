@@ -12,6 +12,7 @@ class IncomingemailsController < ApplicationController
     	location = ""
     end
     respond_to do |format|
+      format.html{}
     	format.js {}
       #format.html { render :text => 'success', :status => 200}
     end
