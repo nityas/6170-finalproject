@@ -5,32 +5,25 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def index
     @locations = Location.all
+    # for each location create a marker.
+    # a marker has latitude,longitude, and infowindow with offerings
+    # and a pin
     @hash = Gmaps4rails.build_markers(@locations) do |location, marker|
       marker.lat location.latitude
       marker.lng location.longitude
       offering = Offering.new
       offering.location_id = location.id
       marker.infowindow render_to_string(:partial => "offerings/add", :locals => {:@offering => offering} )
-
       marker.picture({
        "url" => "assets/pin.png",
        "width" =>  50,
        "height" => 68})
     end
-
   end
 
   # GET /locations/1
   # GET /locations/1.json
   # def show
-  #   @temp_location = params
-  #   @json = @temp_location.to_gmaps4rails do |location, marker|
-  #     marker.infowindow render_to_string(:partial => "/layouts/partials/_carrietest.html.erb")
-  #   end
-
-  #   respond_to do |format|
-  #     index.html
-  #   end
   # end
 
   # GET /locations/new
@@ -38,27 +31,19 @@ class LocationsController < ApplicationController
     @location = Location.new
   end
 
-  # GET /locations/1/edit
-  def edit
-  end
-
   # POST /locations
   # POST /locations.json
   # creates an MIT-location unless this location already exists 
   def create
-
     @location = Location.new(location_params)
-
     unless Location.exists?(:customid => location_params[:customid])    
       if @location.save
         flash[:notice] = "hurray"
       else
         flash[:alert] = "Problem saving this location"
       end
-
     end
     redirect_to root_path
-
   end
 
   # PATCH/PUT /locations/1
@@ -93,7 +78,6 @@ class LocationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def location_params
-
       params.require(:location).permit(:latitude, :longitude, :customid,  :title, :building_number)
 
     end

@@ -1,44 +1,10 @@
 
-<h1>Listing locations</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Latitude</th>
-      <th>Longitude</th>
-      <th>Custom ID</th>
-      <th>Name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @locations.each do |location| %>
-      <tr>
-        <td><%= location.latitude %></td>
-        <td><%= location.longitude %></td>
-        <td><%= location.customid %></td>
-        <td><%= location.title %></td>
-        <td><%= link_to 'Show', location %></td>
-        <td><%= link_to 'Edit', edit_location_path(location) %></td>
-        <td><%= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <br>
 
-
 <%= text_field_tag "query", nil, :placeholder => "i.e. Stata or 32", :id => "queryField" %>
-
 <%= submit_tag "make a location", :id => "search" %>
 <%= render partial: 'layouts/partials/flash'%>
-
 <%= render partial: 'map.html.erb'%>
-
 
 <script type="text/javascript">
   //Define the boundaries of a map 
@@ -88,6 +54,5 @@
 
      map.setCenter(new google.maps.LatLng(y, x));
    });
-
 </script>
 
