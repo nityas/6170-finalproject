@@ -1,41 +1,6 @@
-
-
-<h1>Listing locations</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Latitude</th>
-      <th>Longitude</th>
-      <th>Custom ID</th>
-      <th>Name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @locations.each do |location| %>
-      <tr>
-        <td><%= location.latitude %></td>
-        <td><%= location.longitude %></td>
-        <td><%= location.customid %></td>
-        <td><%= location.title %></td>
-        <td><%= link_to 'Show', location %></td>
-        <td><%= link_to 'Edit', edit_location_path(location) %></td>
-        <td><%= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <br>
 
-<!--<%= link_to 'New Location', new_location_path %>-->
-
-
-<%= text_field_tag "query", nil, :placeholder => "i.e. Stata", :id => "queryField" %>
+<%= text_field_tag "query", nil, :placeholder => "i.e. Stata or 32", :id => "queryField" %>
 <%= submit_tag "make a location", :id => "search" %>
 
 
@@ -43,33 +8,38 @@
 
 
 <script type="text/javascript">
-   var strictBounds = new google.maps.LatLngBounds(
-     new google.maps.LatLng(42.340, -71.20), 
-     new google.maps.LatLng(42.370, -71.0)
-   );
+  //Define the boundaries of a map 
+  var strictBounds = new google.maps.LatLngBounds(
+    new google.maps.LatLng(42.340, -71.20), 
+    new google.maps.LatLng(42.370, -71.0)
+  );
 
-var mapOptions = 
-{
+  //Define the max and min allowed zoom of the map
+  var mapOptions = 
+  {
     maxZoom:19,
     minZoom:15,
-};
+  };
 
-handler = Gmaps.build('Google', {markers: { maxRandomDistance: null} });
-handler.buildMap({ provider: mapOptions, internal: {id: 'map'}}, function(){
-  markers = handler.addMarkers(<%=raw @hash.to_json %>);
-  handler.bounds.extendWith(markers);
-  handler.fitMapToBounds();
-  handler.getMap().setZoom(16);
-  handler.getMap().setCenter(new google.maps.LatLng(42.359, -71.090413));
-});
+  //Create a map and set the markers
+  handler = Gmaps.build('Google', {markers: { maxRandomDistance: null} });
+  handler.buildMap({ provider: mapOptions, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers(<%=raw @hash.to_json %>);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+    //set the initial zoom
+    handler.getMap().setZoom(16);
+    //set the initial center 
+    handler.getMap().setCenter(new google.maps.LatLng(42.359, -71.090413));
+  });
+
    var map = handler.getMap();
 
    // Listen for the dragend event
    google.maps.event.addListener(map, 'dragend', function() {
      if (strictBounds.contains(map.getCenter())) return;
 
-     // We're out of bounds - Move the map back within the bounds
-
+    // We're out of bounds - Move the map back within the bounds
      var c = map.getCenter(),
          x = c.lng(),
          y = c.lat(),
