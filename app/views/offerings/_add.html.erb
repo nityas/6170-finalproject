@@ -1,9 +1,11 @@
+
 <h2><b><%= Location.find(@offering.location_id).title %></b></h2>
 <div id="tabs">
   <ul>
     <li><a href="#tabs-1">New Offering</a></li>
     <li><a href="#tabs-2">All Existing Offerings</a></li>
   </ul>
+  <center>
   <div id="tabs-1">
     <%= form_for(@offering) do |f| %>
       <% if @offering.errors.any? %>
@@ -65,5 +67,6 @@
     <% end %>  
     </table>
   </div>
-  
+  </center>
 </div>
+
