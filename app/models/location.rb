@@ -4,8 +4,6 @@ class Location < ActiveRecord::Base
 	has_many :offerings, dependent: :destroy
 
 	def self.get_or_create_id(location) 
-		puts "GET OR CREATE ID: LOCATION"
-		puts location.customid
 		if !Location.exists?(customid: location.customid)
 			newlocation = Location.new(location)
 			newlocation.save()
@@ -16,3 +14,6 @@ class Location < ActiveRecord::Base
 		return locationid
 	end
 end
+
+
+    
