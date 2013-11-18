@@ -24,7 +24,9 @@ class OfferingsController < ApplicationController
   # POST /offerings
   # POST /offerings.json
   def create
-    @offering = Offering.new(offering_params)
+    @offering = Offering.new
+    @offering.sub_location = params[:offering][:sub_location]
+    @offering.description = params[:offering][:description]
     location = Location.find(params[:offering][:location])
     @offering.location_id = Location.get_or_create_id(location)
     respond_to do |format|
