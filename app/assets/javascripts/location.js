@@ -1,4 +1,12 @@
 $(document).ready( function () {
+
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
+
   $("#search").click(function(){
     var query = $("#queryField").val();
     create_search(query);
