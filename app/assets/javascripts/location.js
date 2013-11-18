@@ -7,12 +7,21 @@ $(document).ready( function () {
   });
 
 
+  /*
+    Handles when user hits "submit" to make a location
+    Currently displayed externally as "make a location" but internally as a location search,
+    so that post-MVP changes can be made more easily.
+  */
   $("#search").click(function(){
     var query = $("#queryField").val();
     create_search(query);
     
   });
 
+  /*
+    Sends user's location query to whereis.mit.edu via ajax request
+    Gets back the most likely MIT location based on this query, along with its associated information.
+  */
   function create_search(query){
     $.ajax({
         url: "http://whereis.mit.edu/search",
@@ -27,6 +36,9 @@ $(document).ready( function () {
     });
   }
 
+  /*
+   Takes in MIT location information (as "result") and uses those as parameters to create a location.
+  */
   function handle_search_result(result){
     console.log(result);
     if (result == undefined){
