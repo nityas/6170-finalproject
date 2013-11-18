@@ -28,10 +28,9 @@ $(document).ready( function () {
       var latitude = result.lat_wgs84;
       var longitude = result.long_wgs84;
       var image = result.bldgimg;
-      var address = result.address;
       var name = result["name"];
       var mitlocation_id = result["id"];
-      create_location(latitude, longitude, mitlocation_id, name, address);
+      create_location(latitude, longitude, mitlocation_id, name);
     }
 
   }
@@ -39,11 +38,11 @@ $(document).ready( function () {
   /*
     Creates this location if it didn't already exist.
   */
-  function create_location(lat, lng, mitlocation_id, location_name, addr){
+  function create_location(lat, lng, mitlocation_id, location_name){
     $.ajax({
       url: "/locations",
       type: 'POST',
-      data: {location: {latitude: lat, longitude: lng, address: addr, title: location_name, description: "sample description", customid: mitlocation_id}},
+      data: {location: {latitude: lat, longitude: lng, title: location_name,  customid: mitlocation_id}},
       success: function(res){
         console.log("location created: " + location_name)
 
