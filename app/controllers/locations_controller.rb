@@ -46,7 +46,7 @@ class LocationsController < ApplicationController
   # POST /locations.json
   # creates an MIT-location unless this location already exists 
   def create
-
+    puts "hello"
     @location = Location.new(location_params)
 
     respond_to do |format|
