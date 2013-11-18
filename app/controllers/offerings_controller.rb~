@@ -7,9 +7,18 @@ class OfferingsController < ApplicationController
     @offerings = Offering.all
   end
 
+  # GET /offerings/1
+  # GET /offerings/1.json
+  def show
+  end
+
   # GET /offerings/new
   def new
     @offering = Offering.new()
+  end
+
+  # GET /offerings/1/edit
+  def edit
   end
 
   # POST /offerings
