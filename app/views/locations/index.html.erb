@@ -7,10 +7,8 @@
     <tr>
       <th>Latitude</th>
       <th>Longitude</th>
-      <th>Address</th>
       <th>Custom ID</th>
       <th>Name</th>
-      <th>Description</th>
       <th></th>
       <th></th>
       <th></th>
@@ -22,10 +20,8 @@
       <tr>
         <td><%= location.latitude %></td>
         <td><%= location.longitude %></td>
-        <td><%= location.address %></td>
         <td><%= location.customid %></td>
         <td><%= location.title %></td>
-        <td><%= location.description %></td>
         <td><%= link_to 'Show', location %></td>
         <td><%= link_to 'Edit', edit_location_path(location) %></td>
         <td><%= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -40,7 +36,7 @@
 
 
 <%= text_field_tag "query", nil, :placeholder => "i.e. Stata", :id => "queryField" %>
-<%= submit_tag "search", :id => "search" %>
+<%= submit_tag "make a location", :id => "search" %>
 
 
 <%= render partial: 'map.html.erb'%>

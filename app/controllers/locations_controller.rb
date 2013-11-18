@@ -46,7 +46,7 @@ class LocationsController < ApplicationController
   # POST /locations.json
   # creates an MIT-location unless this location already exists 
   def create
-    puts "hello"
+
     @location = Location.new(location_params)
 
     respond_to do |format|
@@ -98,6 +98,6 @@ class LocationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def location_params
-      params.require(:location).permit(:latitude, :longitude, :customid, :address, :title, :description)
+      params.require(:location).permit(:latitude, :longitude, :customid,  :title,)
     end
 end
