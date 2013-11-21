@@ -31,6 +31,9 @@ gem 'geocoder'
 # gem for bootstrap
 gem 'bootstrap-sass', '2.3.2'
 
+# gem for server side javascript/url calls
+gem "rest-client", "~> 1.6.7"
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
