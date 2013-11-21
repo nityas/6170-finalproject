@@ -18,8 +18,9 @@ class IncomingemailsController < ApplicationController
     #end
     @location = "51"
     respond_to do |format|
-      format.js {render_to_string(:my_location=>location)}
+      format.js {}
       format.html{render :text => 'success', :status => 200}
+      format.json{}
     end
   end
 end
