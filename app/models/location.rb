@@ -6,9 +6,8 @@ class Location < ActiveRecord::Base
 	# return the location id
 	def self.get_or_create_id(location) 
 		if !Location.exists?(customid: location.customid)
-			newlocation = Location.new(location)
-			newlocation.save()
-			locationid = newlocation.id
+			location.save()
+			locationid = location.id
 		else
 			locationid = Location.where(:customid => location.customid).first.id
 		end
