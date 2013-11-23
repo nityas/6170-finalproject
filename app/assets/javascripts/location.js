@@ -28,7 +28,7 @@ $(document).ready( function () {
         dataType: 'jsonp',
         success: function(res){
           handle_search_result(res[0]);
-          location.reload()
+          //
         }
     });
   }
@@ -47,11 +47,63 @@ $(document).ready( function () {
       var name = result["name"];
       var mitlocation_id = result["id"];
       var bldgnum = result["bldgnum"]
-      create_location(latitude, longitude, mitlocation_id, name, bldgnum);
+
+    $.ajax({
+      type: "GET",
+      url: "/locations/exists",
+      dataType: "JSON",
+      data: { 'mitlocation_id': mitlocation_id },
+      success: function(data) {
+        console.log(data);
+        var centerpoint = new google.maps.LatLng(latitude,longitude);
+        handler.getMap().setCenter(centerpoint)
+        if (data) {
+           //TODO open window automatically
+        } else {
+            show_location(latitude, longitude, mitlocation_id, name, bldgnum);
+        }
+      }
+    });
     }
   }
 
+  
+  function show_location(lat, lng, mitlocation_id, location_name,bldgnum){
+    var infoWindowContent = [
+    "<h2><b> Building "+String(bldgnum)+ " - " +String(location_name) + "</b></h2>",
+    "<h2>Post A New Byte </h2>",
+    "<form id='map-form'>",
+    "<div>Location Details: <input id='location-details' type='text' /></div>",
+    "<div>Food Description: <input id='food-description' type='text' /></div>",
+    '<input type="button" value="Post Byte" onClick="saveData(\'' + lat + '\',\'' + lng +
+     '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" />',
+    "</form>"].join("");   
+
+    var tempmarker= {"lat":lat,
+      "lng":lng,
+      "picture":{
+       "url":"/pin.png",
+       "width":"50",
+       "height":"68"
+      },
+      "infowindow":infoWindowContent
+    };
+
+    handler.addMarker(tempmarker);
+    //TODO  open window automatically
+  };
+
+
   /*
+    Sends user's search query to whereis.mit.edu and gets back information for this potential location.
+  */
+  function handle_null_result(){
+    alert("Sorry, no MIT location found for your query");
+  }
+});
+
+
+/*
     Creates this location if it didn't already exist.
   */
   function create_location(lat, lng, mitlocation_id, location_name,bldgnum){
@@ -61,14 +113,26 @@ $(document).ready( function () {
       data: {location: {latitude: lat, longitude: lng, title: location_name,  customid: mitlocation_id, building_number: bldgnum}},
       success: function(res){
         console.log("location created: " + location_name)
+        location.reload();
       }
     })
   }
 
-  /*
-    Sends user's search query to whereis.mit.edu and gets back information for this potential location.
-  */
-  function handle_null_result(){
-    alert("Sorry, no MIT location found for your query");
-  }
-});
+
+    function saveData(lat, lng, mitlocation_id, location_name,bldgnum){
+      var location_details = escape(document.getElementById("location-details").value);
+      var food = escape(document.getElementById("food-description").value);
+     // var mitlocationID2 = escape(document.getElementById("mitlocation-id").value);
+      console.log(location_details)
+      console.log(food)
+      console.log(lat)
+      console.log(lng)
+      console.log(location_name)
+      console.log(mitlocation_id)
+      console.log(bldgnum)
+      //TODO add offering after location creation
+      create_location(lat, lng, mitlocation_id, location_name, bldgnum);
+
+
+      //console.log(latlng)
+    };

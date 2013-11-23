@@ -1,8 +1,14 @@
 IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
   resources :offerings
 
-  resources :locations
+  resources :locations do
+    collection do
+      get 'exists'
+    end
+  end 
   resources :incomingemails
+
+
   root 'locations#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
