@@ -1,5 +1,7 @@
 class OfferingsController < ApplicationController
   before_action :set_offering, only: [:show, :edit, :update, :destroy]
+  before_action :signed_in_user, only: [:show, :destroy]
+
 
   # GET /offerings
   # GET /offerings.json

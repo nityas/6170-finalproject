@@ -1,4 +1,6 @@
 IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
+  resources :users
+
   resources :offerings
 
   resources :locations do
