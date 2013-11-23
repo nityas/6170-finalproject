@@ -113,6 +113,16 @@ $(document).ready( function () {
       data: {location: {latitude: lat, longitude: lng, title: location_name,  customid: mitlocation_id, building_number: bldgnum}},
       success: function(res){
         console.log("location created: " + location_name)
+      }
+    })
+  }
+
+    function create_offering(location, sub_location, description){
+    $.ajax({
+      url: "/offerings",
+      type: 'POST',
+      data: {offering: {location: location, sub_location: sub_location, description: description}},
+      success: function(res){
         location.reload();
       }
     })
@@ -120,19 +130,15 @@ $(document).ready( function () {
 
 
     function saveData(lat, lng, mitlocation_id, location_name,bldgnum){
-      var location_details = escape(document.getElementById("location-details").value);
-      var food = escape(document.getElementById("food-description").value);
-     // var mitlocationID2 = escape(document.getElementById("mitlocation-id").value);
-      console.log(location_details)
-      console.log(food)
+      var locationDetails = escape(document.getElementById("location-details").value);
+      var foodDescription = escape(document.getElementById("food-description").value);
       console.log(lat)
       console.log(lng)
       console.log(location_name)
       console.log(mitlocation_id)
       console.log(bldgnum)
-      //TODO add offering after location creation
       create_location(lat, lng, mitlocation_id, location_name, bldgnum);
-
-
-      //console.log(latlng)
+      //create_offering(mitlocation_id,locationDetails,foodDescription);
+      //TODO add offering after location creation. The ajax is working , 
+      // The offering create needs to be augmented 
     };

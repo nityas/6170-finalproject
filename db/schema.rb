@@ -13,12 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20131118204544) do
 
-  create_table "incomingemails", force: true do |t|
-    t.string   "place"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "locations", force: true do |t|
     t.float    "latitude"
     t.float    "longitude"
