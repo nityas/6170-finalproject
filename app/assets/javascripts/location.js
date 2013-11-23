@@ -16,6 +16,15 @@ $(document).ready( function () {
     create_search(query);
   });
 
+  function show_location(lat, lng, mitlocation_id, location_name, bldgnum){
+    var infoWindowContent = [ "<h2>Post A New Byte</h2><br/>", "<form id='map-form'>", 
+    "<div>Location Details: <input id='location-details' type='text' /></div>", 
+    "<div>Food Description: <input id='food-description' type='text' /></div>", 
+    "<input type='button' value='Post Byte' onclick='saveData()'/>", "</form>"].join(""); 
+    var pin_path = "assets/pin.png";
+    var tempmarker = {lat: lat, lng: lng, "infowindow":infoWindowContent, icon: pin_path};
+    handler.addMarker(tempmarker); 
+  };
   /*
     Sends user's location query to whereis.mit.edu via ajax request
     Gets back the most likely MIT location based on this query, along with its associated information.
@@ -28,7 +37,7 @@ $(document).ready( function () {
         dataType: 'jsonp',
         success: function(res){
           handle_search_result(res[0]);
-          location.reload()
+          //location.reload()
         }
     });
   }
@@ -47,7 +56,8 @@ $(document).ready( function () {
       var name = result["name"];
       var mitlocation_id = result["id"];
       var bldgnum = result["bldgnum"]
-      create_location(latitude, longitude, mitlocation_id, name, bldgnum);
+      //create_location(latitude, longitude, mitlocation_id, name, bldgnum);
+      show_location(latitude, longitude, mitlocation_id, name, bldgnum);
     }
   }
 
