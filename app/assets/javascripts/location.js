@@ -16,6 +16,15 @@ $(document).ready( function () {
     create_search(query);
   });
 
+  function show_location(lat, lng, mitlocation_id, location_name, bldgnum){
+    var infoWindowContent = [ "<h2>Post A New Byte</h2><br/>", "<form id='map-form'>", 
+    "<div>Location Details: <input id='location-details' type='text' /></div>", 
+    "<div>Food Description: <input id='food-description' type='text' /></div>", 
+    "<input type='button' value='Post Byte' onclick='saveData()'/>", "</form>"].join(""); 
+    var pin_path = "assets/pin.png";
+    var tempmarker = {lat: lat, lng: lng, "infowindow":infoWindowContent, icon: pin_path};
+    handler.addMarker(tempmarker); 
+  };
   /*
     Sends user's location query to whereis.mit.edu via ajax request
     Gets back the most likely MIT location based on this query, along with its associated information.
@@ -28,7 +37,6 @@ $(document).ready( function () {
         dataType: 'jsonp',
         success: function(res){
           handle_search_result(res[0]);
-          //
         }
     });
   }
@@ -47,12 +55,11 @@ $(document).ready( function () {
       var name = result["name"];
       var mitlocation_id = result["id"];
       var bldgnum = result["bldgnum"]
-
-    $.ajax({
+      $.ajax({
       type: "GET",
       url: "/locations/exists",
       dataType: "JSON",
-      data: { 'mitlocation_id': mitlocation_id },
+      data: {'mitlocation_id': mitlocation_id},
       success: function(data) {
         console.log(data);
         var centerpoint = new google.maps.LatLng(latitude,longitude);
@@ -67,6 +74,10 @@ $(document).ready( function () {
     }
   }
 
+  function show_marker_window(my_lat,my_lng, marker){
+    console.log(handler);
+    google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
+  }
   
   function show_location(lat, lng, mitlocation_id, location_name,bldgnum){
     var infoWindowContent = [
@@ -79,18 +90,20 @@ $(document).ready( function () {
      '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" />',
     "</form>"].join("");   
 
-    var tempmarker= {"lat":lat,
-      "lng":lng,
-      "picture":{
-       "url":"/pin.png",
-       "width":"50",
-       "height":"68"
-      },
-      "infowindow":infoWindowContent
-    };
 
-    handler.addMarker(tempmarker);
-    //TODO  open window automatically
+    var infoWindow = new google.maps.InfoWindow({
+      content: infoWindowContent
+    });
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(lat,lng),
+      map: handler.getMap(),
+      icon: "assets/pin.png"
+    });
+
+    google.maps.event.addListener(marker, 'click', function () {
+      infoWindow.open(map, this);
+    });
+    google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
   };
 
 
@@ -112,27 +125,33 @@ $(document).ready( function () {
       type: 'POST',
       data: {location: {latitude: lat, longitude: lng, title: location_name,  customid: mitlocation_id, building_number: bldgnum}},
       success: function(res){
-        console.log("location created: " + location_name)
-        location.reload();
+        console.log("location created: " + res)
+      }
+    })
+  }
+
+    function create_offering(mitlocation_id, sub_location, description){
+    $.ajax({
+      url: "/offerings",
+      type: 'POST',
+      data: {offering: {location: mitlocation_id, sub_location: sub_location, description: description}},
+      success: function(res){
+        this.reload();
       }
     })
   }
 
 
     function saveData(lat, lng, mitlocation_id, location_name,bldgnum){
-      var location_details = escape(document.getElementById("location-details").value);
-      var food = escape(document.getElementById("food-description").value);
-     // var mitlocationID2 = escape(document.getElementById("mitlocation-id").value);
-      console.log(location_details)
-      console.log(food)
+      var locationDetails = escape(document.getElementById("location-details").value);
+      var foodDescription = escape(document.getElementById("food-description").value);
       console.log(lat)
       console.log(lng)
       console.log(location_name)
       console.log(mitlocation_id)
       console.log(bldgnum)
-      //TODO add offering after location creation
       create_location(lat, lng, mitlocation_id, location_name, bldgnum);
-
-
-      //console.log(latlng)
+      create_offering(mitlocation_id,locationDetails,foodDescription);
+      //TODO add offering after location creation. The ajax is working , 
+      // The offering create needs to be augmented 
     };

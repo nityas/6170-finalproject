@@ -1,5 +1,5 @@
 
-<h2><b>Building <%= Location.find(@offering.location_id).building_number %> - <%= Location.find(@offering.location_id).title %></b></h2>
+<h2><b>Building <%= @location.building_number %> - <%= @location.title %></b></h2>
 <div id="tabs">
   <ul class="nav nav-tabs" id="myTab">
     <li class="active"><a data-toggle="tab" href="#tabs-1">Post a Byte</a></li>
@@ -9,34 +9,7 @@
   <center>
   <div class="tab-content" id="myTabContent">
     <div id="tabs-1" class="tab-pane fade active in">
-      <%= form_for(@offering) do |f| %>
-        <% if @offering.errors.any? %>
-          <div id="error_explanation">
-          <h2><%= pluralize(@offering.errors.count, "error") %> prohibited this offering from being saved:</h2>
-          <ul>
-          <% @offering.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <h2> Post A New Byte </h2>
-        <div class="field">
-          <%= f.hidden_field :location, :value => @offering.location_id %>
-        </div>        
-        <div class="field">
-          <%= f.label :sub_location, "Location Detail" %>
-          <%= f.text_field :sub_location,  :placeholder => "i.e. 3rd floor" %>
-        </div>
-        <div class="field">
-          <%= f.label :description, "Food Description" %>
-          <%= f.text_field :description, :placeholder => "i.e. chips & cookies" %>
-        </div>
-        <div class="actions">
-          <%= f.submit "Post byte" %>
-        </div>
-      <% end %>
+      <%= render partial: "offerings/create", locals: {offering: @offering} %>
     </div>
 
     <div id="tabs-2"  class="tab-pane fade">
@@ -48,7 +21,7 @@
         <br>
       </tr>
       </b>
-      <% Location.find(@offering.location_id).offerings.each do |offering| %>
+      <% @location.offerings.each do |offering| %>
         <tr>
           <td><%= offering.sub_location %></td>
           <td><%= offering.description %></td>
@@ -58,5 +31,5 @@
       <% end %>
     </div>
   </center>
-  </div>
+</div>
 

@@ -33,14 +33,11 @@ class IncomingemailsController < ApplicationController
     @newLocation.building_number = response[0]["bldgnum"]
     @newLocationId = Location.get_or_create_id(@newLocation)
 
-    #create the offering
+    #create the offering, should probably do a redirect to preserve rails security
     @offering = Offering.new
     @offering.sub_location = @sublocation
-    puts @sublocation
     @offering.description = @description
-    puts @description
     @offering.location_id = @newLocationId
-    puts @newLocationId
     @offering.save
 
     respond_to do |format|

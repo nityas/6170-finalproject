@@ -15,12 +15,15 @@ class OfferingsController < ApplicationController
 
   # POST /offerings
   # POST /offerings.json
+  # @params location - custom id gotten from whereismit
+  # @params sublocation - text descriptor of location
+  # @params description - description of food offered
   def create
     @offering = Offering.new
     @offering.sub_location = params[:offering][:sub_location]
     @offering.description = params[:offering][:description]
-    location = Location.find(params[:offering][:location])
-    @offering.location_id = Location.get_or_create_id(location)
+    @offering.location_id = Location.where(:customid => params[:offering][:location]).first.id
+
     respond_to do |format|
       if @offering.save
         format.html { redirect_to root_url, notice: 'Byte was successfully created.' }
@@ -50,7 +53,12 @@ class OfferingsController < ApplicationController
   # DELETE /offerings/1
   # DELETE /offerings/1.json
   def destroy
+    location_id = @offering.location_id
+    isLocationEmpty = @offering.clear_empty_location(location_id)
     @offering.destroy
+    if isLocationEmpty
+      Location.find(location_id).destroy
+    end
     respond_to do |format|
       format.html { redirect_to root_url, notice: 'Byte was successfully removed.' }
       format.json { head :no_content }
