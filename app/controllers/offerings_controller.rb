@@ -52,7 +52,12 @@ class OfferingsController < ApplicationController
   # DELETE /offerings/1
   # DELETE /offerings/1.json
   def destroy
+    location_id = @offering.location_id
+    isLocationEmpty = @offering.clear_empty_location(location_id)
     @offering.destroy
+    if isLocationEmpty
+      Location.find(location_id).destroy
+    end
     respond_to do |format|
       format.html { redirect_to root_url }
       format.json { head :no_content }
