@@ -14,6 +14,3 @@ class Location < ActiveRecord::Base
 		return locationid
 	end
 end
-
-
-    

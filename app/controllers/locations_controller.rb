@@ -21,10 +21,13 @@ class LocationsController < ApplicationController
     end
   end
 
-  # GET /locations/1
-  # GET /locations/1.json
-  # def show
-  # end
+  def exists
+    location_exists = !!Location.exists?(customid: params[:mitlocation_id])
+    respond_to do |format|
+      format.html
+      format.json {render json: location_exists }
+    end
+  end
 
   # GET /locations/new
   def new
