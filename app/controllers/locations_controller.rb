@@ -12,8 +12,8 @@ class LocationsController < ApplicationController
       marker.lat location.latitude
       marker.lng location.longitude
       offering = Offering.new
-      offering.location_id = location.id
-      marker.infowindow render_to_string(:partial => "offerings/add", :locals => {:@offering => offering} )
+      custom_location_id = location.customid
+      marker.infowindow render_to_string(:partial => "offerings/add", :locals => {:@offering => offering, :@location => location} )
       marker.picture({
        "url" => "assets/pin.png",
        "width" =>  50,
@@ -21,6 +21,8 @@ class LocationsController < ApplicationController
     end
   end
 
+  #POST /locations/exists
+  #@param of whereismit custom id
   def exists
     location_exists = !!Location.exists?(customid: params[:mitlocation_id])
     respond_to do |format|
@@ -41,7 +43,7 @@ class LocationsController < ApplicationController
     @location = Location.new(location_params)
     unless Location.exists?(:customid => location_params[:customid])    
       if @location.save
-        flash[:notice] = "hurray"
+        flash[:notice] = "Saved Location"
       else
         flash[:alert] = "Problem saving this location"
       end

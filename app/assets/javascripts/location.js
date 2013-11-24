@@ -55,11 +55,11 @@ $(document).ready( function () {
       var name = result["name"];
       var mitlocation_id = result["id"];
       var bldgnum = result["bldgnum"]
-    $.ajax({
+      $.ajax({
       type: "GET",
       url: "/locations/exists",
       dataType: "JSON",
-      data: { 'mitlocation_id': mitlocation_id },
+      data: {'mitlocation_id': mitlocation_id},
       success: function(data) {
         console.log(data);
         var centerpoint = new google.maps.LatLng(latitude,longitude);
@@ -74,10 +74,9 @@ $(document).ready( function () {
     }
   }
 
-  function show_marker_window(my_lat,my_lng){
-    marker = _.find(handler.getMap().markers, function(obj) { return (obj.lat == my_lat && obj.lng == my_lng)});
+  function show_marker_window(my_lat,my_lng, marker){
     console.log(handler);
-    //google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
+    google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
   }
   
   function show_location(lat, lng, mitlocation_id, location_name,bldgnum){
@@ -91,19 +90,20 @@ $(document).ready( function () {
      '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" />',
     "</form>"].join("");   
 
-    var tempmarker= {"lat":lat,
-      "lng":lng,
-      "picture":{
-       "url":"/pin.png",
-       "width":"50",
-       "height":"68"
-      },
-      "infowindow":infoWindowContent
-    };
- 
-    handler.addMarker(tempmarker);
-    //TODO  open window automatically
-    //show_marker_window(lat, lng);
+
+    var infoWindow = new google.maps.InfoWindow({
+      content: infoWindowContent
+    });
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(lat,lng),
+      map: handler.getMap(),
+      icon: "assets/pin.png"
+    });
+
+    google.maps.event.addListener(marker, 'click', function () {
+      infoWindow.open(map, this);
+    });
+    google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
   };
 
 
@@ -130,13 +130,13 @@ $(document).ready( function () {
     })
   }
 
-    function create_offering(location, sub_location, description){
+    function create_offering(mitlocation_id, sub_location, description){
     $.ajax({
       url: "/offerings",
       type: 'POST',
-      data: {offering: {location: location, sub_location: sub_location, description: description}},
+      data: {offering: {location: mitlocation_id, sub_location: sub_location, description: description}},
       success: function(res){
-        location.reload();
+        this.reload();
       }
     })
   }
@@ -151,7 +151,7 @@ $(document).ready( function () {
       console.log(mitlocation_id)
       console.log(bldgnum)
       create_location(lat, lng, mitlocation_id, location_name, bldgnum);
-      //create_offering(mitlocation_id,locationDetails,foodDescription);
+      create_offering(mitlocation_id,locationDetails,foodDescription);
       //TODO add offering after location creation. The ajax is working , 
       // The offering create needs to be augmented 
     };

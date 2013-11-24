@@ -14,12 +14,15 @@ class OfferingsController < ApplicationController
 
   # POST /offerings
   # POST /offerings.json
+  # @params location - custom id gotten from whereismit
+  # @params sublocation - text descriptor of location
+  # @params description - description of food offered
   def create
     @offering = Offering.new
     @offering.sub_location = params[:offering][:sub_location]
     @offering.description = params[:offering][:description]
-    location = Location.find(params[:offering][:location])
-    @offering.location_id = Location.get_or_create_id(location)
+    @offering.location_id = Location.where(:customid => params[:offering][:location]).first.id
+
     respond_to do |format|
       if @offering.save
         format.html { redirect_to root_url, notice: 'Offering was successfully created.' }
