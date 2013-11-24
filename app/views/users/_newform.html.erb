@@ -1,18 +1,16 @@
-<% if @user.errors.any? %>
-  <div id="error_explanation">
-    <div class="alert alert-error">
-      The form contains <%= pluralize(@user.errors.count, "error") %>.
-    </div>
-    <ul>
-    <% @user.errors.full_messages.each do |msg| %>
-      <li>* <%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <%= form_for(@user) do |f| %>
-
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-error">
+        The form contains <%= pluralize(@user.errors.count, "error") %>.
+      </div>
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li>* <%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
   <%= f.label :name %>
   <%= f.text_field :name %>
 
@@ -24,7 +22,6 @@
 
   <%= f.label :password_confirmation, "Confirmation" %>
   <%= f.password_field :password_confirmation %>
-
-  <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+  </br>
+  <%= f.submit "Create my account", class: "btn btn-primary" %>
 <% end %>
-  
