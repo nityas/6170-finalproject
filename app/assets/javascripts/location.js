@@ -112,7 +112,7 @@ $(document).ready( function () {
       type: 'POST',
       data: {location: {latitude: lat, longitude: lng, title: location_name,  customid: mitlocation_id, building_number: bldgnum}},
       success: function(res){
-        console.log("location created: " + location_name)
+        console.log("location created: " + res)
       }
     })
   }
