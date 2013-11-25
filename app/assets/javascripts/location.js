@@ -71,6 +71,7 @@ $(document).ready( function () {
             return (obj.serviceObject.position.lat() - latitude < epsilon && obj.serviceObject.position.lng() - longitude < epsilon)});
           console.log(marker);
         } else {
+          console.log('temp marker');
           show_location(latitude, longitude, mitlocation_id, name, bldgnum);
         }
       }
