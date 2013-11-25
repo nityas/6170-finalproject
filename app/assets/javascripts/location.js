@@ -12,6 +12,7 @@ $(document).ready( function () {
     so that post-MVP changes can be made more easily.
   */
   $("#search").click(function(){
+    console.log("asdfdsfasfdsafffffffffff");
     var query = $("#queryField").val();
     create_search(query);
   });
