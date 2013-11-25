@@ -1,4 +1,5 @@
 class LocationsController < ApplicationController
+  before_action :signed_in_user, only: [:create, :update, :new]
   before_action :set_location, only: [:show, :edit, :update, :destroy]
 
   # GET /locations
@@ -77,6 +78,11 @@ class LocationsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def signed_in_user
+        redirect_to root_url, alert: "Action Unsuccessful, please sign in." unless signed_in?
+    end
+
     def set_location
       @location = Location.find(params[:id])
     end
