@@ -28,6 +28,9 @@ gem 'jbuilder', '~> 1.2'
 gem 'gmaps4rails'
 gem 'geocoder'
 
+# Use ActiveModel has_secure_password
+gem 'bcrypt-ruby', '~> 3.0.0'
+
 # gem for bootstrap
 gem 'bootstrap-sass', '2.3.2'
 
@@ -53,8 +56,7 @@ gem 'mail'
 
 gem 'whenever', :require => false
 
-# Use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.0.1'
+
 
 # Use unicorn as the app server
 # gem 'unicorn'

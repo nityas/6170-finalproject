@@ -149,6 +149,6 @@ $(document).ready( function () {
     function saveData(lat, lng, mitlocation_id, location_name,bldgnum){
       var locationDetails = escape(document.getElementById("location-details").value);
       var foodDescription = escape(document.getElementById("food-description").value);
-      create_location(lat, lng, mitlocation_id, location_name, bldgnum);
-      create_offering(mitlocation_id,locationDetails,foodDescription);
+      //create_location(lat, lng, mitlocation_id, location_name, bldgnum);
+      //create_offering(mitlocation_id,locationDetails,foodDescription);
     };
