@@ -2,7 +2,6 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
 
   resources :offerings
 
-  resources :users
   
   resources :sessions, only: [:new, :create, :destroy]
   match '/signup',  to: 'users#new',            via: 'get'
@@ -14,6 +13,9 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
       get 'exists'
     end
   end 
+
+  resources :users 
+
   resources :incomingemails
 
 

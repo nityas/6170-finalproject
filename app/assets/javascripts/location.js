@@ -56,18 +56,20 @@ $(document).ready( function () {
         var centerpoint = new google.maps.LatLng(latitude,longitude);
         handler.getMap().setCenter(centerpoint)
         if (data) {
-          console.log(data)
-           //TODO open window automatically
+          //TODO open window automatically
+          var epsilon = 0.000001;
+          var marker = _.find(markers, function(obj) {
+            return (obj.serviceObject.position.lat() - latitude < epsilon && obj.serviceObject.position.lng() - longitude < epsilon)});
+          console.log(marker);
         } else {
-            show_location(latitude, longitude, mitlocation_id, name, bldgnum);
+          show_location(latitude, longitude, mitlocation_id, name, bldgnum);
         }
       }
     });
     }
   }
 
-  function show_marker_window(my_lat,my_lng, marker){
-    console.log(handler);
+  function show_marker_window(marker){
     google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
   }
   
@@ -83,6 +85,7 @@ $(document).ready( function () {
     "</form>"].join("");   
 
 
+
     var infoWindow = new google.maps.InfoWindow({
       content: infoWindowContent
     });
@@ -95,6 +98,7 @@ $(document).ready( function () {
     google.maps.event.addListener(marker, 'click', function () {
       infoWindow.open(map, this);
     });
+
     google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
   };
 
@@ -139,6 +143,4 @@ $(document).ready( function () {
       var foodDescription = escape(document.getElementById("food-description").value);
       create_location(lat, lng, mitlocation_id, location_name, bldgnum);
       create_offering(mitlocation_id,locationDetails,foodDescription);
-      //TODO add offering after location creation. The ajax is working , 
-      // The offering create needs to be augmented 
     };

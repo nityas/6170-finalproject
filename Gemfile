@@ -55,6 +55,7 @@ end
 # gem for emails
 gem 'mail'
 
+gem 'whenever', :require => false
 
 # Use unicorn as the app server
 # gem 'unicorn'

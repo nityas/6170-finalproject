@@ -14,7 +14,9 @@ class LocationsController < ApplicationController
       marker.lng location.longitude
       offering = Offering.new
       custom_location_id = location.customid
-      marker.infowindow render_to_string(:partial => "offerings/add", :locals => {:@offering => offering, :@location => location} )
+      if signed_in?
+        marker.infowindow render_to_string(:partial => "offerings/add", :locals => {:@offering => offering, :@location => location} )
+      end
       marker.picture({
        "url" => "assets/pin.png",
        "width" =>  50,
