@@ -20,16 +20,17 @@
     <% else %>
       <div id="tabs-2"  class="tab-pane fade active in">
     <% end %>
-        <b>
+        
       <div>
       <table class="table">
+      <b>
       <tr>
         <th>Where</th>
         <th>What</th>
         <th>Give an update</th>
         <br>
       </tr>
-        </b>
+      </b>
         <% @location.offerings.each do |offering| %>
           <tr>
             <td><%= offering.sub_location %></td>
