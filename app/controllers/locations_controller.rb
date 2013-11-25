@@ -26,6 +26,7 @@ class LocationsController < ApplicationController
   #@param of whereismit custom id
   def exists
     location_exists = !!Location.exists?(customid: params[:mitlocation_id])
+    puts(location_exists)
     respond_to do |format|
       format.html
       format.json {render json: location_exists }

@@ -94,8 +94,6 @@ $(document).ready( function () {
      '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" />',
     "</form>"].join("");   
 
-
-
     var infoWindow = new google.maps.InfoWindow({
       content: infoWindowContent
     });
