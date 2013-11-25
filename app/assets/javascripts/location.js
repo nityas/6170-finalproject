@@ -37,6 +37,7 @@ $(document).ready( function () {
   */
   function handle_search_result(result){
     console.log(result);
+    console.log('a');
     if (result == undefined){
       handle_null_result();
     }else{
