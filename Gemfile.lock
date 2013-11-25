@@ -127,11 +127,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-<<<<<<< HEAD
-  bcrypt-ruby (~> 3.0.0)
-=======
   bcrypt-ruby (= 3.0.1)
->>>>>>> 090db075184387f17b08b4b26eeaf52a75246d1a
   bootstrap-sass (= 2.3.2)
   coffee-rails (~> 4.0.0)
   geocoder
