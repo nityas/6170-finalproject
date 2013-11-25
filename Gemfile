@@ -37,6 +37,10 @@ gem 'bootstrap-sass', '2.3.2'
 # gem for server side javascript/url calls
 gem "rest-client", "~> 1.6.7"
 
+# Use ActiveModel has_secure_password
+gem 'bcrypt-ruby', '3.0.1'
+
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -55,8 +59,6 @@ end
 gem 'mail'
 
 gem 'whenever', :require => false
-
-
 
 # Use unicorn as the app server
 # gem 'unicorn'

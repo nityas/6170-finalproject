@@ -2,36 +2,45 @@
 <h2><b>Building <%= @location.building_number %> - <%= @location.title %></b></h2>
 <div id="tabs">
   <ul class="nav nav-tabs" id="myTab">
-    <li class="active"><a data-toggle="tab" href="#tabs-1">Post a Byte</a></li>
-    <li class=""><a data-toggle="tab" href="#tabs-2">View Bytes</a></li>
+    <% if signed_in? %>
+      <li class="active"><a data-toggle="tab" href="#tabs-1">Post a Byte</a></li>
+      <li class=""><a data-toggle="tab" href="#tabs-2">View Bytes</a></li>
+    <% else %>
+      <li class="active"><a data-toggle="tab" href="#tabs-2">View Bytes</a></li>
+    <% end %>    
   </ul>
 
   <center>
   <div class="tab-content" id="myTabContent">
-    <div id="tabs-1" class="tab-pane fade active in">
-      <%= render partial: "offerings/create", locals: {offering: @offering} %>
-    </div>
-
-    <div id="tabs-2"  class="tab-pane fade">
+    <% if signed_in? %>
+      <div id="tabs-1" class="tab-pane fade active in">
+        <%= render partial: "offerings/create", locals: {offering: @offering} %>
+      </div>
+      <div id="tabs-2"  class="tab-pane fade">
+    <% else %>
+      <div id="tabs-2"  class="tab-pane fade active in">
+    <% end %>
+        
       <div>
       <table class="table">
+      <b>
       <tr>
         <th>Where</th>
         <th>What</th>
         <th>Give an update</th>
         <br>
       </tr>
-      <% @location.offerings.each do |offering| %>
-        <tr>
-          <td><%= offering.sub_location %></td>
-          <td><%= offering.description %></td>
-          <td><%= link_to 'Click if all gone', offering, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
+      </b>
+        <% @location.offerings.each do |offering| %>
+          <tr>
+            <td><%= offering.sub_location %></td>
+            <td><%= offering.description %></td>
+            <td><%= link_to 'Click if all gone', offering, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+          <br>
+        <% end %>
+      </div>
       </table>
-      <div>
-        <br>
-    </div>
   </center>
 </div>
 
