@@ -65,6 +65,7 @@ $(document).ready( function () {
         var centerpoint = new google.maps.LatLng(latitude,longitude);
         handler.getMap().setCenter(centerpoint)
         if (data) {
+          console.log(data)
            //TODO open window automatically
         } else {
             show_location(latitude, longitude, mitlocation_id, name, bldgnum);
@@ -136,7 +137,7 @@ $(document).ready( function () {
       type: 'POST',
       data: {offering: {location: mitlocation_id, sub_location: sub_location, description: description}},
       success: function(res){
-        this.reload();
+        location.reload();
       }
     })
   }

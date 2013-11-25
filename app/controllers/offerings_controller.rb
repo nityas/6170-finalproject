@@ -1,4 +1,5 @@
 class OfferingsController < ApplicationController
+  before_action :signed_in_user, only: [:create, :update, :new]
   before_action :set_offering, only: [:show, :edit, :update, :destroy]
 
   # GET /offerings
@@ -25,7 +26,7 @@ class OfferingsController < ApplicationController
 
     respond_to do |format|
       if @offering.save
-        format.html { redirect_to root_url, notice: 'Offering was successfully created.' }
+        format.html { redirect_to root_url, notice: 'Byte was successfully created.' }
         format.json { render action: 'show', status: :created, location: @offering }
       else
         format.html { render action: 'new' }
@@ -40,7 +41,7 @@ class OfferingsController < ApplicationController
   def update
     respond_to do |format|
       if @offering.update(offering_params)
-        format.html { redirect_to root_url, notice: 'Offering was successfully updated.' }
+        format.html { redirect_to root_url, notice: 'Byte was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -59,13 +60,18 @@ class OfferingsController < ApplicationController
       Location.find(location_id).destroy
     end
     respond_to do |format|
-      format.html { redirect_to root_url }
+      format.html { redirect_to root_url, notice: 'Byte was successfully removed.' }
       format.json { head :no_content }
     end
   end
 
   private
+
+    def signed_in_user
+        redirect_to root_url, alert: "Action Unsuccessful, please sign in." unless signed_in?
+    end
     # Use callbacks to share common setup or constraints between actions.
+
     def set_offering
       @offering = Offering.find(params[:id])
     end

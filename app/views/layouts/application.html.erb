@@ -26,8 +26,22 @@
         <ul class="nav">
         </ul>
         <ul class="nav pull-right">
-            <li>
+          <% if signed_in? %>
+            <li><%= link_to "Sign Out", signout_path, method: "delete" %></li>
+          <% else %>
+            <li class="dropdown">
+              <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In<strong class="caret"></strong></a>
+              <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                <%= render :partial => 'sessions/newform'%>
+              </div>
             </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign Up<strong class="caret"></strong></a>
+              <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                <%= render :partial => 'users/newform', :locals => {:@user => User.new}%>
+              </div>
+            </li>
+          <% end %>
         </ul>
       </div>
   </div>
