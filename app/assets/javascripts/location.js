@@ -16,6 +16,7 @@ $(document).ready( function () {
     create_search(query);
   });
 
+/* why do we have to functions with the same name?
   function show_location(lat, lng, mitlocation_id, location_name, bldgnum){
     var infoWindowContent = [ "<h2>Post A New Byte</h2><br/>", "<form id='map-form'>", 
     "<div>Location Details: <input id='location-details' type='text' /></div>", 
@@ -25,6 +26,8 @@ $(document).ready( function () {
     var tempmarker = {lat: lat, lng: lng, "infowindow":infoWindowContent, icon: pin_path};
     handler.addMarker(tempmarker); 
   };
+  */
+
   /*
     Sends user's location query to whereis.mit.edu via ajax request
     Gets back the most likely MIT location based on this query, along with its associated information.
@@ -106,7 +109,10 @@ $(document).ready( function () {
     google.maps.event.addListener(marker, 'click', function () {
       infoWindow.open(map, this);
     });
-
+    
+    google.maps.event.addListener(infoWindow, 'closeclick', function () {
+      marker.setMap(null);
+    });
     google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
   };
 
