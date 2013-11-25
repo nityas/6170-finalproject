@@ -16,15 +16,6 @@ $(document).ready( function () {
     create_search(query);
   });
 
-  function show_location(lat, lng, mitlocation_id, location_name, bldgnum){
-    var infoWindowContent = [ "<h2>Post A New Byte</h2><br/>", "<form id='map-form'>", 
-    "<div>Location Details: <input id='location-details' type='text' /></div>", 
-    "<div>Food Description: <input id='food-description' type='text' /></div>", 
-    "<input type='button' value='Post Byte' onclick='saveData()'/>", "</form>"].join(""); 
-    var pin_path = "assets/pin.png";
-    var tempmarker = {lat: lat, lng: lng, "infowindow":infoWindowContent, icon: pin_path};
-    handler.addMarker(tempmarker); 
-  };
   /*
     Sends user's location query to whereis.mit.edu via ajax request
     Gets back the most likely MIT location based on this query, along with its associated information.
@@ -146,11 +137,6 @@ $(document).ready( function () {
     function saveData(lat, lng, mitlocation_id, location_name,bldgnum){
       var locationDetails = escape(document.getElementById("location-details").value);
       var foodDescription = escape(document.getElementById("food-description").value);
-      console.log(lat)
-      console.log(lng)
-      console.log(location_name)
-      console.log(mitlocation_id)
-      console.log(bldgnum)
       create_location(lat, lng, mitlocation_id, location_name, bldgnum);
       create_offering(mitlocation_id,locationDetails,foodDescription);
       //TODO add offering after location creation. The ajax is working , 
