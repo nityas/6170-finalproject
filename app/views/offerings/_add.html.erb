@@ -21,12 +21,14 @@
       <div id="tabs-2"  class="tab-pane fade active in">
     <% end %>
         <b>
-        <tr>
-          <th>Where</th>
-          <th>What</th>
-          <th>Give an update</th>
-          <br>
-        </tr>
+      <div>
+      <table class="table">
+      <tr>
+        <th>Where</th>
+        <th>What</th>
+        <th>Give an update</th>
+        <br>
+      </tr>
         </b>
         <% @location.offerings.each do |offering| %>
           <tr>
@@ -37,6 +39,7 @@
           <br>
         <% end %>
       </div>
+      </table>
   </center>
 </div>
 
