@@ -12,9 +12,9 @@ class SessionsController < ApplicationController
 	    sign_in user
 	    redirect_to root_url
 	  else
-	    # Create an error message and re-render the signin form.
-	    flash.now[:error] = 'Invalid email/password combination'
+	    # Create an error message and re-render the signin form    
 		render 'new'
+		flash.now[:error] = 'Unsuccessful Login: Invalid email/password combination'
 	  end
 	end
 
