@@ -27,6 +27,7 @@ $(document).ready( function () {
         data: {type: 'query', q: query, output: 'json'},
         dataType: 'jsonp',
         success: function(res){
+          console.log("asdfdsfasfdsafffffffffff");
           handle_search_result(res[0]);
         }
     });
