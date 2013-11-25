@@ -46,6 +46,7 @@ $(document).ready( function () {
       var name = result["name"];
       var mitlocation_id = result["id"];
       var bldgnum = result["bldgnum"]
+      /*
       $.ajax({
       type: "GET",
       url: "/locations/exists",
@@ -63,10 +64,12 @@ $(document).ready( function () {
           console.log(marker);
         } else {
           console.log('temp marker');
-          //show_location(latitude, longitude, mitlocation_id, name, bldgnum);
+          show_location(latitude, longitude, mitlocation_id, name, bldgnum);
         }
       }
     });
+      */
+      console.log('testing');
     }
   }
 
@@ -143,6 +146,6 @@ $(document).ready( function () {
     function saveData(lat, lng, mitlocation_id, location_name,bldgnum){
       var locationDetails = escape(document.getElementById("location-details").value);
       var foodDescription = escape(document.getElementById("food-description").value);
-      //create_location(lat, lng, mitlocation_id, location_name, bldgnum);
-      //create_offering(mitlocation_id,locationDetails,foodDescription);
+      create_location(lat, lng, mitlocation_id, location_name, bldgnum);
+      create_offering(mitlocation_id,locationDetails,foodDescription);
     };
