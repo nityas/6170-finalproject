@@ -1,15 +1,6 @@
 $(document).ready( function () {
-
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-
   /*
-    Handles when user hits "submit" to make a location
-    Currently displayed externally as "make a location" but internally as a location search,
-    so that post-MVP changes can be made more easily.
+    Handles when user hits "submit" to search a location on the map.
   */
   $("#search").click(function(){
     var query = $("#queryField").val();
@@ -17,7 +8,7 @@ $(document).ready( function () {
   });
 
   /*
-    Sends user's location query to whereis.mit.edu via ajax request
+    Sends user's location query to whereis.mit.edu via ajax GET request
     Gets back the most likely MIT location based on this query, along with its associated information.
   */
   function create_search(query){
@@ -36,17 +27,14 @@ $(document).ready( function () {
    Takes in MIT location information (as "result") and uses those as parameters to create a location.
   */
   function handle_search_result(result){
-    console.log(result);
     if (result == undefined){
       handle_null_result();
     }else{
       var latitude = result.lat_wgs84;
       var longitude = result.long_wgs84;
-      var image = result.bldgimg;
-      var name = result["name"];
       var mitlocation_id = result["id"];
-      var bldgnum = result["bldgnum"]
-      
+      /* verify if a location exist via ajax GET request
+      to the location controller*/
       $.ajax({
         type: "GET",
         url: "/locations/exists",
@@ -68,21 +56,22 @@ $(document).ready( function () {
             infowindow.open(handler.getMap(), marker.serviceObject);
           } else {
             console.log('temp marker');
-            show_location(latitude, longitude, mitlocation_id, name, bldgnum);
+            show_location(latitude, longitude, mitlocation_id, result["name"], result["bldgnum"]);
           }
         }
       });
-      console.log('testing');
     }
   }
 
-  function show_marker_window(marker){
-    google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
-  }
-  
+  /*If a location does not exist in the database, create a temporary location
+  on the map that will allow the user to commit it to the database with a new
+  active offer.*/
   function show_location(lat, lng, mitlocation_id, location_name,bldgnum){
+    /*from google map api: https://developers.google.com/maps/articles/phpsqlinfo_v3*/
+    
+    /*the content of the inital byte form*/
     var infoWindowContent = [
-    "<h2><b> Building "+String(bldgnum)+ " - " +String(location_name) + "</b></h2>",
+    "<h2><b> Building "+String(bldgnum) + " - " + String(location_name) + "</b></h2>",
     "<h2>Post A New Byte </h2>",
     "<form id='map-form'>",
     "<div>Location Details: <input id='location-details' type='text' /></div>",
@@ -94,6 +83,9 @@ $(document).ready( function () {
     var infoWindow = new google.maps.InfoWindow({
       content: infoWindowContent
     });
+
+    /* create a temporary pin on the map and assinge the appropriate
+       infoWindow*/
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(lat,lng),
       map: handler.getMap(),
@@ -107,9 +99,10 @@ $(document).ready( function () {
     google.maps.event.addListener(infoWindow, 'closeclick', function () {
       marker.setMap(null);
     });
+
+    /* pop the infoWindow for the user*/
     google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
   };
-
 
   /*
     Sends user's search query to whereis.mit.edu and gets back information for this potential location.
@@ -117,23 +110,29 @@ $(document).ready( function () {
   function handle_null_result(){
     alert("Sorry, no MIT location found for your query");
   }
+
 });
 
-
-/*
-    Creates this location if it didn't already exist.
+  /*
+    Creates a permanent location on the map if such a location doesn't already 
+    exist. If the location was sucessfully created, the initial offering will also
+    be created.
   */
-  function create_location(lat, lng, mitlocation_id, location_name,bldgnum){
+  function create_location(lat, lng, mitlocation_id, location_name,bldgnum, sub_location, description){
     $.ajax({
       url: "/locationsss",
       type: 'POST',
-      data: {location: {latitude: lat, longitude: lng, title: location_name,  customid: mitlocation_id, building_number: bldgnum}},
+      data: {location: {latitude: lat, longitude: lng, title: location_name, customid: mitlocation_id, building_number: bldgnum}},
       success: function(res){
-        console.log("location created: " + res)
+        create_offering(mitlocation_id,sub_location,description);
       }
     })
   }
 
+  /* 
+    creates the initial offering that for a new location 
+    that was just added to the map.
+  */
   function create_offering(mitlocation_id, sub_location, description){
     $.ajax({
       url: "/offerings",
@@ -145,10 +144,12 @@ $(document).ready( function () {
     })
   }
 
-
+  /*
+    initiate the creation of a new location and its initial offering if a user
+    submits the initial offering form.
+  */
   function saveData(lat, lng, mitlocation_id, location_name,bldgnum){
     var locationDetails = escape(document.getElementById("location-details").value);
     var foodDescription = escape(document.getElementById("food-description").value);
-    //create_location(lat, lng, mitlocation_id, location_name, bldgnum);
-    //create_offering(mitlocation_id,locationDetails,foodDescription);
+    create_location(lat, lng, mitlocation_id, location_name, bldgnum,locationDetails,foodDescription);
   };

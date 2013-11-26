@@ -14,13 +14,11 @@
 
 
 .alert, .notice{
-
 	margin-left: 30px;
 }
 .alert{
 	color: red;
 }
-
 .notice{
 	color: green;
 }

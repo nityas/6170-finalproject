@@ -1,26 +1,10 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :signed_in_user, only: [:index, :edit, :update]
-
-  # GET /users
-  # GET /users.json
-  def index
-    @user = current_user if signed_in?
-  end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
-    @user = User.find(params[:id])
-  end
+  before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :signed_in_user, only: [:edit, :update]
 
   # GET /users/new
   def new
     @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
   end
 
   # POST /users

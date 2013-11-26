@@ -11,36 +11,20 @@
   </ul>
 
   <center>
-  <div class="tab-content" id="myTabContent">
-    <% if signed_in? %>
-      <div id="tabs-1" class="tab-pane fade active in">
-        <%= render partial: "offerings/create", locals: {offering: @offering} %>
-      </div>
-      <div id="tabs-2"  class="tab-pane fade">
-    <% else %>
-      <div id="tabs-2"  class="tab-pane fade active in">
-    <% end %>
-        
-      <div>
-      <table class="table">
-      <b>
-      <tr>
-        <th>Where</th>
-        <th>What</th>
-        <th>Give an update</th>
-        <br>
-      </tr>
-      </b>
-        <% @location.offerings.each do |offering| %>
-          <tr>
-            <td><%= offering.sub_location %></td>
-            <td><%= offering.description %></td>
-            <td><%= link_to 'Click if all gone', offering, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-          <br>
-        <% end %>
-      </div>
-      </table>
+    <div class="tab-content" id="myTabContent">
+      <% if signed_in? %>
+        <div id="tabs-1" class="tab-pane fade active in">
+          <%= render partial: "offerings/createNewByteTab", locals: {offering: @offering} %>
+        </div>
+        <div id="tabs-2"  class="tab-pane fade">
+          <%= render partial: "offerings/viewOfferings"%>
+        </div>
+      <% else %>
+        <div id="tabs-2"  class="tab-pane fade active in">
+          <%= render partial: "offerings/viewOfferings"%>
+        </div>
+      <% end %>
+    </div>
   </center>
 </div>
 
