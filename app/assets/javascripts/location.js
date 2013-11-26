@@ -121,7 +121,7 @@ $(document).ready( function () {
   */
   function create_location(lat, lng, mitlocation_id, location_name,bldgnum){
     $.ajax({
-      url: "/locations",
+      url: "/locationsss",
       type: 'POST',
       data: {location: {latitude: lat, longitude: lng, title: location_name,  customid: mitlocation_id, building_number: bldgnum}},
       success: function(res){
