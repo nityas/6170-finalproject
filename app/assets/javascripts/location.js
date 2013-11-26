@@ -12,9 +12,8 @@ $(document).ready( function () {
     so that post-MVP changes can be made more easily.
   */
   $("#search").click(function(){
-    console.log("asdfdsfasfdsafffffffffff");
     var query = $("#queryField").val();
-    //create_search(query);
+    create_search(query);
   });
 
   /*
@@ -28,8 +27,7 @@ $(document).ready( function () {
         data: {type: 'query', q: query, output: 'json'},
         dataType: 'jsonp',
         success: function(res){
-          console.log("asdfdsfasfdsafffffffffff");
-          handle_search_result(res[0]);
+          handle_search_resultf(res[0]);
         }
     });
   }
@@ -39,7 +37,6 @@ $(document).ready( function () {
   */
   function handle_search_result(result){
     console.log(result);
-    console.log('00000000000000000000000000000000');
     if (result == undefined){
       handle_null_result();
     }else{
@@ -49,29 +46,28 @@ $(document).ready( function () {
       var name = result["name"];
       var mitlocation_id = result["id"];
       var bldgnum = result["bldgnum"]
-      /*
+      
       $.ajax({
-      type: "GET",
-      url: "/locations/exists",
-      dataType: "JSON",
-      data: {'mitlocation_id': mitlocation_id},
-      success: function(data) {
-        console.log(data);
-        var centerpoint = new google.maps.LatLng(latitude,longitude);
-        handler.getMap().setCenter(centerpoint)
-        if (data) {
-          //TODO open window automatically
-          var epsilon = 0.000001;
-          var marker = _.find(markers, function(obj) {
-            return (obj.serviceObject.position.lat() - latitude < epsilon && obj.serviceObject.position.lng() - longitude < epsilon)});
-          console.log(marker);
-        } else {
-          console.log('temp marker');
-          show_location(latitude, longitude, mitlocation_id, name, bldgnum);
+        type: "GET",
+        url: "/locations/exists",
+        dataType: "JSON",
+        data: {'mitlocation_id': mitlocation_id},
+        success: function(data) {
+          console.log(data);
+          var centerpoint = new google.maps.LatLng(latitude,longitude);
+          handler.getMap().setCenter(centerpoint)
+          if (data) {
+            //TODO open window automatically
+            var epsilon = 0.000001;
+            var marker = _.find(markers, function(obj) {
+              return (obj.serviceObject.position.lat() - latitude < epsilon && obj.serviceObject.position.lng() - longitude < epsilon)});
+            console.log(marker);
+          } else {
+            console.log('temp marker');
+            show_location(latitude, longitude, mitlocation_id, name, bldgnum);
+          }
         }
-      }
-    });
-      */
+      });
       console.log('testing');
     }
   }
@@ -134,7 +130,7 @@ $(document).ready( function () {
     })
   }
 
-    function create_offering(mitlocation_id, sub_location, description){
+  function create_offering(mitlocation_id, sub_location, description){
     $.ajax({
       url: "/offerings",
       type: 'POST',
@@ -146,9 +142,9 @@ $(document).ready( function () {
   }
 
 
-    function saveData(lat, lng, mitlocation_id, location_name,bldgnum){
-      var locationDetails = escape(document.getElementById("location-details").value);
-      var foodDescription = escape(document.getElementById("food-description").value);
-      create_location(lat, lng, mitlocation_id, location_name, bldgnum);
-      create_offering(mitlocation_id,locationDetails,foodDescription);
-    };
+  function saveData(lat, lng, mitlocation_id, location_name,bldgnum){
+    var locationDetails = escape(document.getElementById("location-details").value);
+    var foodDescription = escape(document.getElementById("food-description").value);
+    //create_location(lat, lng, mitlocation_id, location_name, bldgnum);
+    //create_offering(mitlocation_id,locationDetails,foodDescription);
+  };
