@@ -14,7 +14,7 @@
   <div class="tab-content" id="myTabContent">
     <% if signed_in? %>
       <div id="tabs-1" class="tab-pane fade active in">
-        <%= render partial: "offerings/create", locals: {offering: @offering} %>
+        <%= render partial: "offerings/createNewByteTab", locals: {offering: @offering} %>
       </div>
       <div id="tabs-2"  class="tab-pane fade">
     <% else %>

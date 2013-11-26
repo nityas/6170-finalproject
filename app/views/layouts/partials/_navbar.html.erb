@@ -1,0 +1,33 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <ul class="nav pull-left">
+      <a class="brand" href="<%= locations_path %>">
+        <div class="span2"><%= image_tag("bytemap.png", :alt => "bytemap") %>
+        </div>
+      </a>
+    </ul>
+    <div class="nav-collapse collapse">
+      <ul class="nav">
+      </ul>
+      <ul class="nav pull-right">
+        <% if signed_in? %>
+          <li><%= link_to "Sign Out", signout_path, method: "delete" %></li>
+        <% else %>
+          <li class="dropdown">
+            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In
+            <strong class="caret"></strong></a>
+            <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+              <%= render :partial => 'sessions/newform'%>
+            </div>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign Up<strong class="caret"></strong></a>
+            <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+              <%= render :partial => 'users/newform', :locals => {:@user => User.new}%>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,13 +1,13 @@
 class LocationsController < ApplicationController
   before_action :signed_in_user, only: [:create, :update, :new]
-  before_action :set_location, only: [:show, :edit, :update, :destroy]
+  before_action :set_location, only: [:edit, :update, :destroy]
 
   # GET /locations
   # GET /locations.json
   def index
     @locations = Location.all
     # for each location create a marker.
-    # a marker has latitude,longitude, and infowindow with offerings
+    # a marker has latitude,longitude, infowindow with offerings,
     # and a pin
     @hash = Gmaps4rails.build_markers(@locations) do |location, marker|
       marker.lat location.latitude
@@ -25,7 +25,8 @@ class LocationsController < ApplicationController
   end
 
   #POST /locations/exists
-  #@param of whereismit custom id
+  #@param mitlocation_id from whereismit custom id
+  #check if a location already exist in the database or not
   def exists
     location_exists = !!Location.exists?(customid: params[:mitlocation_id])
     respond_to do |format|
