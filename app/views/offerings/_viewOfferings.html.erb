@@ -5,7 +5,6 @@
       <th>Where</th>
       <th>What</th>
       <th>Give an update</th>
-      <br>
     </tr>
     </b>
     <% @location.offerings.each do |offering| %>
@@ -14,7 +13,6 @@
         <td><%= offering.description %></td>
         <td><%= link_to 'Click if all gone', offering, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-      <br>
     <% end %>
   </table>
 </div>
