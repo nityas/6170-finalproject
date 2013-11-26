@@ -14,7 +14,7 @@ $(document).ready( function () {
   $("#search").click(function(){
     console.log("asdfdsfasfdsafffffffffff");
     var query = $("#queryField").val();
-    create_search(query);
+    //create_search(query);
   });
 
   /*
@@ -39,7 +39,7 @@ $(document).ready( function () {
   */
   function handle_search_result(result){
     console.log(result);
-    console.log('a');
+    console.log('00000000000000000000000000000000');
     if (result == undefined){
       handle_null_result();
     }else{
