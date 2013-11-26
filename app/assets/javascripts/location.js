@@ -61,7 +61,11 @@ $(document).ready( function () {
             var epsilon = 0.000001;
             var marker = _.find(markers, function(obj) {
               return (obj.serviceObject.position.lat() - latitude < epsilon && obj.serviceObject.position.lng() - longitude < epsilon)});
+            var markerServiceObj = marker.serviceObject;
             console.log(marker);
+            console.log(marker.infowindow);
+            var infowindow = marker.infowindow;
+            infowindow.open(handler.getMap(), marker.serviceObject);
           } else {
             console.log('temp marker');
             show_location(latitude, longitude, mitlocation_id, name, bldgnum);
