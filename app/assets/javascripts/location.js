@@ -45,17 +45,12 @@ $(document).ready( function () {
           var centerpoint = new google.maps.LatLng(latitude,longitude);
           handler.getMap().setCenter(centerpoint)
           if (data) {
-            //TODO open window automatically
+            //open existing location infowindow automatically by finding the marker by the lat/lng
             var epsilon = 0.000001;
             var marker = _.find(markers, function(obj) {
               return (obj.serviceObject.position.lat() - latitude < epsilon && obj.serviceObject.position.lng() - longitude < epsilon)});
-            var markerServiceObj = marker.serviceObject;
-            console.log(marker);
-            console.log(marker.infowindow);
-            var infowindow = marker.infowindow;
-            infowindow.open(handler.getMap(), marker.serviceObject);
+            google.maps.event.trigger(marker.serviceObject, 'click', {latLng: new google.maps.LatLng(0, 0)});
           } else {
-            console.log('temp marker');
             show_location(latitude, longitude, mitlocation_id, result["name"], result["bldgnum"]);
           }
         }
@@ -80,28 +75,18 @@ $(document).ready( function () {
      '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" />',
     "</form>"].join("");   
 
-    var infoWindow = new google.maps.InfoWindow({
-      content: infoWindowContent
-    });
+    var tempmarker= {"lat":lat,
+      "lng":lng,
+      "picture":{
+       "url":"/pin.png",
+       "width":"50",
+       "height":"68"
+      },
+      "infowindow":infoWindowContent
+    };
 
-    /* create a temporary pin on the map and assinge the appropriate
-       infoWindow*/
-    var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(lat,lng),
-      map: handler.getMap(),
-      icon: "assets/pin.png"
-    });
-
-    google.maps.event.addListener(marker, 'click', function () {
-      infoWindow.open(map, this);
-    });
-    
-    google.maps.event.addListener(infoWindow, 'closeclick', function () {
-      marker.setMap(null);
-    });
-
-    /* pop the infoWindow for the user*/
-    google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
+    marker = handler.addMarker(tempmarker);
+    google.maps.event.trigger(marker.serviceObject, 'click', {latLng: new google.maps.LatLng(0, 0)});
   };
 
   /*
