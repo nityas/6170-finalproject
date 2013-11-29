@@ -28,11 +28,15 @@ gem 'jbuilder', '~> 1.2'
 gem 'gmaps4rails'
 gem 'geocoder'
 
+# Use ActiveModel has_secure_password
+gem 'bcrypt-ruby', '~> 3.0.1'
+
 # gem for bootstrap
 gem 'bootstrap-sass', '2.3.2'
 
 # gem for server side javascript/url calls
 gem "rest-client", "~> 1.6.7"
+
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -52,9 +56,6 @@ end
 gem 'mail'
 
 gem 'whenever', :require => false
-
-# Use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.0.1'
 
 # Use unicorn as the app server
 # gem 'unicorn'

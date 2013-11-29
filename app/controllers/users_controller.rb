@@ -1,18 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :signed_in_user, only: [:index, :edit, :update]
-
-  # GET /users
-  # GET /users.json
-  def index
-    @user = current_user if signed_in?
-  end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
-    @user = User.find(params[:id])
-  end
+  require 'rest_client'
+  require 'json'
+  before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :signed_in_user, only: [:edit, :update]
 
   # GET /users/new
   def new
@@ -35,17 +25,27 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
+    
+    #query mit people search to confirm valid mit email
+    @kerberos = @user.email.split('@')[0]
+    @info = RestClient.get 'http://web.mit.edu/bin/cgicso?', {:params => {:options => "general", :query => @kerberos, :output =>'json'}}
+    responseEmail = @kerberos + "@MIT.EDU"
+    
     respond_to do |format|
-      if @user.save
-        sign_in @user
-        format.html { redirect_to root_url, notice: 'User was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @user }
+      if @info.include?(responseEmail)
+        if @user.save
+          sign_in @user
+          format.html { redirect_to root_url, notice: 'User was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @user }
+        else
+          format.html { render action: 'new', notice: 'Not a valid MIT email.'}
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       else
         format.html { render action: 'new' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
-    end
+    end    
   end
 
   # PATCH/PUT /users/1

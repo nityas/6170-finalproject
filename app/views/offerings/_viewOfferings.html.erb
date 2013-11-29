@@ -1,0 +1,18 @@
+ <div>
+  <table class="table">
+    <b>
+    <tr>
+      <th>Where</th>
+      <th>What</th>
+      <th>Give an update</th>
+    </tr>
+    </b>
+    <% @location.offerings.each do |offering| %>
+      <tr>
+        <td><%= offering.sub_location %></td>
+        <td><%= offering.description %></td>
+        <td><%= link_to 'Click if all gone', offering, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
