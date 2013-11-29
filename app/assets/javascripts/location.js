@@ -16,15 +16,6 @@ $(document).ready( function () {
     create_search(query);
   });
 
-  function show_location(lat, lng, mitlocation_id, location_name, bldgnum){
-    var infoWindowContent = [ "<h2>Post A New Byte</h2><br/>", "<form id='map-form'>", 
-    "<div>Location Details: <input id='location-details' type='text' /></div>", 
-    "<div>Food Description: <input id='food-description' type='text' /></div>", 
-    "<input type='button' value='Post Byte' onclick='saveData()'/>", "</form>"].join(""); 
-    var pin_path = "assets/pin.png";
-    var tempmarker = {lat: lat, lng: lng, "infowindow":infoWindowContent, icon: pin_path};
-    handler.addMarker(tempmarker); 
-  };
   /*
     Sends user's location query to whereis.mit.edu via ajax request
     Gets back the most likely MIT location based on this query, along with its associated information.
@@ -56,25 +47,35 @@ $(document).ready( function () {
       var mitlocation_id = result["id"];
       var bldgnum = result["bldgnum"]
       $.ajax({
-      type: "GET",
-      url: "/locations/exists",
-      dataType: "JSON",
-      data: {'mitlocation_id': mitlocation_id},
-      success: function(data) {
-        console.log(data);
-        var centerpoint = new google.maps.LatLng(latitude,longitude);
-        handler.getMap().setCenter(centerpoint)
-        if (data) {
-          //TODO open window automatically
-          var epsilon = 0.000001;
-          var marker = _.find(markers, function(obj) {
-            return (obj.serviceObject.position.lat() - latitude < epsilon && obj.serviceObject.position.lng() - longitude < epsilon)});
-          console.log(marker);
-        } else {
-          show_location(latitude, longitude, mitlocation_id, name, bldgnum);
+        type: "GET",
+        url: "/users/exists",
+        dataType: "JSON",
+        data: {},
+        success: function(data) {
+          console.log(data);
+          signed_in = data
         }
-      }
-    });
+      });
+      $.ajax({
+        type: "GET",
+        url: "/locations/exists",
+        dataType: "JSON",
+        data: {'mitlocation_id': mitlocation_id},
+        success: function(data) {
+          console.log(data);
+          var centerpoint = new google.maps.LatLng(latitude,longitude);
+          handler.getMap().setCenter(centerpoint)
+          if (data) {
+            //TODO open window automatically
+            var epsilon = 0.000001;
+            var marker = _.find(markers, function(obj) {
+              return (obj.serviceObject.position.lat() - latitude < epsilon && obj.serviceObject.position.lng() - longitude < epsilon)});
+            console.log(marker);
+          } else {
+            show_location(latitude, longitude, mitlocation_id, name, bldgnum, signed_in);
+          }
+        }
+      });
     }
   }
 
@@ -82,17 +83,23 @@ $(document).ready( function () {
     google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
   }
   
-  function show_location(lat, lng, mitlocation_id, location_name,bldgnum){
-    var infoWindowContent = [
-    "<h2><b> Building "+String(bldgnum)+ " - " +String(location_name) + "</b></h2>",
-    "<h2>Post A New Byte </h2>",
-    "<form id='map-form'>",
-    "<div>Location Details: <input id='location-details' type='text' /></div>",
-    "<div>Food Description: <input id='food-description' type='text' /></div>",
-    '<input type="button" value="Post Byte" onClick="saveData(\'' + lat + '\',\'' + lng +
-     '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" />',
-    "</form>"].join("");   
-
+  function show_location(lat, lng, mitlocation_id, location_name,bldgnum, signed_in){
+    if(signed_in){
+      var infoWindowContent = [
+      "<h2><b> Building "+String(bldgnum)+ " - " +String(location_name) + "</b></h2>",
+      "<h2>Post A New Byte </h2>",
+      "<form id='map-form'>",
+      "<div>Location Details: <input id='location-details' type='text' /></div>",
+      "<div>Food Description: <input id='food-description' type='text' /></div>",
+      '<input type="button" value="Post Byte" onClick="saveData(\'' + lat + '\',\'' + lng +
+       '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" />',
+      "</form>"].join("");   
+    }
+    else{
+      var infoWindowContent = [
+      "<h2><b> Building "+String(bldgnum)+ " - " +String(location_name) + "</b></h2>",
+      "<h2>Login To Post A Byte</h2>"].join("");   
+    }
 
 
     var infoWindow = new google.maps.InfoWindow({

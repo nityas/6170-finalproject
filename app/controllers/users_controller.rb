@@ -19,6 +19,14 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def exists
+    signedin = signed_in?
+    respond_to do |format|
+      format.html
+      format.json {render json: signedin }
+    end
+  end
+
   # GET /users/1/edit
   def edit
   end

@@ -2,9 +2,9 @@
 <br>
 <%= text_field_tag "query", nil, :placeholder => "i.e. Stata or 32", :id => "queryField" %>
 <% if signed_in? %>
-  <%= submit_tag "find a location", :id => "search" %>
-<% else %>
   <%= submit_tag "make a location", :id => "search" %>
+<% else %>
+  <%= submit_tag "find a location", :id => "search" %>
 <% end %>
 <%= render partial: 'layouts/partials/flash'%>
 <%= render partial: 'map.html.erb'%>
