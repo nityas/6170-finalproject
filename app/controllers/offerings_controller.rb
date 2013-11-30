@@ -20,6 +20,7 @@ class OfferingsController < ApplicationController
 
     respond_to do |format|
       if @offering.save
+        OffersMailer.offer_mail("ido.p.efrati@gmail.com").deliver
         format.html { redirect_to root_url, notice: 'Byte was successfully created.' }
         format.json { render action: 'show', status: :created, location: @offering }
       else
