@@ -11,12 +11,22 @@
 	line-height: 40px;
 	text-align: left;
 	border-bottom: solid  #C0C0C0   1px;
+	font-size: 12pt;
 }
 
 .view_offerings_table th{
 	font-weight: bold;
 }
 
-tr:nth-child(2n){
-	
+.submit_byte{
+	right: 0px;
+}
+
+#tabOptions li{
+	font-size: 16pt;
+}
+
+#header{
+	font-weight: bold;
+	font-size: 18pt;
 }
