@@ -57,11 +57,9 @@ class OfferingsController < ApplicationController
 
     # destroy offering if enough votes cast
     if @offering.sufficient_votes?
-      isLocationEmpty = @offering.clear_empty_location(location_id)
       @offering.destroy
-
       # destroy location if no more offerings in this location
-      if isLocationEmpty
+      if @location.isEmpty?
         message = 'Byte was successfully removed. No more Bytes at %{name}.' % {:name => @location.title}
         @location.destroy
 

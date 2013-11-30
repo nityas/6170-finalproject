@@ -5,14 +5,10 @@ class ApplicationController < ActionController::Base
   before_action :check_voting_cookie
   include SessionsHelper	
 
-    # if client does not have cookie, creates order and sets cookie to be the order id
+  # if client does not have a voting cookie, initializes the voting cookie
   def check_voting_cookie
     unless session[:votes]
       session[:votes] = []
-    end
-    puts "VOTING INFO"
-    session[:votes].each do |vote|
-    	puts vote
     end
   end  
 end

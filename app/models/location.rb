@@ -13,4 +13,9 @@ class Location < ActiveRecord::Base
 		end
 		return locationid
 	end
+
+	# returns true if this location has no more offerings
+	def isEmpty?
+		return self.offerings.count == 0
+	end
 end
