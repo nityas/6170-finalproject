@@ -26,4 +26,13 @@ class Offering < ActiveRecord::Base
 		seconds_elapsed = Time.now - self.created_at
 		return seconds_elapsed > 900
 	end
+
+	def vote_to_destroy(session)
+		self.increment!(:numDeleteVotes)
+		session[:votes].push(self.id)
+	end
+
+	def sufficient_votes?
+		return self.numDeleteVotes >= 3
+	end
 end

@@ -14,13 +14,14 @@ class LocationsController < ApplicationController
       marker.lng location.longitude
       offering = Offering.new
       custom_location_id = location.customid
-      marker.infowindow render_to_string(:partial => "offerings/add", :locals => {:@offering => offering, :@location => location} )
+      marker.infowindow render_to_string(:partial => "offerings/add", :locals => {:@offering => offering, :@location => location, :@vote_history => session[:votes]} )
       marker.picture({
        "url" => "assets/pin.png",
        "width" =>  50,
        "height" => 68})
     end
   end
+
 
   #POST /locations/exists
   #@param mitlocation_id from whereismit custom id

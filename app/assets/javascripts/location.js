@@ -67,6 +67,12 @@ $(document).ready( function () {
     }
   }
 
+
+ // Gets html for all locations and updates the view.
+  function ajax_show_locations(){
+
+  }
+
   /*If a location does not exist in the database, create a temporary location
   on the map that will allow the user to commit it to the database with a new
   active offer.*/
