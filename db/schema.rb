@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131123192757) do
+
+ActiveRecord::Schema.define(version: 20131130043114) do
 
   create_table "locations", force: true do |t|
     t.float    "latitude"
@@ -31,6 +32,7 @@ ActiveRecord::Schema.define(version: 20131123192757) do
     t.datetime "last_seen"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "numDeleteVotes"
   end
 
   create_table "users", force: true do |t|

@@ -1,0 +1,5 @@
+
+<%if @vote_history.index(@offering.id) >= 0 %>
+	hide_voting_interface( "<%=  @offering.id %>");
+<% end %>
+

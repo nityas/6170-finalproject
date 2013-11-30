@@ -16,6 +16,7 @@ class OfferingsController < ApplicationController
     @offering = Offering.new
     @offering.sub_location = params[:offering][:sub_location]
     @offering.description = params[:offering][:description]
+    @offering.numDeleteVotes = 0
     @offering.location_id = Location.where(:customid => params[:offering][:location]).first.id
 
     respond_to do |format|
@@ -49,16 +50,37 @@ class OfferingsController < ApplicationController
   # DELETE /offerings/1.json
   def destroy
     location_id = @offering.location_id
-    isLocationEmpty = @offering.clear_empty_location(location_id)
-    @offering.destroy
-    if isLocationEmpty
-      Location.find(location_id).destroy
-    end
-    respond_to do |format|
-      format.html { redirect_to root_url, notice: 'Byte was successfully removed.' }
-      format.json { head :no_content }
+    @location = Location.find(location_id)
+    @vote_history = session[:votes]
+
+    #cast a vote to destroy offering
+    @offering.vote_to_destroy(session)
+
+    # destroy offering if enough votes cast
+    if @offering.sufficient_votes?
+      @offering.destroy
+      # destroy location if no more offerings in this location
+      if @location.isEmpty?
+        message = 'Byte was successfully removed. No more Bytes at %{name}.' % {:name => @location.title}
+        @location.destroy
+
+        #TODO: figure out how to make this reload even though we did :remote => true client-side
+        redirect_to root_path, notice: message
+      else
+        respond_to do |format|
+          format.js {}
+          format.json {render :json => @vote_history}
+        end
+      end
+
+    else
+      respond_to do |format|
+        format.js {}
+        format.json {render :json => @vote_history}
+      end
     end
   end
+
 
   private
 

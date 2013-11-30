@@ -14,6 +14,12 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
     end
   end 
 
+  resources :users do
+    collection do
+      get 'exists'
+    end
+  end 
+
   resources :users 
 
   resources :incomingemails
