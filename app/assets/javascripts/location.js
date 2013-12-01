@@ -85,7 +85,7 @@ $(document).ready( function () {
       "infowindow":infoWindowContent
     };
 
-    marker = handler.addMarker(tempmarker);
+    var marker = handler.addMarker(tempmarker);
     google.maps.event.trigger(marker.serviceObject, 'click', {latLng: new google.maps.LatLng(0, 0)});
   };
 
