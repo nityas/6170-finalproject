@@ -2,6 +2,8 @@ class IncomingemailsController < ApplicationController
   require 'mail'
   require 'rest_client'
   require 'json'
+  require 'treat'
+  Treat.install
   skip_before_filter :verify_authenticity_token
 
   # GET /locations/new

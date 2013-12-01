@@ -1,4 +1,6 @@
-$(document).ready( function () {
+//$(document).ready( function () {
+<script type="text/javascript">
+  tempmarker = null; 
   /*
     Handles when user hits "submit" to search a location on the map.
   */
@@ -34,37 +36,26 @@ $(document).ready( function () {
       var mitlocation_id = result["id"];
       /* verify if a location exist via ajax GET request
       to the location controller*/
-      $.ajax({
-        type: "GET",
-        url: "/users/exists",
-        dataType: "JSON",
-        data: {},
-        success: function(data) {
-          console.log(data);
-          signed_in = data
-        }
+      
+      var epsilon = 0.000001;
+      var marker = null;
+      //search in existing markers
+      marker = _.find(markers, function(obj) {
+        return (Math.abs(obj.serviceObject.position.lat() - latitude) < epsilon && Math.abs(obj.serviceObject.position.lng() - longitude) < epsilon)
       });
-      $.ajax({
-        type: "GET",
-        url: "/locations/exists",
-        dataType: "JSON",
-        data: {'mitlocation_id': mitlocation_id},
-        success: function(data) {
-          console.log(data);
-          var centerpoint = new google.maps.LatLng(latitude,longitude);
-          handler.getMap().setCenter(centerpoint)
-          if (data) {
-            //open existing location infowindow automatically by finding the marker by the lat/lng
-            var epsilon = 0.000001;
-            var marker = _.find(markers, function(obj) {
-              return (obj.serviceObject.position.lat() - latitude < epsilon && obj.serviceObject.position.lng() - longitude < epsilon)
-            });
-            google.maps.event.trigger(marker.serviceObject, 'click', {latLng: new google.maps.LatLng(0, 0)});
-          } else {
-            show_location(latitude, longitude, mitlocation_id, result["name"], result["bldgnum"], signed_in);
-          }
-        }
-      });
+      var centerpoint = new google.maps.LatLng(latitude,longitude);
+      handler.getMap().setCenter(centerpoint)
+
+      //remove any previous temp marker
+      if (tempmarker!=null){
+        handler.removeMarker(tempmarker); 
+      }
+
+      if (marker!=null){
+        google.maps.event.trigger(marker.serviceObject, 'click', {latLng: new google.maps.LatLng(0, 0)});
+      }else{
+        show_location(latitude, longitude, mitlocation_id, result["name"], result["bldgnum"], <%= @is_signed_in %>);
+      }
     }
   }
 
@@ -103,7 +94,7 @@ $(document).ready( function () {
       "<h2>Login To Post A Byte</h2>"].join("");   
     }
 
-    var tempmarker= {"lat":lat,
+    var tempmarkerInfo= {"lat":lat,
       "lng":lng,
       "picture":{
        "url":"/pin.png",
@@ -113,21 +104,10 @@ $(document).ready( function () {
       "infowindow":infoWindowContent
     };
 
-    marker = handler.addMarker(tempmarker);
-    google.maps.event.trigger(marker.serviceObject, 'click', {latLng: new google.maps.LatLng(0, 0)});
+    //creates new temp marker
+    tempmarker = handler.addMarker(tempmarkerInfo);
+    google.maps.event.trigger(tempmarker.serviceObject, 'click', {latLng: new google.maps.LatLng(0, 0)});
   };
-  /*
-   Takes in MIT location information (as "result") and uses those as parameters to create a location.
-  */
-
-
-  
-  function show_marker_window(marker){
-    google.maps.event.trigger(marker, 'click', {latLng: new google.maps.LatLng(0, 0)});
-  }
-
-
-  
 
   /*
     Sends user's search query to whereis.mit.edu and gets back information for this potential location.
@@ -136,7 +116,7 @@ $(document).ready( function () {
     alert("Sorry, no MIT location found for your query");
   }
 
-});
+//});
 
   /*
     Creates a permanent location on the map if such a location doesn't already 
@@ -178,3 +158,5 @@ $(document).ready( function () {
     var foodDescription = document.getElementById("food-description").value;
     create_location(lat, lng, mitlocation_id, location_name, bldgnum,locationDetails,foodDescription);
   };
+
+</script>
