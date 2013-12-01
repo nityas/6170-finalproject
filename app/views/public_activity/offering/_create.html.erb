@@ -1,0 +1,18 @@
+<% if activity.owner == current_user %>
+	<b>I</b>
+<% else %>
+	<b><%= activity.owner.name if activity.owner %></b>
+<% end %>
+
+posted
+
+<% if activity.trackable %>
+	<b><%= activity.trackable.description %></b> at 
+	<% location = Location.find(activity.trackable.location_id) %>
+	<b>Building <%=  location.building_number %> - <%=  location.title %></b>
+	<div class="timestamp">
+		<%= distance_of_time_in_words(activity.trackable.created_at, to_time=Time.now, include_seconds=true) %> ago
+	</div>
+<% else %>
+	a byte that no longer exists
+<% end %>

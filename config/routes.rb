@@ -1,5 +1,6 @@
 IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
 
+  
   resources :offerings
 
   
@@ -19,7 +20,8 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
       get 'exists'
     end
   end 
-
+  
+  resources :activities
   resources :users 
 
   resources :incomingemails

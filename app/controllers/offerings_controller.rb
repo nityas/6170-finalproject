@@ -14,12 +14,14 @@ class OfferingsController < ApplicationController
   # @params description - description of food offered
   def create
     @offering = Offering.new
+    @offering.owner_id = @current_user.id
     @offering.sub_location = params[:offering][:sub_location]
     @offering.description = params[:offering][:description]
     @offering.location_id = Location.where(:customid => params[:offering][:location]).first.id
 
     respond_to do |format|
       if @offering.save
+        @offering.create_activity :create, owner: current_user
         format.html { redirect_to root_url, notice: 'Byte was successfully created.' }
         format.json { render action: 'show', status: :created, location: @offering }
       else
@@ -54,6 +56,7 @@ class OfferingsController < ApplicationController
       Location.find(location_id).destroy
     end
     respond_to do |format|
+      @offering.create_activity :destroy
       format.html { redirect_to root_url, notice: 'Byte was successfully removed.' }
       format.json { head :no_content }
     end
