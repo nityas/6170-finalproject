@@ -1,11 +1,11 @@
 
-<h2><b>Building <%= @location.building_number %> - <%= @location.title %></b></h2>
+<h2 id="header">Building <%= @location.building_number %> - <%= @location.title %></h2>
 <div id="tabs">
-  <ul class="nav nav-tabs" id="myTab">
+  <ul class="nav nav-tabs" id="tabOptions">
     <% if signed_in? %>
       <li class="active"><a data-toggle="tab" href="#tabs-1">View Bytes</a></li>
       <li class=""><a data-toggle="tab" href="#tabs-2">Post a Byte</a></li>
-      
+      <%= render partial: "subscriptions/form", locals: {location: @location}%>
     <% else %>
       <li class="active"><a data-toggle="tab" href="#tabs-1">View Bytes</a></li>
     <% end %>    

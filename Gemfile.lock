@@ -29,7 +29,6 @@ GEM
     atomic (1.1.14)
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
-    birch (0.0.8)
     bootstrap-sass (2.3.2.0)
       sass (~> 3.2)
     builder (3.1.4)
@@ -63,7 +62,11 @@ GEM
     pg (0.16.0)
     pg (0.16.0-x86-mingw32)
     polyglot (0.3.3)
-    progressbar (0.21.0)
+    public_activity (1.4.0)
+      actionpack (>= 3.0.0)
+      activerecord (>= 3.0)
+      i18n (>= 0.5.0)
+      railties (>= 3.0.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -90,18 +93,16 @@ GEM
       json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rubyzip (1.1.0)
     sass (3.2.12)
     sass-rails (4.0.1)
       railties (>= 4.0.0, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
-    schiphol (0.9.4)
-      progressbar (>= 0.10.0)
-      rubyzip (>= 0.9.6.1)
     sdoc (0.3.20)
       json (>= 1.1.3)
       rdoc (~> 3.10)
+    sms-easy (1.2.4)
+      actionmailer (>= 4.0.0)
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -117,10 +118,6 @@ GEM
     thread_safe (0.1.3)
       atomic
     tilt (1.4.1)
-    treat (2.0.7)
-      birch
-      schiphol
-      yomu
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -131,8 +128,6 @@ GEM
     whenever (0.8.4)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
-    yomu (0.1.9)
-      mime-types (~> 1.23)
 
 PLATFORMS
   ruby
@@ -148,12 +143,13 @@ DEPENDENCIES
   jquery-rails
   mail
   pg
+  public_activity
   rails (= 4.0.0)
   rails_12factor
   rest-client (~> 1.6.7)
   sass-rails (~> 4.0.0)
   sdoc
+  sms-easy
   sqlite3
-  treat
   uglifier (>= 1.3.0)
   whenever

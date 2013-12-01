@@ -1,8 +1,9 @@
 <br>
 <%= text_field_tag "query", nil, :placeholder => "i.e. Stata or 32", :id => "queryField" %>
-<%= submit_tag "find a location", :id => "search" %>
+<%= submit_tag "Search", :id => "search" %>
 <%= render partial: 'layouts/partials/flash'%>
 <%= render partial: 'map.html.erb'%>
 <%= render "gmap.js" %>
+<%= render "search.js" %>
 
 

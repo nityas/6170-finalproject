@@ -19,7 +19,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 
 #NLP gem
-gem 'treat'
+#gem 'treat'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 #gem 'turbolinks'
@@ -40,6 +40,8 @@ gem 'bootstrap-sass', '2.3.2'
 # gem for server side javascript/url calls
 gem "rest-client", "~> 1.6.7"
 
+#gem for newfeed- db monitoring
+gem 'public_activity'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -59,6 +61,10 @@ end
 gem 'mail'
 
 gem 'whenever', :require => false
+
+#gem for texting
+gem 'sms-easy'
+
 
 # Use unicorn as the app server
 # gem 'unicorn'

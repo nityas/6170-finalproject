@@ -9,25 +9,32 @@ class LocationsController < ApplicationController
     # for each location create a marker.
     # a marker has latitude,longitude, infowindow with offerings,
     # and a pin
+    @is_signed_in = signed_in?
     @hash = Gmaps4rails.build_markers(@locations) do |location, marker|
       marker.lat location.latitude
       marker.lng location.longitude
       offering = Offering.new
+      @subscription = Subscription.new
       custom_location_id = location.customid
-      marker.infowindow render_to_string(:partial => "offerings/add", :locals => {:@offering => offering, :@location => location} )
+      marker.infowindow render_to_string(:partial => "offerings/add", :locals => {:@offering => offering, :@location => location, :@vote_history => session[:votes]} )
       marker.picture({
        "url" => "assets/pin.png",
        "width" =>  50,
        "height" => 68})
     end
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
+
 
   #POST /locations/exists
   #@param mitlocation_id from whereismit custom id
   #check if a location already exist in the database or not
   def exists
     location_exists = !!Location.exists?(customid: params[:mitlocation_id])
-    puts(location_exists)
     respond_to do |format|
       format.html
       format.json {render json: location_exists }

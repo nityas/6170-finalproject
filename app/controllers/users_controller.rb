@@ -9,6 +9,18 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def exists
+    signedin = signed_in?
+    respond_to do |format|
+      format.html
+      format.json {render json: signedin }
+    end
+  end
+
+  # GET /users/1/edit
+  def edit
+  end
+
   # POST /users
   # POST /users.json
   def create
@@ -18,7 +30,7 @@ class UsersController < ApplicationController
     @kerberos = @user.email.split('@')[0]
     @info = RestClient.get 'http://web.mit.edu/bin/cgicso?', {:params => {:options => "general", :query => @kerberos, :output =>'json'}}
     responseEmail = @kerberos + "@MIT.EDU"
-    
+    @user.provider = @user.provider_to_email(user_params[:provider])
     respond_to do |format|
       if @info.include?(responseEmail)
         if @user.save
@@ -70,7 +82,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password,:password_confirmation)
+      params.require(:user).permit(:name, :email,:phoneNumber, :provider, :password,:password_confirmation)
     end
 
     def signed_in_user

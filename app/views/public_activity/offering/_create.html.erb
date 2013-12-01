@@ -1,0 +1,22 @@
+<% if activity.owner%>
+	<% if activity.owner == current_user %>
+		<b>I</b>
+	<% else %>
+		<b><%= activity.owner.name %></b>
+	<% end %>
+<% else %>
+	Someone
+<% end %>
+
+posted
+
+<% if activity.trackable %>
+	<b><%= activity.trackable.description %></b> at 
+	<% location = Location.find(activity.trackable.location_id) %>
+	<b>Building <%=  location.building_number %> - <%=  location.title %></b>
+	<div class="timestamp">
+		<%= event_time_format activity.trackable.created_at%>
+	</div>
+<% else %>
+	a byte that no longer exists
+<% end %>

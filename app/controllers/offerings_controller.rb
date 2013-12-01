@@ -14,14 +14,18 @@ class OfferingsController < ApplicationController
   # @params description - description of food offered
   def create
     @offering = Offering.new
+    @offering.owner_id = @current_user.id
     @offering.sub_location = params[:offering][:sub_location]
     @offering.description = params[:offering][:description]
+    @offering.numDeleteVotes = 0
     @offering.location_id = Location.where(:customid => params[:offering][:location]).first.id
 
     respond_to do |format|
       if @offering.save
+        @offering.create_activity :create, owner: current_user
         format.html { redirect_to root_url, notice: 'Byte was successfully created.' }
         format.json { render action: 'show', status: :created, location: @offering }
+        OffersMailer.offer_mail(@offering).deliver
       else
         format.html { render action: 'new' }
         format.json { render json: @offering.errors, status: :unprocessable_entity }
@@ -48,16 +52,38 @@ class OfferingsController < ApplicationController
   # DELETE /offerings/1.json
   def destroy
     location_id = @offering.location_id
-    isLocationEmpty = @offering.clear_empty_location(location_id)
-    @offering.destroy
-    if isLocationEmpty
-      Location.find(location_id).destroy
-    end
-    respond_to do |format|
-      format.html { redirect_to root_url, notice: 'Byte was successfully removed.' }
-      format.json { head :no_content }
+    @location = Location.find(location_id)
+    @vote_history = session[:votes]
+
+    #cast a vote to destroy offering
+    @offering.vote_to_destroy(session)
+
+    # destroy offering if enough votes cast
+    if @offering.sufficient_votes?
+      @offering.create_activity :destroy, owner: current_user
+      @offering.destroy  
+      # destroy location if no more offerings in this location
+      if @location.isEmpty?
+        message = 'Byte was successfully removed. No more Bytes at %{name}.' % {:name => @location.title}
+        @location.destroy
+
+        #TODO: figure out how to make this reload even though we did :remote => true client-side
+        redirect_to root_path, notice: message
+      else
+        respond_to do |format|
+          format.js {}
+          format.json {render :json => @vote_history}
+        end
+      end
+    else
+      @offering.create_activity :downvote
+      respond_to do |format|  
+        format.js {}
+        format.json {render :json => @vote_history}
+      end
     end
   end
+
 
   private
 
