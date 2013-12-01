@@ -18,6 +18,10 @@
     <%= f.hidden_field :user_id, :value => current_user.id %>
   </div>
   <div class="actions">
-    <%= f.submit "subscribe", :class => "submit_byte" %>
+    <%if @subscription.subscribed(@location,current_user.id)%>
+      <%= f.submit "subscribe", :class => "submit_byte" %>
+    <%else%>
+    <button><%=link_to 'unsubscribe', Subscription.where(building_id:@location.id , user_id: current_user.id).first, method: :delete, data: { confirm: 'Are you sure?' }  %></button>
+    <%end%>  
   </div>
 <% end %>

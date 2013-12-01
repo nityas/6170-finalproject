@@ -174,7 +174,7 @@ $(document).ready( function () {
     submits the initial offering form.
   */
   function saveData(lat, lng, mitlocation_id, location_name,bldgnum){
-    var locationDetails = escape(document.getElementById("location-details").value);
-    var foodDescription = escape(document.getElementById("food-description").value);
+    var locationDetails = document.getElementById("location-details").value;
+    var foodDescription = document.getElementById("food-description").value;
     create_location(lat, lng, mitlocation_id, location_name, bldgnum,locationDetails,foodDescription);
   };
