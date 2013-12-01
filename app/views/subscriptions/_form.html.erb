@@ -1,0 +1,27 @@
+<%= form_for(@subscription) do |f| %>
+  <% if @subscription.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@subscription.errors.count, "error") %> prohibited this subscription from being saved:</h2>
+
+      <ul>
+      <% @subscription.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.hidden_field :building_id, :value => @location.id %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+  </div>
+  <div class="actions">
+    <%if @subscription.subscribed(@location,current_user.id)%>
+      <%= f.submit "subscribe", :class => "submit_byte" %>
+    <%else%>
+    <button><%=link_to 'unsubscribe', Subscription.where(building_id:@location.id , user_id: current_user.id).first, method: :delete, data: { confirm: 'Are you sure?' }  %></button>
+    <%end%>  
+  </div>
+<% end %>

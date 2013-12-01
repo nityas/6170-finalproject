@@ -1,8 +1,7 @@
 IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
 
-  
+  resources :subscriptions
   resources :offerings
-
   
   resources :sessions, only: [:new, :create, :destroy]
   match '/signup',  to: 'users#new',            via: 'get'

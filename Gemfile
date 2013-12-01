@@ -59,6 +59,10 @@ gem 'mail'
 
 gem 'whenever', :require => false
 
+#gem for texting
+gem 'sms-easy'
+
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

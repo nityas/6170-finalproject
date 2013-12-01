@@ -7,9 +7,6 @@ class Offering < ActiveRecord::Base
 	validates :sub_location, presence: true
 	validates :description, presence: true
 
-	def clear_empty_location(location_id)
-		return  Location.find(location_id).offerings.size == 1
-	end
 
 	# deletes stale offerings from the database. 
 	# This method is called by a cron job every minute
@@ -28,5 +25,14 @@ class Offering < ActiveRecord::Base
 	def is_stale?
 		seconds_elapsed = Time.now - self.created_at
 		return seconds_elapsed > 900
+	end
+
+	def vote_to_destroy(session)
+		self.increment!(:numDeleteVotes)
+		session[:votes].push(self.id)
+	end
+
+	def sufficient_votes?
+		return self.numDeleteVotes >= 3
 	end
 end

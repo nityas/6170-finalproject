@@ -1,1 +1,21 @@
-A byte was removed from the map
+<% if activity.owner %>
+	<% if activity.owner == current_user %>
+		<b>I</b>
+	<% else %>
+		<b><%= activity.owner.name %></b>
+	<% end %>
+<% else %>
+	Someone
+<% end %>
+
+removed a byte from
+
+<% if activity.parameters[:location] %>
+	<b>Building <%=  activity.parameters[:location].building_number %> - <%=  activity.parameters[:location].title %></b>
+<% else %>
+	the map
+<% end %>
+
+<div class="timestamp">
+	<%= event_time_format activity.created_at%>
+</div>

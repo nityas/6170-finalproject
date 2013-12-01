@@ -57,7 +57,8 @@ $(document).ready( function () {
             //open existing location infowindow automatically by finding the marker by the lat/lng
             var epsilon = 0.000001;
             var marker = _.find(markers, function(obj) {
-              return (obj.serviceObject.position.lat() - latitude < epsilon && obj.serviceObject.position.lng() - longitude < epsilon)});
+              return (obj.serviceObject.position.lat() - latitude < epsilon && obj.serviceObject.position.lng() - longitude < epsilon)
+            });
             google.maps.event.trigger(marker.serviceObject, 'click', {latLng: new google.maps.LatLng(0, 0)});
           } else {
             show_location(latitude, longitude, mitlocation_id, result["name"], result["bldgnum"], signed_in);
@@ -65,6 +66,16 @@ $(document).ready( function () {
         }
       });
     }
+  }
+
+
+ // Gets html for all locations and updates the view.
+  function ajax_show_locations(){
+
+  }
+
+  function ajax_show_location(){
+
   }
 
   /*If a location does not exist in the database, create a temporary location
@@ -163,7 +174,7 @@ $(document).ready( function () {
     submits the initial offering form.
   */
   function saveData(lat, lng, mitlocation_id, location_name,bldgnum){
-    var locationDetails = escape(document.getElementById("location-details").value);
-    var foodDescription = escape(document.getElementById("food-description").value);
+    var locationDetails = document.getElementById("location-details").value;
+    var foodDescription = document.getElementById("food-description").value;
     create_location(lat, lng, mitlocation_id, location_name, bldgnum,locationDetails,foodDescription);
   };
