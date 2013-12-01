@@ -13,6 +13,7 @@ class LocationsController < ApplicationController
       marker.lat location.latitude
       marker.lng location.longitude
       offering = Offering.new
+      @subscription = Subscription.new
       custom_location_id = location.customid
       marker.infowindow render_to_string(:partial => "offerings/add", :locals => {:@offering => offering, :@location => location, :@vote_history => session[:votes]} )
       marker.picture({

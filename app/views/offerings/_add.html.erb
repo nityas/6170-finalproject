@@ -5,7 +5,7 @@
     <% if signed_in? %>
       <li class="active"><a data-toggle="tab" href="#tabs-1">View Bytes</a></li>
       <li class=""><a data-toggle="tab" href="#tabs-2">Post a Byte</a></li>
-      
+      <%= render partial: "subscriptions/form"%>
     <% else %>
       <li class="active"><a data-toggle="tab" href="#tabs-1">View Bytes</a></li>
     <% end %>    

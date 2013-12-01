@@ -1,7 +1,9 @@
 class OffersMailer < ActionMailer::Base
-	#self.async = true
 	default :from => "offers@bytemap.com"
-	def offer_mail(number)
-		mail(:to => number)
+	def offer_mail(offer)
+		potentialMails = Subscription.select("user_id").where(building_id: offer.location_id)
+		mails = potentialMails.collect { |user| User.find(user.user_id).phoneNumber.to_s + User.find(user.user_id).provider}
+		@offer = offer
+		mail(:to => mails,:subject => "")
 	end
 end

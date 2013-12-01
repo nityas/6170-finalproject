@@ -30,10 +30,16 @@ class UsersController < ApplicationController
     @kerberos = @user.email.split('@')[0]
     @info = RestClient.get 'http://web.mit.edu/bin/cgicso?', {:params => {:options => "general", :query => @kerberos, :output =>'json'}}
     responseEmail = @kerberos + "@MIT.EDU"
-    
+    @user.provider = @user.provider_to_email(user_params[:provider])
+    puts "$$$$$"
+    puts @user    
     respond_to do |format|
       if @info.include?(responseEmail)
         if @user.save
+          puts "$$$$$4"
+          puts @user
+          puts @user.provider
+          puts "%%%%%%"
           sign_in @user
           format.html { redirect_to root_url, notice: 'User was successfully created.' }
           format.json { render action: 'show', status: :created, location: @user }
@@ -82,7 +88,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password,:password_confirmation)
+      params.require(:user).permit(:name, :email,:phoneNumber, :provider, :password,:password_confirmation)
     end
 
     def signed_in_user

@@ -1,5 +1,7 @@
 IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
 
+  resources :subscriptions
+
   resources :offerings
 
   
