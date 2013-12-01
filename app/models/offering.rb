@@ -1,4 +1,7 @@
 class Offering < ActiveRecord::Base
+
+	include PublicActivity::Common
+
 	has_one :location
 	belongs_to :user
 	validates :sub_location, presence: true

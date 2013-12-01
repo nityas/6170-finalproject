@@ -37,6 +37,8 @@ gem 'bootstrap-sass', '2.3.2'
 # gem for server side javascript/url calls
 gem "rest-client", "~> 1.6.7"
 
+#gem for newfeed- db monitoring
+gem 'public_activity'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
