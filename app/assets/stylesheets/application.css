@@ -27,4 +27,6 @@
 	width: 400px;
 	float: right;
 	right: 15px;
+	z-index : 1;
+	position: relative;
 }
