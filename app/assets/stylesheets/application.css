@@ -22,3 +22,9 @@
 .notice{
 	color: green;
 }
+
+#accordion{
+	width: 400px;
+	float: right;
+	right: 15px;
+}
