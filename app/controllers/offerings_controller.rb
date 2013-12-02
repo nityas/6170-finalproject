@@ -60,7 +60,6 @@ class OfferingsController < ApplicationController
 
     # destroy offering if enough votes cast
     if @offering.sufficient_votes?
-      @offering.create_activity :destroy, owner: current_user
       @offering.destroy  
       # destroy location if no more offerings in this location
       if @location.isEmpty?
@@ -76,7 +75,6 @@ class OfferingsController < ApplicationController
         end
       end
     else
-      @offering.create_activity :downvote
       respond_to do |format|  
         format.js {}
         format.json {render :json => @vote_history}

@@ -1,8 +1,17 @@
 <br>
 <%= text_field_tag "query", nil, :placeholder => "i.e. Stata or 32", :id => "queryField" %>
 <%= submit_tag "Search", :id => "search" %>
+<div id="accordion">
+  <h3>Currently Available</h3>
+  <div>
+  <%= render partial: 'activities/newsfeed', locals: {:@activities => PublicActivity::Activity.order("created_at desc")}%>
+  </div>
+</div>
 <%= render partial: 'layouts/partials/flash'%>
-<%= render partial: 'map.html.erb'%>
-<%= render "gmap.js" %>
+<div id="mapcontent">
+	<%= render partial: 'map.html.erb'%>
+	<%= render "gmap.js" %>
+	<%= render "search.js" %>
+</div>
 
 

@@ -86,5 +86,11 @@ p {
   color: #F95A61; 
 }
 
+#mapcontent{
+  z-index : 0;
+  top: 118px;
+  position: fixed;
+}
+
 #map label { width: auto; display:inline; }
 #map img { max-width: none; }
