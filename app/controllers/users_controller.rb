@@ -25,11 +25,12 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    
     #query mit people search to confirm valid mit email
     @kerberos = @user.email.split('@')[0]
+    @emailEnd = @user.email.split('@')[1].upcase
     @info = RestClient.get 'http://web.mit.edu/bin/cgicso?', {:params => {:options => "general", :query => @kerberos, :output =>'json'}}
-    responseEmail = @kerberos + "@MIT.EDU"
+    responseEmail = @kerberos + "@" + @emailEnd
+    
     @user.provider = @user.provider_to_email(user_params[:provider])
     respond_to do |format|
       if @info.include?(responseEmail)
@@ -38,11 +39,11 @@ class UsersController < ApplicationController
           format.html { redirect_to root_url, notice: 'User was successfully created.' }
           format.json { render action: 'show', status: :created, location: @user }
         else
-          format.html { render action: 'new', notice: 'Not a valid MIT email.'}
+          format.html { render action: 'new'}
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       else
-        format.html { render action: 'new' }
+        format.html { render action: 'new', notice: 'Not a valid MIT email.' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end    

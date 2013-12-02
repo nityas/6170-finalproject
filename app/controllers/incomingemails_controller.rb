@@ -2,14 +2,9 @@ class IncomingemailsController < ApplicationController
   require 'mail'
   require 'rest_client'
   require 'json'
-  require 'treat'
+  #require 'treat'
   Treat.install
   skip_before_filter :verify_authenticity_token
-
-  # GET /locations/new
-  def new
-    @incomingemails = Incomingemail.new
-  end
 
   def create
     #Get the subject line and parse for location
@@ -20,15 +15,15 @@ class IncomingemailsController < ApplicationController
     #if the location was parse create the location. 
     if !@location.nil?
       response = RestClient.get 'http://whereis.mit.edu/search', {:params => {:type => 'query', :q => @location, :output =>'json'}}
-      response = JSON.parse(response)
+      response = JSON.parse(response)[0]
 
       #creating a new location or getting the current location
       @newLocation = Location.new
-      @newLocation.latitude = response[0]["lat_wgs84"]
-      @newLocation.longitude = response[0]["long_wgs84"]
-      @newLocation.title = response[0]["name"]
-      @newLocation.customid = response[0]["id"]
-      @newLocation.building_number = response[0]["bldgnum"]
+      @newLocation.latitude = response["lat_wgs84"]
+      @newLocation.longitude = response["long_wgs84"]
+      @newLocation.title = response["name"]
+      @newLocation.customid = response["id"]
+      @newLocation.building_number = response["bldgnum"]
       @newLocationId = Location.get_or_create_id(@newLocation)
 
       #create the offering, should probably do a redirect to preserve rails security
