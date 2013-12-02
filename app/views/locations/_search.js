@@ -1,4 +1,3 @@
-//$(document).ready( function () {
 <script type="text/javascript">
   tempmarker = null; 
   /*
@@ -115,8 +114,6 @@
   function handle_null_result(){
     alert("Sorry, no MIT location found for your query");
   }
-
-//});
 
   /*
     Creates a permanent location on the map if such a location doesn't already 
