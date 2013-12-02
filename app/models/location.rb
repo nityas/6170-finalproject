@@ -17,7 +17,7 @@ class Location < ActiveRecord::Base
 	end
 
 	def get_title_description()
-		if !self.building_number == "undefined"
+		if !self.building_number.nil?
 			if self.title.include? self.building_number
 				return "Building " + self.building_number
 			else
