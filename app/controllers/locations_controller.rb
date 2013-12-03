@@ -41,10 +41,6 @@ class LocationsController < ApplicationController
     end
   end
 
-  # GET /locations/new
-  def new
-    @location = Location.new
-  end
 
   # POST /locations
   # POST /locations.json

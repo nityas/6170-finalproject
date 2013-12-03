@@ -16,7 +16,7 @@
        <%if @vote_history.index(offering.id) == nil %>
          <td><%= link_to 'Click if all gone', offering,  :remote => true, :class => "#{offering.id} vote_destroy", :format => :js ,method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% else %>
-          <td></td>
+          <td>(already gave update)</td>
        <% end %>
  
       </tr>
