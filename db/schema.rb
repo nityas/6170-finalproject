@@ -30,12 +30,6 @@ ActiveRecord::Schema.define(version: 20131130222947) do
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
 
-  create_table "incomingemails", force: true do |t|
-    t.string   "place"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "locations", force: true do |t|
     t.float    "latitude"
     t.float    "longitude"
@@ -73,7 +67,7 @@ ActiveRecord::Schema.define(version: 20131130222947) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "phoneNumber"
-    t.string   "provider",        limit: nil
+    t.string   "provider"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
