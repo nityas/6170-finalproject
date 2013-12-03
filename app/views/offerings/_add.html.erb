@@ -1,5 +1,9 @@
+<% if @location.title.include? @location.building_number %>
+  <h2 id="header"><%= @location.title %></h2>
+<% else %>
+  <h2 id="header">Building <%= @location.building_number %> - <%= @location.title %></h2>
+<% end %>
 
-<h2 id="header">Building <%= @location.building_number %> - <%= @location.title %></h2>
 <div id="tabs">
   <ul class="nav nav-tabs" id="tabOptions">
     <% if signed_in? %>
