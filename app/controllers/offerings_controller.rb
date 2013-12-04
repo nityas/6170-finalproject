@@ -2,10 +2,6 @@ class OfferingsController < ApplicationController
   before_action :signed_in_user, only: [:create, :update, :new]
   before_action :set_offering, only: [:edit, :update, :destroy]
 
-  # GET /offerings/new
-  def new
-    @offering = Offering.new()
-  end
 
   # POST /offerings
   # POST /offerings.json
