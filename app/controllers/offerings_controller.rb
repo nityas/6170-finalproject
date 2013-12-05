@@ -14,20 +14,27 @@ class OfferingsController < ApplicationController
     @offering.sub_location = params[:offering][:sub_location]
     @offering.description = params[:offering][:description]
     @offering.numDeleteVotes = 0
-    @offering.location_id = Location.where(:customid => params[:offering][:location]).first.id
 
-    respond_to do |format|
-      if @offering.save
-        @offering.create_activity :create, owner: current_user
-        format.html { redirect_to root_url, notice: 'Byte was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @offering }
-        OffersMailer.offer_mail(@offering).deliver
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @offering.errors, status: :unprocessable_entity }
+    if Location.exists?(:customid => params[:offering][:location])
+      @offering.location_id = Location.where(:customid => params[:offering][:location]).first.id
+      respond_to do |format|
+        if @offering.save
+          @offering.create_activity :create, owner: current_user
+          format.html { redirect_to root_url, notice: 'Byte was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @offering }
+          OffersMailer.offer_mail(@offering).deliver
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @offering.errors, status: :unprocessable_entity }
+        end
+      end
+      
+    # another user deleted the last offering at this location so the location no longer exists
+    else
+      respond_to do |format|
+        format.html {redirect_to root_url, alert: "Sorry, this location no longer exists because it has been deleted by another user."}
       end
     end
-
   end
 
   # PATCH/PUT /offerings/1
@@ -50,32 +57,33 @@ class OfferingsController < ApplicationController
   def destroy
     location_id = @offering.location_id
     @location = Location.find(location_id)
-    @vote_history = session[:votes]
+    vote_history = session[:votes]
 
     #cast a vote to destroy offering
     @offering.vote_to_destroy(session)
-
+    @emptylocation = false
+    @alreadyvoted = false
     # destroy offering if enough votes cast
     if @offering.sufficient_votes?
+      puts "SUFFICIENT VOTES"
       @offering.destroy  
       # destroy location if no more offerings in this location
       if @location.isEmpty?
-        message = 'Byte was successfully removed. No more Bytes at %{name}.' % {:name => @location.title}
+        puts "EMPTY LOCATION"
+        @emptylocation = true
         @location.destroy
-
-        #TODO: figure out how to make this reload even though we did :remote => true client-side
-        redirect_to root_path, notice: message
       else
-        respond_to do |format|
-          format.js {}
-          format.json {render :json => @vote_history}
-        end
+        @emptylocation = false
+        puts "NONEMPTY LOCATION"
       end
     else
-      respond_to do |format|  
-        format.js {}
-        format.json {render :json => @vote_history}
-      end
+      puts "INSUFFICIENT VOTES"
+    end
+
+    puts session[:votes].index(@offering.id) >= 0
+    @alreadyvoted = (session[:votes].index(@offering.id) >= 0)
+    respond_to do |format|  
+      format.js {}
     end
   end
 

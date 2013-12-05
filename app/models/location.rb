@@ -1,6 +1,6 @@
 class Location < ActiveRecord::Base
 	has_many :offerings, dependent: :destroy
-	has_many :subscriptions, dependent: :destroy
+	has_many :subscriptions#, dependent: :destroy
 
 
 	#get a locaion id if the location already exists in the location table. Otherwise, creates the location

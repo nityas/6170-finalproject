@@ -8,7 +8,7 @@ class LocationsController < ApplicationController
     setup_locations
     respond_to do |format|
       format.html
-      format.js
+      format.js 
     end
   end
 
@@ -16,7 +16,7 @@ class LocationsController < ApplicationController
   def refresh
     setup_locations
     respond_to do |format|
-      format.js 
+      format.js # executes refresh.js.erb
     end
   end
 

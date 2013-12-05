@@ -139,7 +139,7 @@
       url: "/offerings",
       type: 'POST',
       data: {offering: {location: mitlocation_id, sub_location: sub_location, description: description}},
-      success: function(res){
+      success: function(res){ 
         location.reload();
       }
     })

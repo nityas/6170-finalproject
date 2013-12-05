@@ -12,10 +12,12 @@
         <td><%= offering.sub_location %></td>
         <td><div class = "description"><%= offering.description %></div></td>
 
-        <!-- show interface for voting 'all gone' only if user hasn't already voted on this before -->
+        <!-- show interface for voting 'all gone' only if user hasn't already voted on this offering before -->
        <%if @vote_history.index(offering.id) == nil %>
-         <td><%= link_to 'Click if all gone', offering,  :remote => true, :class => "#{offering.id} vote_destroy", :format => :js ,method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      <% else %>
+        <td><%= link_to "Click if all gone", offering,  :remote => true, :id => "#{offering.id}", :class => "vote_destroy", :format => :js ,method: :delete, data: { confirm: 'Are you sure?' } %></td>
+     
+
+       <% else %>
           <td>(already gave update)</td>
        <% end %>
  
@@ -23,3 +25,4 @@
     <% end %>
   </table>
 </div>
+
