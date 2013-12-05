@@ -1,7 +1,7 @@
 == README
 
 Our app is located at
-http://still-earth-6642.herokuapp.com/
+http://glacial-thicket-7191.herokuapp.com
 
 To use our app:
 1) Search and make a location
