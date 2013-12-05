@@ -7,8 +7,8 @@
   <%= render partial: 'activities/newsfeed', locals: {:@activities => PublicActivity::Activity.order("created_at desc")}%>
   </div>
 </div>
-<%= link_to 'REFRESH', {controller: 'locations', action: 'refresh'}, remote: true %>
-<%= button_tag "refresh_ajax", :id => "button" %>
+
+<%= button_tag "test_ajax_refresh", :id => "test_ajax_refresh" %>
 <%= render partial: 'layouts/partials/flash'%>
 <div id="mapcontent">
 	<%= render partial: 'map.html.erb'%>
