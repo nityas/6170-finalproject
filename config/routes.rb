@@ -14,6 +14,8 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
     end
   end 
 
+  get 'refresh', to: 'locations#refresh'
+
   resources :users do
     collection do
       get 'exists'

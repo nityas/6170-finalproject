@@ -44,6 +44,7 @@ class OfferingsController < ApplicationController
     end
   end
 
+
   # DELETE /offerings/1
   # DELETE /offerings/1.json
   def destroy
