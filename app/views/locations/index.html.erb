@@ -7,11 +7,28 @@
   <%= render partial: 'activities/newsfeed', locals: {:@activities => PublicActivity::Activity.order("created_at desc")}%>
   </div>
 </div>
+
+<%= button_tag "test_ajax_refresh", :id => "test_ajax_refresh" %>
 <%= render partial: 'layouts/partials/flash'%>
 <div id="mapcontent">
 	<%= render partial: 'map.html.erb'%>
-	<%= render "gmap.js" %>
-	<%= render "search.js" %>
+
+
+
 </div>
 
 
+<script type="text/javascript">
+
+//$(document).ready(function(){
+	<%= render "search.js" %>
+	<%= render "gmap.js" %>
+	<%= render "refresh.js" %>
+	<%= render "destroy.js" %>
+//});
+</script>
+
+
+
+
+</script>

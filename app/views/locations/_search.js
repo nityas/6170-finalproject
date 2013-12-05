@@ -1,4 +1,3 @@
-<script type="text/javascript">
   tempmarker = null; 
   /*
     Handles when user hits "submit" to search a location on the map.
@@ -140,7 +139,7 @@
       url: "/offerings",
       type: 'POST',
       data: {offering: {location: mitlocation_id, sub_location: sub_location, description: description}},
-      success: function(res){
+      success: function(res){ 
         location.reload();
       }
     })
@@ -155,5 +154,3 @@
     var foodDescription = document.getElementById("food-description").value;
     create_location(lat, lng, mitlocation_id, location_name, bldgnum,locationDetails,foodDescription);
   };
-
-</script>

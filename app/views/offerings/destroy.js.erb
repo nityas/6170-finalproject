@@ -1,5 +1,16 @@
+<% puts "destroy.js.erb" %>
+<% puts "alreadyvoted: #{@alreadyvoted}" %>
+<% puts "emptylocation? #{@emptylocation}"%>
 
-<%if @vote_history.index(@offering.id) >= 0 %>
-	hide_voting_interface( "<%=  @offering.id %>");
+//reload the page if this location is now empty
+<% if @emptylocation == true %>
+	location.reload(false);
 <% end %>
+
+// hide voting interface & acknowledge voting submission 
+<%if @alreadyvoted == true %>
+	acknowledge_vote_submission( "<%=  @offering.id %>");
+<% end %>
+
+
 

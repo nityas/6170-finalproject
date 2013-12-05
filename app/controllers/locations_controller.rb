@@ -5,6 +5,22 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def index
+    setup_locations
+    respond_to do |format|
+      format.html
+      format.js 
+    end
+  end
+
+  # GET /refresh
+  def refresh
+    setup_locations
+    respond_to do |format|
+      format.js # executes refresh.js.erb
+    end
+  end
+
+  def setup_locations
     @locations = Location.all
     # for each location create a marker.
     # a marker has latitude,longitude, infowindow with offerings,
@@ -22,13 +38,7 @@ class LocationsController < ApplicationController
        "width" =>  50,
        "height" => 68})
     end
-
-    respond_to do |format|
-      format.html
-      format.js
-    end
   end
-
 
   #POST /locations/exists
   #@param mitlocation_id from whereismit custom id
@@ -70,6 +80,7 @@ class LocationsController < ApplicationController
       end
     end
   end
+
 
   # DELETE /locations/1
   # DELETE /locations/1.json
