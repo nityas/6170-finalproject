@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131206052701) do
+ActiveRecord::Schema.define(version: 20131206164814) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -64,9 +64,9 @@ ActiveRecord::Schema.define(version: 20131206052701) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.integer  "reputation"
+    t.integer  "phoneNumber"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "phoneNumber"
     t.string   "provider"
   end
 
