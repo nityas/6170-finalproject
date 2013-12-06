@@ -24,7 +24,7 @@ class Offering < ActiveRecord::Base
 	# returns true if this offering was created more than 15 minutes (900 seconds) ago
 	def is_stale?
 		seconds_elapsed = Time.now - self.created_at
-		return seconds_elapsed > 900
+		return seconds_elapsed > 60
 	end
 
 	def vote_to_destroy(session)
