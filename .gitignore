@@ -15,4 +15,4 @@
 /log/*.log
 /tmp
 
-action_mailer_gmail
+#action_mailer_gmail
