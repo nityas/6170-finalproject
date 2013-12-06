@@ -28,8 +28,9 @@ class OfferingsController < ApplicationController
           format.json { render json: @offering.errors, status: :unprocessable_entity }
         end
       end
-      
-    # another user deleted the last offering at this location so the location no longer exists
+
+    # another user deleted the last offering at this location so the location no longer exists,
+    # but this user tried to create a new offering at this location because this user's page has not refreshed yet
     else
       respond_to do |format|
         format.html {redirect_to root_url, alert: "Sorry, this location no longer exists because it has been deleted by another user."}
