@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :password_digest
       t.string :remember_token
       t.integer :reputation
-      t.integer :phoneNumber, :limit => 8
+      t.column :phoneNumber, :bigint
       t.timestamps
     end
     add_index :users, :email, unique: true
