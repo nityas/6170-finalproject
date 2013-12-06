@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
     has_many :offerings
     has_secure_password
     validates :password, length: {minimum: 6}
-    validates :phoneNumber, length: {is: 10}
+    #validates :phoneNumber, length: {is: 10}
     #validates_presence_of :provider :if => :phoneNumber?
     before_create :create_remember_token
 	
