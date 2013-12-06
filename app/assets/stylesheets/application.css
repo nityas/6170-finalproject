@@ -25,6 +25,8 @@
 
 #accordion{
 	width: 400px;
+	max-height: 400px;
+	overflow:auto;
 	float: right;
 	right: 15px;
 	z-index : 1;

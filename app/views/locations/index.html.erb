@@ -2,7 +2,7 @@
 <%= text_field_tag "query", nil, :placeholder => "i.e. Stata or 32", :id => "queryField" %>
 <%= submit_tag "Search", :id => "search" %>
 <div id="accordion">
-  <h3>Currently Available</h3>
+  <h3>Click for All Available Offerings!</h3>
   <div>
   <%= render partial: 'activities/newsfeed', locals: {:@activities => PublicActivity::Activity.order("created_at desc")}%>
   </div>
