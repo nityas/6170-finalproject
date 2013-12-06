@@ -3,10 +3,21 @@
     Handles when user hits "submit" to search a location on the map.
   */
   $("#search").click(function(){
-    var query = $("#queryField").val();
-    create_search(query);
+    launchSearch();
   });
 
+  /* Handle when user hits enter key to search a location on the map.
+  */
+  $("#queryField").keyup(function(event){
+    if (event.keyCode == 13){
+      launchSearch();
+    }
+  });
+
+  function launchSearch(){
+    var query = $("#queryField").val();
+    create_search(query);
+  }
   /*
     Sends user's location query to whereis.mit.edu via ajax GET request
     Gets back the most likely MIT location based on this query, along with its associated information.
