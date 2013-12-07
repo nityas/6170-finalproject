@@ -33,7 +33,11 @@ class OfferingsController < ApplicationController
     # but this user tried to create a new offering at this location because this user's page has not refreshed yet
     else
       respond_to do |format|
-        format.html {redirect_to root_url, alert: "Sorry, this location no longer exists because it has been deleted by another user."}
+        if (params[:offering][:from_email]).nil?
+          format.html {redirect_to root_url, alert: "Sorry, this location no longer exists because it has been deleted by another user."}
+        else
+          format.html {render :text => 'success', :status => 200}
+        end
       end
     end
   end
