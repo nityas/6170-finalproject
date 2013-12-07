@@ -24,7 +24,6 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
   
   resources :activities
   resources :users 
-
   resources :incomingemails
 
 

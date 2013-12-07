@@ -34,12 +34,7 @@ class OfferingsController < ApplicationController
     # but this user tried to create a new offering at this location because this user's page has not refreshed yet
     else
       respond_to do |format|
-        if (params[:offering][:from_email]).nil?
-          format.html {redirect_to root_url, alert: "Sorry, this location no longer exists because it has been deleted by another user."}
-        else
-          puts "assssssssssssss"
-          format.html {render :text => 'success', :status => 200}
-        end
+        format.html {redirect_to root_url, alert: "Sorry, this location no longer exists because it has been deleted by another user."}
       end
     end
   end
@@ -111,6 +106,6 @@ class OfferingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def offering_params
-      params.permit(:offering, :location, :sub_location, :description, :from_email)
+      params.permit(:offering, :location, :sub_location, :description)
     end
 end
