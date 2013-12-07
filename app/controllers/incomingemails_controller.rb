@@ -8,9 +8,9 @@ class IncomingemailsController < ApplicationController
     #Get the subject line and parse for location
     @information = parseEmail(params[:headers]['Subject'], params[:plain])
 
-    @location = @information.location
-    @sublocation = @information.sublocation
-    @description = @information.description
+    @location = @information[0]
+    @sublocation = @information[1]
+    @description = @information[2]
     @to = params[:envelope][:to]
 
 
