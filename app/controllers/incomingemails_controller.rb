@@ -33,7 +33,7 @@ class IncomingemailsController < ApplicationController
 
     end
     respond_to do |format|
-      format.html{render "offerings/create", :sub_location => @sublocation, :description => @description, :location => @newLocationId, :text => 'success', :status => 200}
+      format.html{:text => 'success', :status => 200}
       format.json{}
     end
   end
