@@ -1,20 +1,20 @@
 <br>
-<div Style="display:inline">
-<%= text_field_tag "query", nil, :placeholder => "i.e. Stata or 32", :id => "queryField" %>
-<%= submit_tag "Search", :id => "search" , :class => "btn btn-primary " %>
-<div class="notice" Style="display:inline"> </div>
-
-<div id="accordion">
-  <h3>Click for All Available Bytes!</h3>
-  <div id="accordioncontent">
-  <%= render partial: 'activities/newsfeed', locals: {:@activities => PublicActivity::Activity.order("created_at desc")}%>
-  </div>
-</div>
-</div>
+<span style="display:inline;">
+	<%= text_field_tag "query", nil, :placeholder => "i.e. Stata or 32", :id => "queryField" %>
+    <%= submit_tag "Search", :id => "search" , :class => "btn btn-primary " %>
+	<span class="notice" style="display:inline;"></span>
+	<span id="flash" style="display:inline;"><%= raw render(:partial => 'layouts/partials/flash').html_safe %></span>
+	<div id="accordion">
+	  <h3>Click for All Available Bytes!</h3>
+	  <div id="accordioncontent">
+	  <%= render partial: 'activities/newsfeed', locals: {:@activities => PublicActivity::Activity.order("created_at desc")}%>
+	  </div>
+	</div>
+</span>
 
 <!--<%= button_tag "test_ajax_refresh", :id => "test_ajax_refresh" %>-->
 
-<%= render partial: 'layouts/partials/flash'%>
+
 <div id="mapcontent">
 	<%= render partial: 'map.html.erb'%>
 </div>

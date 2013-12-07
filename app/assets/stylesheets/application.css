@@ -33,6 +33,10 @@
 	position: relative;
 }
 
+#flash{
+	display:inline;
+}
+
 .username_navbar{
 	color:white; 
 	padding-top:10px;
