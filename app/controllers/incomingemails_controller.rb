@@ -25,14 +25,15 @@ class IncomingemailsController < ApplicationController
       @newLocationId = Location.get_or_create_id(@newLocation)
 
       #create the offering, should probably do a redirect to preserve rails security
-      @offering = Offering.new
-      @offering.sub_location = @sublocation
-      @offering.description = @description
-      @offering.location_id = @newLocationId
-      @offering.save
+      #@offering = Offering.new
+      #@offering.sub_location = @sublocation
+      #@offering.description = @description
+      #@offering.location_id = @newLocationId
+      #@offering.save
+
     end
     respond_to do |format|
-      format.html{render :text => 'success', :status => 200}
+      format.html{render "offerings/create", :sub_location => @sublocation, :description => @description, :location => @newLocationId, :text => 'success', :status => 200}
       format.json{}
     end
   end
