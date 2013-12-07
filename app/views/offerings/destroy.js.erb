@@ -2,7 +2,7 @@
 <% puts "alreadyvoted: #{@alreadyvoted}" %>
 <% puts "emptylocation? #{@emptylocation}"%>
 
-/*function acknowledge_vote_submission(selector){
+function acknowledge_vote_submission(selector){
 	alert("acknowledge_vote_submission");
         var update_column = $("#"+selector).parent();
         update_column.html("thanks!");
@@ -12,7 +12,7 @@
 
 function alert_user(str){
         alert(str);
-}*/
+}
 
 //reload the page if this location is now empty, or if the offering no longer exists
 <% if @emptylocation == true  %>
