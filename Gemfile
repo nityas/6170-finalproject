@@ -18,8 +18,6 @@ gem 'coffee-rails', '~> 4.0.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-#NLP gem
-
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 #gem 'turbolinks'
 
@@ -62,7 +60,7 @@ gem 'mail'
 gem 'whenever', :require => false
 
 #gem for texting
-gem 'sms-easy'
+#gem 'sms-easy'
 
 # Use unicorn as the app server
 # gem 'unicorn'

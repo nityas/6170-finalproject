@@ -58,10 +58,10 @@ ActiveRecord::Schema.define(version: 20131207172650) do
   end
 
   create_table "subscriptions", force: true do |t|
-    t.integer  "building_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "location_id"
   end
 
   create_table "users", force: true do |t|

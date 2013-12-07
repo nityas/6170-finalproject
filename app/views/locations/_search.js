@@ -85,10 +85,9 @@
     /*from google map api: https://developers.google.com/maps/articles/phpsqlinfo_v3*/
     
     /*the content of the inital byte form*/
-    /*the content of the inital byte form*/
     if(signed_in){
       var infoWindowContent = [
-      "<h2><b> Building "+String(bldgnum) + " - " + String(location_name) + "</b></h2>",
+      "<h2><b> "+String(location_name) + "</b></h2>",
       "<h2>Post A New Byte </h2>",
       "<form id='map-form'>",
       "<div>Location Details: <input id='location-details' type='text' /></div>",
@@ -99,7 +98,7 @@
     }
     else{
       var infoWindowContent = [
-      "<h2><b> Building "+String(bldgnum)+ " - " +String(location_name) + "</b></h2>",
+      "<h2><b> " +String(location_name) + "</b></h2>",
       "<h2>Login To Post A Byte</h2>"].join("");   
     }
 
@@ -122,7 +121,7 @@
     Sends user's search query to whereis.mit.edu and gets back information for this potential location.
   */
   function handle_null_result(){
-    alert("Sorry, no MIT location found for your query");
+    $('.notice').html("Sorry, no MIT location found for your query").slideDown(500).delay(3000).slideUp(500)
   }
 
   /*
