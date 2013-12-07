@@ -2,12 +2,6 @@ class IncomingemailsController < ApplicationController
   require 'mail'
   require 'rest_client'
   require 'json'
-  #require 'treat'
-<<<<<<< HEAD
-  #Treat.install
-=======
-  #Treat::Core::Installer.install 'english'
->>>>>>> c7a75b945e54d6e8d5a508f0c06ef16bc49572d5
   skip_before_filter :verify_authenticity_token
 
   def create
