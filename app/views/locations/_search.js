@@ -122,7 +122,7 @@
     Sends user's search query to whereis.mit.edu and gets back information for this potential location.
   */
   function handle_null_result(){
-    alert("Sorry, no MIT location found for your query");
+    $('.notice').html("Sorry, no MIT location found for your query").slideDown(500).delay(3000).slideUp(500)
   }
 
   /*

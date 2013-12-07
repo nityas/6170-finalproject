@@ -3,11 +3,17 @@ class User < ActiveRecord::Base
     validates :email, presence: true, uniqueness: true
     has_many :offerings
     has_secure_password
+
     validates :password, length: {minimum: 6}
-    validates :phoneNumber, length: {is: 10}
-    #validates_presence_of :provider :if => :phoneNumber?
-    before_create :create_remember_token
+
+
+	validates :phoneNumber,length: {is: 10}, uniqueness: true, presence: true, if: lambda{ |record| record.provider.present? }
+	validates :provider, presence: true, if: lambda{ |record| record.phoneNumber.present? }
 	
+	before_create :create_remember_token
+	
+
+
 	def User.new_remember_token
 	  SecureRandom.urlsafe_base64
 	end
@@ -21,8 +27,10 @@ class User < ActiveRecord::Base
 			return "@tmomail.net"
 		elsif providerName.eql? "AT&T"
 			return "@txt.att.net"
-		else providerName.eql? "Verizon"
+		elsif providerName.eql? "Verizon"
 			return "@vtext.com"
+		else
+			return nil
 		end
 	end
 	private
