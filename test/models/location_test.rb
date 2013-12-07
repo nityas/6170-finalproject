@@ -5,10 +5,10 @@ class LocationTest < ActiveSupport::TestCase
   #   assert true
   # end	
 
-  test "get_title_description" do
-  	@location = make_location()
-  	assert @location.get_title_description == "Building 32- Stata 32"
-  end
+  # test "get_title_description" do
+  # 	@location = make_location()
+  # 	assert @location.get_title_description == "Building 32- Stata 32"
+  # end
 
 
    def make_location_withbldg
