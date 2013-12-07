@@ -36,7 +36,7 @@ class IncomingemailsController < ApplicationController
     end
     respond_to do |format|
       if successful_email
-        format.html{reirect_to offerings_path}
+        format.html{redirect_to offerings_path}
         format.json{render :text => 'success', :status => 200}
       else
         format.html{render :text => 'success', :status => 200}
