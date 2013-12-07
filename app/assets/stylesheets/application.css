@@ -37,3 +37,8 @@
 	color:white; 
 	padding-top:10px;
 }
+
+.vote{
+	font-style:italic;
+    color: green;
+}
