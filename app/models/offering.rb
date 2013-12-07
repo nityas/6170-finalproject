@@ -29,7 +29,7 @@ class Offering < ActiveRecord::Base
 	def self.remove_stale
 		puts "REMOVE_STALE"
 		self.all.each do |offer|
-			if offer.is_stale?
+			if offer.is_stale?(300)
 				#offer.destroy
 				offer.custom_destroy
 				puts "DESTROYING offering #: "
@@ -40,10 +40,10 @@ class Offering < ActiveRecord::Base
 
 	# returns true if this offering was created more than 5 min ago (short time so that staff can test if they desire)
 	# run "heroku run rake remove_stale_offerings" to run this just once immediately
-	def is_stale?
+	def is_stale?(grace_period)
 		puts "IS_STALE?"
 		seconds_elapsed = Time.now - self.created_at
-		return seconds_elapsed > 300
+		return seconds_elapsed > grace_period
 	end
 
 	def vote_to_destroy(session)
