@@ -1,6 +1,16 @@
 class Incomingemail < ActiveRecord::Base
 	def parseEmail(subject, body)
-		puts body
+		@info = nil
+		parse = subject.split[","]
+		parse.each do |item|
+			what = item.split[":"]
+			if item[0].downcase!.include("what")?
+				@info.description = item[1]
+			elsif item[0].downcase!.include("where")?
+				@info.location =  item[1]
+				@info.sublocation = item[1]
+			end
+		end
 	end
 
 	def correctToEmail(email)
