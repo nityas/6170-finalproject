@@ -3,17 +3,18 @@ require 'test_helper'
 class LocationTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
-  # end
+  # end	
+
+  test "get_title_description" do
+  	@location = make_location()
+  	assert @location.get_title_description == "Building 32- Stata 32"
+  end
 
 
-   def make_location
+   def make_location_withbldg
   	@location = Location.new
-  	@location.latitude = 1.1
-  	@location.longitude = 1.1
-  	@location.title = "Stata"
-  	@location.customid = "test"
-  	@location.building_number = "test"
-  	@location.save
+  	@location.title = "Stata 32"
+  	@location.building_number = "32"
   	return @location
   end
 
