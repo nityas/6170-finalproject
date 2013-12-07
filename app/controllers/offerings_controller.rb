@@ -36,6 +36,7 @@ class OfferingsController < ApplicationController
         if (params[:offering][:from_email]).nil?
           format.html {redirect_to root_url, alert: "Sorry, this location no longer exists because it has been deleted by another user."}
         else
+          puts "assssssssssssss"
           format.html {render :text => 'success', :status => 200}
         end
       end
