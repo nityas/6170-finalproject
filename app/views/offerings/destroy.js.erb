@@ -2,8 +2,15 @@
 <% puts "alreadyvoted: #{@alreadyvoted}" %>
 <% puts "emptylocation? #{@emptylocation}"%>
 
-//reload the page if this location is now empty
-<% if @emptylocation == true %>
+//reload the page if this location is now empty, or if the offering no longer exists
+<% if @emptylocation == true  %>
+	alert_user("Thanks for your input! This location now has no more bytes.")
+	location.reload(false);
+<% end %>
+
+//reload the page if this location is now empty, or if the offering no longer exists
+<% if @offering_exists == false  %>
+	alert_user("While you were browsing this page, other users also indicated that this byte no longer exists so it has been removed. Thanks for your input!");
 	location.reload(false);
 <% end %>
 

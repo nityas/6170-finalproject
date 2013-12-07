@@ -7,6 +7,22 @@ class Offering < ActiveRecord::Base
 	validates :sub_location, presence: true
 	validates :description, presence: true
 
+  # destroys an offering
+  # also destroys the location if the location becomes empty as a result of the offering deletion
+  # returns true if this offering's location was destroyed
+	def custom_destroy
+		self.destroy  
+      # destroy location if no more offerings in this location
+      location = Location.find(self.location_id)
+	  if location.isEmpty?
+        puts "EMPTY LOCATION"
+        location.destroy
+        return true
+      else
+      	puts "NONEMPTY LOCATION"
+        return false
+      end
+	end
 
 	# deletes stale offerings from the database. 
 	# This method is called by a cron job every 10 minutes (made short for testing purposes)
@@ -14,7 +30,8 @@ class Offering < ActiveRecord::Base
 		puts "remove_stale"
 		self.all.each do |offer|
 			if offer.is_stale?
-				offer.destroy
+				#offer.destroy
+				offer.custom_destroy
 				puts "DESTROYING offering #: "
 				puts offer.id
 			end

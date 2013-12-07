@@ -55,34 +55,34 @@ class OfferingsController < ApplicationController
 
   # DELETE /offerings/1
   # DELETE /offerings/1.json
-  def destroy
-    location_id = @offering.location_id
-    @location = Location.find(location_id)
-    vote_history = session[:votes]
 
-    #cast a vote to destroy offering
-    @offering.vote_to_destroy(session)
+  def destroy
+    
+    # variables to be sent to js.erb
+    @offering_exists = false
     @emptylocation = false
     @alreadyvoted = false
-    # destroy offering if enough votes cast
-    if @offering.sufficient_votes?
-      puts "SUFFICIENT VOTES"
-      @offering.destroy  
-      # destroy location if no more offerings in this location
-      if @location.isEmpty?
-        puts "EMPTY LOCATION"
-        @emptylocation = true
-        @location.destroy
-      else
-        @emptylocation = false
-        puts "NONEMPTY LOCATION"
-      end
-    else
-      puts "INSUFFICIENT VOTES"
-    end
 
-    puts session[:votes].index(@offering.id) >= 0
-    @alreadyvoted = (session[:votes].index(@offering.id) >= 0)
+    # offering no longer exists due to other users deleting it before this user's page refreshed
+    if not defined? @offering
+      puts "OFFERING NO LONGER EXISTS"
+      @offering_exists = false
+    # offering exists
+    else
+      @offering_exists = true
+      #cast a vote to destroy the offering
+      @offering.vote_to_destroy(session)
+
+      # destroy offering if enough votes cast
+      if @offering.sufficient_votes?
+        puts "SUFFICIENT VOTES"
+
+        # true if location was destroyed as a result of this offering being destroyed
+        @emptylocation = @offering.custom_destroy()
+      end
+      puts session[:votes].index(@offering.id) >= 0
+      @alreadyvoted = (session[:votes].index(@offering.id) >= 0)
+    end
     respond_to do |format|  
       format.js {}
     end
@@ -97,8 +97,11 @@ class OfferingsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
 
     def set_offering
-      @offering = Offering.find(params[:id])
+      if Offering.exists?(:id => params[:id])
+        @offering = Offering.find(params[:id])
+      end
     end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def offering_params
