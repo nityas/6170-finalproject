@@ -11,7 +11,6 @@ class SubscriptionsController < ApplicationController
   # POST /subscriptions.json
   def create
     @subscription = Subscription.new(subscription_params)
-
     respond_to do |format|
       if @subscription.save
         format.html { redirect_to root_url, notice: 'Subscription was successfully created.' }

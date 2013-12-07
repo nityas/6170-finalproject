@@ -94,6 +94,7 @@
       "<div>Food Description: <input id='food-description' type='text' /></div>",
       '<input type="button" value="Post Byte" onClick="saveData(\'' + lat + '\',\'' + lng +
        '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" />',
+      '<input type="button" value="Subscribe" onClick="subscribe()" />',
       "</form>"].join("");    
     }
     else{
@@ -163,4 +164,11 @@
     var locationDetails = document.getElementById("location-details").value;
     var foodDescription = document.getElementById("food-description").value;
     create_location(lat, lng, mitlocation_id, location_name, bldgnum,locationDetails,foodDescription);
+  };
+
+  /*
+    subscribe or unsubscribe to a location
+  */
+  function subscribe(){
+
   };
