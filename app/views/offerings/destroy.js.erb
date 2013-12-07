@@ -2,8 +2,27 @@
 <% puts "alreadyvoted: #{@alreadyvoted}" %>
 <% puts "emptylocation? #{@emptylocation}"%>
 
-//reload the page if this location is now empty
-<% if @emptylocation == true %>
+/*function acknowledge_vote_submission(selector){
+	alert("acknowledge_vote_submission");
+        var update_column = $("#"+selector).parent();
+        update_column.html("thanks!");
+        update_column.css("font-style", "italic");
+        update_column.css("color", "green");
+}
+
+function alert_user(str){
+        alert(str);
+}*/
+
+//reload the page if this location is now empty, or if the offering no longer exists
+<% if @emptylocation == true  %>
+	alert_user("Thanks for your input! This location now has no more bytes.")
+	location.reload(false);
+<% end %>
+
+//reload the page if this location is now empty, or if the offering no longer exists
+<% if @offering_exists == false  %>
+	alert_user("While you were browsing this page, other users also indicated that this byte no longer exists so it has been removed. Thanks for your input!");
 	location.reload(false);
 <% end %>
 
