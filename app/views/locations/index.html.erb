@@ -1,7 +1,7 @@
 <br>
 <div Style="display:inline">
 <%= text_field_tag "query", nil, :placeholder => "i.e. Stata or 32", :id => "queryField" %>
-<%= submit_tag "Search", :id => "search" %>
+<%= submit_tag "Search", :id => "search" , :class => "btn btn-primary " %>
 <div class="notice" Style="display:inline"> </div>
 
 <div id="accordion">
@@ -12,7 +12,7 @@
 </div>
 </div>
 
-<%= button_tag "test_ajax_refresh", :id => "test_ajax_refresh" %>
+<!--<%= button_tag "test_ajax_refresh", :id => "test_ajax_refresh" %>-->
 
 <%= render partial: 'layouts/partials/flash'%>
 <div id="mapcontent">
