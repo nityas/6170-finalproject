@@ -9,20 +9,25 @@ function acknowledge_vote_submission(selector){
         update_column.css("color", "green");
 }
 
-function alert_user(str){
-        alert(str);
+function notify_user(str){
+        $(".notice").html(str);
 }
 
 //reload the page if this location is now empty, or if the offering no longer exists
 <% if @emptylocation == true  %>
-	alert_user("Thanks for your input! This location now has no more bytes.")
-	location.reload(false);
+	notify_user("Thanks for your input! This location now has no more Bytes.");
+	setTimeout(function(){
+		location.reload(false);
+	}, 2000);
+
 <% end %>
 
-//reload the page if this location is now empty, or if the offering no longer exists
+//reload the page if the offering no longer exists
 <% if @offering_exists == false  %>
-	alert_user("While you were browsing this page, other users also indicated that this byte no longer exists so it has been removed. Thanks for your input!");
-	location.reload(false);
+	notify_user("Thanks for your input! This Byte has been removed.");
+	setTimeout(function(){
+		location.reload(false);
+	}, 2000);
 <% end %>
 
 // hide voting interface & acknowledge voting submission 
