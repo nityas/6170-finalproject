@@ -38,12 +38,12 @@ class Offering < ActiveRecord::Base
 		end
 	end
 
-	# returns true if this offering was created more than 60 seconds ago (short time so that staff can test if they desire)
+	# returns true if this offering was created more than 5 min ago (short time so that staff can test if they desire)
 	# run "heroku run rake remove_stale_offerings" to run this just once immediately
 	def is_stale?
 		puts "IS_STALE?"
 		seconds_elapsed = Time.now - self.created_at
-		return seconds_elapsed > 120
+		return seconds_elapsed > 300
 	end
 
 	def vote_to_destroy(session)
