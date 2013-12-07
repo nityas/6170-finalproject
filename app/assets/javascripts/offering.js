@@ -1,3 +1,5 @@
+
+
 function acknowledge_vote_submission(selector){
 	var update_column = $("#"+selector).parent();
 	update_column.html("thanks!");
