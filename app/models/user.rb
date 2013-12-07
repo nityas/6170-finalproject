@@ -42,13 +42,10 @@ class User < ActiveRecord::Base
 		end
 	end
 
-<<<<<<< HEAD
 	def can_subscribe?()
     	return self.phoneNumber.nil? || self.provider.nil?
 	end
 
-=======
->>>>>>> b05b9d3c72dfefc1c0817d99af2ac1b6b810ca65
 	private
 		def create_remember_token
 	      self.remember_token = User.encrypt(User.new_remember_token)

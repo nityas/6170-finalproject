@@ -11,9 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20131207200059) do
-
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -32,12 +30,7 @@ ActiveRecord::Schema.define(version: 20131207200059) do
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
 
-
-
   create_table "incomingemails", force: true do |t|
-    t.string   "place"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "locations", force: true do |t|
@@ -74,9 +67,9 @@ ActiveRecord::Schema.define(version: 20131207200059) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.integer  "reputation"
-    t.integer  "phoneNumber"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "phoneNumber"
     t.string   "provider"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
