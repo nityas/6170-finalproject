@@ -4,15 +4,23 @@ class User < ActiveRecord::Base
     has_many :offerings
     has_secure_password
 
-    validates :password, length: {minimum: 6}
-
-
-	validates :phoneNumber,length: {is: 10}, uniqueness: true, presence: true, if: lambda{ |record| record.provider.present? }
+    validates :password, length: {minimum: 6}, :allow_blank => true
+    validates :phoneNumber,length: {is: 10}, uniqueness: true, presence: true, if: lambda{ |record| record.provider.present? }
 	validates :provider, presence: true, if: lambda{ |record| record.phoneNumber.present? }
-	
 	before_create :create_remember_token
-	
 
+    def send_password_reset
+    	generate_token(:password_reset_token)
+    	self.password_reset_sent_at = Time.zone.now
+    	save!(validate: false)
+    	UserMailer.password_reset(self).deliver
+    end
+
+    def generate_token(column)
+	  begin
+	    self[column] = SecureRandom.urlsafe_base64
+	  end while User.exists?(column => self[column])
+	end
 
 	def User.new_remember_token
 	  SecureRandom.urlsafe_base64
@@ -34,10 +42,13 @@ class User < ActiveRecord::Base
 		end
 	end
 
+<<<<<<< HEAD
 	def can_subscribe?()
     	return self.phoneNumber.nil? || self.provider.nil?
 	end
 
+=======
+>>>>>>> b05b9d3c72dfefc1c0817d99af2ac1b6b810ca65
 	private
 		def create_remember_token
 	      self.remember_token = User.encrypt(User.new_remember_token)
