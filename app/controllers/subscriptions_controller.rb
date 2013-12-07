@@ -38,6 +38,7 @@ class SubscriptionsController < ApplicationController
   #check if a location already exist in the database or not
   def exists
     subscription_exists = Subscription.subscribed(params[:location_id], params[:usr_id])
+    
     respond_to do |format|
       format.html
       format.json {render json: subscription_exists }

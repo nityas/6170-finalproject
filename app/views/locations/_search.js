@@ -44,17 +44,20 @@
       var longitude = result.long_wgs84;
       var mitlocation_id = result["id"];
 
-      console.log(userid);
+      //console.log(<%= @userid%>);
 
-      /*
-      .ajax({
-        url: "/subscriptions/exists",
+      $.ajax({
         type: 'GET',
-        data: {subscription: {location: location_id, user_id: userid}},
+        url: "/subscriptions/exists",
+        dataType: "JSON",
+        data: {subscription: {'location_id': mitlocation_id, 'user_id': <%= @userid%> }},
         success: function(res){
           subscribed = data;
+          console.log(subscribed);
         }
-      });*/
+      });
+
+
 
       var epsilon = 0.000001;
       var marker = null;

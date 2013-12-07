@@ -6,6 +6,9 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def index
     setup_locations
+    @is_signed_in = signed_in?
+    @userid = current_user.id
+    puts @userid
     respond_to do |format|
       format.html
       format.js 
@@ -22,7 +25,6 @@ class LocationsController < ApplicationController
 
   def setup_locations
     @locations = Location.all
-    @is_signed_in = signed_in?
     # for each location create a marker.
     # a marker has latitude,longitude, infowindow with offerings,
     # and a pin
