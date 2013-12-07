@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   require 'json'
   before_action :set_user, only: [:edit, :update, :destroy]
   before_action :signed_in_user, only: [:edit, :update]
-
+  before_action :correct_user, only: [:edit, :update]
   # GET /users/new
   def new
     @user = User.new
@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @user = User.find(params[:id])
   end
 
   # POST /users
@@ -79,6 +80,11 @@ class UsersController < ApplicationController
 
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to root_url, notice: "Can't edit that page" unless current_user?(@user)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
