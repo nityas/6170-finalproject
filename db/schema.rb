@@ -64,9 +64,9 @@ ActiveRecord::Schema.define(version: 20131207161240) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.integer  "reputation"
-    t.integer  "phoneNumber"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "phoneNumber"
     t.string   "provider"
   end
 

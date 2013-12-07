@@ -1,14 +1,19 @@
 <br>
+<div Style="display:inline">
 <%= text_field_tag "query", nil, :placeholder => "i.e. Stata or 32", :id => "queryField" %>
 <%= submit_tag "Search", :id => "search" %>
+<div class="notice" Style="display:inline"> </div>
+
 <div id="accordion">
   <h3>Click for All Available Bytes!</h3>
   <div id="accordioncontent">
   <%= render partial: 'activities/newsfeed', locals: {:@activities => PublicActivity::Activity.order("created_at desc")}%>
   </div>
 </div>
+</div>
 
 <%= button_tag "test_ajax_refresh", :id => "test_ajax_refresh" %>
+
 <%= render partial: 'layouts/partials/flash'%>
 <div id="mapcontent">
 	<%= render partial: 'map.html.erb'%>
@@ -16,13 +21,10 @@
 
 
 <script type="text/javascript">
-
-//$(document).ready(function(){
 	<%= render "search.js" %>
 	<%= render "gmap.js" %>
 	<%= render "refresh.js" %>
 	<%= render "autocomplete.js" %> 
-//});
 </script>
 
 
