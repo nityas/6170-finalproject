@@ -5,10 +5,10 @@ class Incomingemail < ActiveRecord::Base
 		parse.each do |item|
 			what = item.split[":"]
 			if item[0].downcase!.include("what")?
-				@info.description = item[1]
+				@info[0] = item[1]
 			elsif item[0].downcase!.include("where")?
-				@info.location =  item[1]
-				@info.sublocation = item[1]
+				@info[1] =  item[1]
+				@info[2] = item[1]
 			end
 		end
 	end
