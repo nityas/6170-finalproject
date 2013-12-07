@@ -26,6 +26,7 @@ class LocationsController < ApplicationController
     # a marker has latitude,longitude, infowindow with offerings,
     # and a pin
     @is_signed_in = signed_in?
+
     @hash = Gmaps4rails.build_markers(@locations) do |location, marker|
       marker.lat location.latitude
       marker.lng location.longitude
