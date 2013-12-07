@@ -5,19 +5,49 @@ class LocationTest < ActiveSupport::TestCase
   #   assert true
   # end	
 
-  # test "get_title_description" do
-  # 	@location = make_location()
-  # 	assert @location.get_title_description == "Building 32- Stata 32"
-  # end
+
+  test "get_title_description" do
+  	@location = make_location_lite('Stata 32', '32')
+  	assert @location.get_title_description() == "Building 32"
+
+  	@location = make_location_lite('Stata', '32')
+  	assert @location.get_title_description() == "Building 32- Stata"
+
+  	@location = make_location_lite('Stata', nil)
+  	assert @location.get_title_description() == "Stata"
+ 
+  end
+
+  test "isEmpty" do
+  	@location = make_location
+  	assert @location.isEmpty? == true
+
+  	@offering = make_offering(@location.id)
+  	assert @location.isEmpty? == false
+
+  	@offering.destroy
+  	assert @location.isEmpty? == true
+  end
 
 
-   def make_location_withbldg
+
+  def make_location_lite(title, bldg_num)
   	@location = Location.new
-  	@location.title = "Stata 32"
-  	@location.building_number = "32"
+  	@location.title = title
+  	@location.building_number = bldg_num
   	return @location
   end
 
+  def make_location
+  	@location = Location.new
+  	@location.latitude = 1.1
+  	@location.longitude = 1.1
+  	@location.title = "Stata"
+  	@location.customid = "test"
+  	@location.building_number = "test"
+  	@location.save
+  	return @location
+  end
 
   def make_offering(loc_id)
     @offering = Offering.new

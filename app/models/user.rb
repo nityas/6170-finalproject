@@ -42,10 +42,14 @@ class User < ActiveRecord::Base
 		end
 	end
 
-
 	def can_subscribe?()
     	return self.phoneNumber.nil? || self.provider.nil?
 	end
+
+	def get_text_address()
+		email = self.phoneNumber.to_s + self.provider
+		return email
+    end
 
 	private
 		def create_remember_token
