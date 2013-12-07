@@ -3,7 +3,6 @@
 <% puts "emptylocation? #{@emptylocation}"%>
 
 function acknowledge_vote_submission(selector){
-	alert("acknowledge_vote_submission");
         var update_column = $("#"+selector).parent();
         update_column.html("thanks!");
         update_column.css("font-style", "italic");

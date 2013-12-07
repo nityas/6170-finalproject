@@ -27,7 +27,7 @@ class Offering < ActiveRecord::Base
 	# deletes stale offerings from the database. 
 	# This method is called by a cron job every 10 minutes (made short for testing purposes)
 	def self.remove_stale
-		puts "remove_stale"
+		puts "REMOVE_STALE"
 		self.all.each do |offer|
 			if offer.is_stale?
 				#offer.destroy
@@ -41,6 +41,7 @@ class Offering < ActiveRecord::Base
 	# returns true if this offering was created more than 60 seconds ago (short time so that staff can test if they desire)
 	# run "heroku run rake remove_stale_offerings" to run this just once immediately
 	def is_stale?
+		puts "IS_STALE?"
 		seconds_elapsed = Time.now - self.created_at
 		return seconds_elapsed > 120
 	end
