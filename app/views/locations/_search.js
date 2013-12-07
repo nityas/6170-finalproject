@@ -43,9 +43,19 @@
       var latitude = result.lat_wgs84;
       var longitude = result.long_wgs84;
       var mitlocation_id = result["id"];
-      /* verify if a location exist via ajax GET request
-      to the location controller*/
-      
+
+      console.log(userid);
+
+      /*
+      .ajax({
+        url: "/subscriptions/exists",
+        type: 'GET',
+        data: {subscription: {location: location_id, user_id: userid}},
+        success: function(res){
+          subscribed = data;
+        }
+      });*/
+
       var epsilon = 0.000001;
       var marker = null;
       //search in existing markers
@@ -169,6 +179,6 @@
   /*
     subscribe or unsubscribe to a location
   */
-  function subscribe(){
+  function subscribe(is_subscribed){
 
   };

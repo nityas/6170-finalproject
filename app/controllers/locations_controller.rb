@@ -22,10 +22,11 @@ class LocationsController < ApplicationController
 
   def setup_locations
     @locations = Location.all
+    @is_signed_in = signed_in?
     # for each location create a marker.
     # a marker has latitude,longitude, infowindow with offerings,
     # and a pin
-    @is_signed_in = signed_in?
+    
 
     @hash = Gmaps4rails.build_markers(@locations) do |location, marker|
       marker.lat location.latitude

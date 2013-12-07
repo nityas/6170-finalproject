@@ -21,6 +21,12 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
       get 'exists'
     end
   end 
+
+  resources :subscriptions do
+    collection do
+      get 'exists'
+    end
+  end 
   
   resources :activities
   resources :users 
