@@ -102,6 +102,6 @@ class OfferingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def offering_params
-      params.permit(:offering, :location, :sub_location, :description)
+      params.permit(:offering, :location, :sub_location, :description, :from_email)
     end
 end
