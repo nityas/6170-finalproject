@@ -1,14 +1,16 @@
 class Incomingemail < ActiveRecord::Base
 	def parseEmail(subject, body)
-		@info = nil
+		@info = Array.new(3)
 		parse = subject.split[","]
 		parse.each do |item|
-			what = item.split[":"]
-			if item[0].downcase!.include("what")?
-				@info[0] = item[1]
-			elsif item[0].downcase!.include("where")?
-				@info[1] =  item[1]
-				@info[2] = item[1]
+			id = item.split[":"][0]
+			what = item.split[":"][1]
+			id.downcase!
+			if id.include("what")?
+				@info[0] = what
+			elsif id.include("where")?
+				@info[1] =  what
+				@info[2] = what
 			end
 		end
 	end
