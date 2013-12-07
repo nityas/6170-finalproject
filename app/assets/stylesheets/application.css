@@ -32,3 +32,8 @@
 	z-index : 1;
 	position: relative;
 }
+
+.username_navbar{
+	color:white; 
+	padding-top:10px;
+}

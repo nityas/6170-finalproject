@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.hidden_field :building_id, :value => @location.id %>
+    <%= f.hidden_field :location_id, :value => @location.id %>
   </div>
   <div class="field">
     <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -21,7 +21,7 @@
     <%if @subscription.subscribed(@location,current_user.id)%>
       <%= f.submit "subscribe", :class => "submit_byte" %>
     <%else%>
-    <button><%=link_to 'unsubscribe', Subscription.where(building_id:@location.id , user_id: current_user.id).first, method: :delete, data: { confirm: 'Are you sure?' }  %></button>
+    <button><%=link_to 'unsubscribe', Subscription.where(location_id:@location.id , user_id: current_user.id).first, method: :delete, data: { confirm: 'Are you sure?' }  %></button>
 
     <%end%>  
   </div>

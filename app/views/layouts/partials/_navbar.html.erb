@@ -11,6 +11,7 @@
       </ul>
       <ul class="nav pull-right">
         <% if signed_in? %>
+          <li class="username_navbar">Welcome <%= current_user.name %></li>
           <li><%= link_to "Sign Out", signout_path, method: "delete" %></li>
         <% else %>
           <li class="dropdown">
