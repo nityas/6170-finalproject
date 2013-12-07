@@ -17,7 +17,7 @@
   
   <%= f.text_field :phoneNumber , :placeholder => "Phone Number"%>
   
-  <%= f.select :provider, options_for_select(%w[AT&T T-Mobile Verizon]), :prompt => "Select Cellular Provider"%>
+  <%= f.select :provider, options_for_select(%w[AT&T T-Mobile Verizon]), :prompt => "Select Cellular Provider",:selected => nil%>
 
   <%= f.password_field :password , :placeholder => "Password"%>
 
