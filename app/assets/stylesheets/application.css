@@ -25,10 +25,13 @@
 
 #accordion{
 	width: 400px;
-	max-height: 400px;
-	overflow:auto;
+	overflow: none;
 	float: right;
 	right: 15px;
 	z-index : 1;
 	position: relative;
+}
+#accordioncontent{
+	max-height: 275px;
+	overflow: auto;
 }
