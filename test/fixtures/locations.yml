@@ -3,13 +3,9 @@
 one:
   latitude: 1.5
   longitude: 1.5
-  address: MyString
   title: MyString
-  description: MyString
 
 two:
   latitude: 1.5
   longitude: 1.5
-  address: MyString
   title: MyString
-  description: MyString

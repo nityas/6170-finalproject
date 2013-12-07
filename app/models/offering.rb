@@ -11,7 +11,7 @@ class Offering < ActiveRecord::Base
   # also destroys the location if the location becomes empty as a result of the offering deletion
   # returns true if this offering's location was destroyed
 	def custom_destroy
-		self.destroy  
+	  self.destroy  
       # destroy location if no more offerings in this location
       location = Location.find(self.location_id)
 	  if location.isEmpty?
@@ -27,23 +27,19 @@ class Offering < ActiveRecord::Base
 	# deletes stale offerings from the database. 
 	# This method is called by a cron job every 10 minutes (made short for testing purposes)
 	def self.remove_stale
-		puts "REMOVE_STALE"
 		self.all.each do |offer|
-			if offer.is_stale?
+			if offer.is_stale?(300)
 				#offer.destroy
 				offer.custom_destroy
-				puts "DESTROYING offering #: "
-				puts offer.id
 			end
 		end
 	end
 
-	# returns true if this offering was created more than 60 seconds ago (short time so that staff can test if they desire)
+	# returns true if this offering was created more than 5 min ago (short time so that staff can test if they desire)
 	# run "heroku run rake remove_stale_offerings" to run this just once immediately
-	def is_stale?
-		puts "IS_STALE?"
+	def is_stale?(grace_period)
 		seconds_elapsed = Time.now - self.created_at
-		return seconds_elapsed > 120
+		return seconds_elapsed > grace_period
 	end
 
 	def vote_to_destroy(session)
@@ -52,6 +48,6 @@ class Offering < ActiveRecord::Base
 	end
 
 	def sufficient_votes?
-		return self.numDeleteVotes >= 2
+		return self.numDeleteVotes >= 3
 	end
 end
