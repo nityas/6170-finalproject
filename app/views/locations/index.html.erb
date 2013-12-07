@@ -3,7 +3,7 @@
 <%= submit_tag "Search", :id => "search" %>
 <div id="accordion">
   <h3>Click for All Available Offerings!</h3>
-  <div>
+  <div id="accordioncontent">
   <%= render partial: 'activities/newsfeed', locals: {:@activities => PublicActivity::Activity.order("created_at desc")}%>
   </div>
 </div>
@@ -12,9 +12,6 @@
 <%= render partial: 'layouts/partials/flash'%>
 <div id="mapcontent">
 	<%= render partial: 'map.html.erb'%>
-
-
-
 </div>
 
 
