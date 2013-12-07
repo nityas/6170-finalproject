@@ -17,6 +17,7 @@ class OfferingsController < ApplicationController
 
     if Location.exists?(:customid => params[:offering][:location])
       @offering.location_id = Location.where(:customid => params[:offering][:location]).first.id
+      puts @offering.location_id
       respond_to do |format|
         if @offering.save
           @offering.create_activity :create, owner: current_user
