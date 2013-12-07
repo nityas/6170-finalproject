@@ -16,6 +16,18 @@ class Location < ActiveRecord::Base
 		return locationid
 	end
 
+	def get_title_description()
+		if !self.building_number.nil?
+			if self.title.include? self.building_number
+				return "Building " + self.building_number
+			else
+				return "Building " + self.building_number + "- " + self.title
+			end
+		else
+			return self.title
+		end
+	end
+
 	# returns true if this location has no more offerings
 	def isEmpty?
 		return self.offerings.count == 0
