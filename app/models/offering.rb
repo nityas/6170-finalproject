@@ -42,7 +42,7 @@ class Offering < ActiveRecord::Base
 	# run "heroku run rake remove_stale_offerings" to run this just once immediately
 	def is_stale?
 		seconds_elapsed = Time.now - self.created_at
-		return seconds_elapsed > 60
+		return seconds_elapsed > 1200000
 	end
 
 	def vote_to_destroy(session)
