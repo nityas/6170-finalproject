@@ -12,6 +12,7 @@ class IncomingemailsController < ApplicationController
     puts(@information[0])
     puts(@information[1])
     puts(@information[2])
+    puts("aaaa")
 
     @location = @information[0]
     @sublocation = @information[1]
