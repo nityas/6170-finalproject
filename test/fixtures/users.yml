@@ -26,5 +26,5 @@
  user_four:
    name: carrie
    email: carrie@mit.edu
-   phoneNumber: nil
-   provider: nil
+   phoneNumber: null
+   provider: null
