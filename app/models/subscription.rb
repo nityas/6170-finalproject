@@ -1,7 +1,8 @@
 class Subscription < ActiveRecord::Base
 	has_one :location
 
-	#checks if the user is subscribed to a given location
+	#checks if the user is subscribed to a given location, we want to make sure
+	# a subscription does not exist. If one exist we don't want to let the user subscribe again
 	def self.subscribed(mitlocation,user_id)
 		return !Subscription.exists?(mitlocation_id: mitlocation, user_id: user_id)
 	end
