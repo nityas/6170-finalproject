@@ -1,19 +1,24 @@
 class Incomingemail < ActiveRecord::Base
-	def self.parseEmail(subject, body)
-		@info = Array.new(3)
+	def self.parseEmailLocation(subject, body)
 		parse = subject.split[","]
+		location = nil;
+		sublocation = nil;
+		description = nil;
 
 		parse.each do |item|
 			id = item.split[":"][0]
 			what = item.split[":"][1]
 			id.downcase!
 			if id.include?("what")
-				@info[0] = what
+				description = what
 			elsif id.include?("where")
-				@info[1] =  what
-				@info[2] = what
+				location =  what
+				sublocation = what
 			end
 		end
+
+		@info = [location, sublocation, description]
+		return @info
 	end
 
 	def self.correctToEmail(email)
