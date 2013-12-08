@@ -1,8 +1,8 @@
 <br>
 <span style="display:inline;">
 	<%= text_field_tag "query", nil, :placeholder => "i.e. Stata or 32", :id => "queryField" %>
-	<%= submit_tag "Search", :id => "search" %>
-	<span class="notice" style="display:inline;"></div>
+    <%= submit_tag "Search", :id => "search" , :class => "btn btn-primary " %>
+	<span class="notice" style="display:inline;"></span>
 	<span id="flash" style="display:inline;"><%= raw render(:partial => 'layouts/partials/flash').html_safe %></span>
 	<div id="accordion">
 	  <h3>Click for All Available Bytes!</h3>
@@ -12,7 +12,7 @@
 	</div>
 </span>
 
-<%= button_tag "test_ajax_refresh", :id => "test_ajax_refresh" %>
+<!--<%= button_tag "test_ajax_refresh", :id => "test_ajax_refresh" %>-->
 
 
 <div id="mapcontent">

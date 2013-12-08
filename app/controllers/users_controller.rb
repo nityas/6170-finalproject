@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
   before_action :signed_in_user, only: [:edit, :update]
   before_action :correct_user, only: [:edit, :update]
+
+  #sources: railscasts 274, and http://ruby.railstutorial.org/chapters/sign-in-sign-out#top
   # GET /users/new
   def new
     @user = User.new
@@ -26,15 +28,15 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
+    @user.email =@user.email.downcase
     #query mit people search to confirm valid mit email
-    @kerberos = @user.email.split('@')[0]
-    @emailEnd = @user.email.split('@')[1].upcase
-    @info = RestClient.get 'http://web.mit.edu/bin/cgicso?', {:params => {:options => "general", :query => @kerberos, :output =>'json'}}
-    responseEmail = @kerberos + "@" + @emailEnd
-    
+    @info = @user.get_MIT_people_email()
+    #call a model method to translate the provider picked by the user
+    #to the provider gateway address. This gives free texting in the form of an email
     @user.provider = @user.provider_to_email(user_params[:provider])
+
     respond_to do |format|
-      if @info.include?(responseEmail)
+      if @info.include?(@user.email)
         if @user.save
           sign_in @user
           format.html { redirect_to root_url, notice: 'User was successfully created.' }

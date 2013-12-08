@@ -42,6 +42,14 @@ class User < ActiveRecord::Base
 		end
 	end
 
+	#query mit people search to confirm valid mit email
+	def get_MIT_people_email()
+    	kerberos = self.email.split('@')[0]
+    	info = RestClient.get 'http://web.mit.edu/bin/cgicso?', {:params => {:options => "general", :query => kerberos, :output =>'json'}}
+    	return info.downcase
+	end
+
+
 	def can_subscribe?()
     	return self.phoneNumber.nil? || self.provider.nil?
 	end

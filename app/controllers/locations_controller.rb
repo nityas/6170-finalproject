@@ -22,11 +22,11 @@ class LocationsController < ApplicationController
 
   def setup_locations
     @locations = Location.all
+    @is_signed_in = signed_in?
+    #building the map of markers for the index.
     # for each location create a marker.
     # a marker has latitude,longitude, infowindow with offerings,
     # and a pin
-    @is_signed_in = signed_in?
-
     @hash = Gmaps4rails.build_markers(@locations) do |location, marker|
       marker.lat location.latitude
       marker.lng location.longitude
@@ -44,7 +44,9 @@ class LocationsController < ApplicationController
   #POST /locations/exists
   #@param mitlocation_id from whereismit custom id
   #check if a location already exist in the database or not
+  #this method is being used by our AJAX calls.
   def exists
+    # ocation_exists should be a boolean. !! will turn the value into one.
     location_exists = !!Location.exists?(customid: params[:mitlocation_id])
     respond_to do |format|
       format.html
