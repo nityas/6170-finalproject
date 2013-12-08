@@ -39,7 +39,7 @@ class Offering < ActiveRecord::Base
 		return seconds_elapsed > grace_period
 	end
 
-	#registers a vote and marks the session as having voted
+	#registers a vote and marks the user as having voted
 	def vote_to_destroy(session)
 		self.increment!(:numDeleteVotes)
 		session[:votes].push(self.id)
