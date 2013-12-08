@@ -7,12 +7,11 @@ class Location < ActiveRecord::Base
 	#@param - given a location object that may not been already saved
 	#return the location id
 	def self.get_or_create_id(location) 
-		if !Location.exists?(customid: location.id)
+		if !Location.exists?(customid: location.customid)
 			location.save()
-			puts("aaaaaaaaaaa")
 			locationid = location.id
 		else
-			@mylocation = Location.find_by(customid: location.id)
+			@mylocation = Location.find_by(customid: location.customid)
 			locationid = @mylocation.id
 		end
 		return locationid
