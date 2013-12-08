@@ -9,8 +9,6 @@ class IncomingemailsController < ApplicationController
     @information = Incomingemail.parseEmail(params[:headers]['Subject'], params[:plain])
 
     @location = @information[0]
-    @sublocation = @information[1]
-    @description = @information[2]
     @to = params[:envelope][:to]
 
 
@@ -33,8 +31,8 @@ class IncomingemailsController < ApplicationController
         successful_email = true;
         #create the offering, should probably do a redirect to preserve rails security
         @offering = Offering.new
-        @offering.sub_location = @sublocation
-        @offering.description = @description
+        @offering.sub_location = @information[1]
+        @offering.description = @information[2]
         @offering.location_id = @newLocationId
         if @offering.save
           OffersMailer.offer_mail(@offering, @newLocation.customid)
