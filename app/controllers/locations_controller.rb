@@ -9,11 +9,11 @@ class LocationsController < ApplicationController
     @is_signed_in = signed_in?
     if @is_signed_in
       @userid = current_user.id
+      @cansubscribe = current_user.can_subscribe?()
     else
       @userid = -1
+      @cansubscribe = false
     end
-
-    @cansubscribe = current_user.can_subscribe?
 
     puts @userid
     respond_to do |format|
