@@ -7,7 +7,7 @@ class Incomingemail < ActiveRecord::Base
 
 		parse.each do |item|
 			puts(item)
-			id = item.split(":"])[0]
+			id = item.split(":")[0]
 			what = item.split(":")[1]
 			id.downcase!
 			if id.include?("what")
