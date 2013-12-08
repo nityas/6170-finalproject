@@ -22,7 +22,7 @@ class Offering < ActiveRecord::Base
       end
 	end
 
-	# deletes stale offerings from the database. 
+	# deletes stale offerings (created more than 20 minutes / 1200 seconds ago) from the database. 
 	# This method is called by a cron job every 10 minutes (made short for testing purposes)
 	def self.remove_stale
 		self.all.each do |offer|
