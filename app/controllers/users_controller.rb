@@ -46,7 +46,9 @@ class UsersController < ApplicationController
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       else
-        format.html { render action: 'new', notice: 'Not a valid MIT email.' }
+
+        format.html { flash[:notice] = 'Not a valid MIT email.'
+                      render action: 'new' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end    
