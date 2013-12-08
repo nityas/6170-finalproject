@@ -30,6 +30,9 @@ ActiveRecord::Schema.define(version: 20131208022311) do
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
 
+  create_table "incoming_emails", force: true do |t|
+  end
+
   create_table "incomingemails", force: true do |t|
   end
 
@@ -67,9 +70,9 @@ ActiveRecord::Schema.define(version: 20131208022311) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.integer  "reputation"
+    t.integer  "phoneNumber"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "phoneNumber"
     t.string   "provider"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
