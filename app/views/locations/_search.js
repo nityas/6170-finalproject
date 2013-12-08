@@ -43,9 +43,23 @@
       var latitude = result.lat_wgs84;
       var longitude = result.long_wgs84;
       var mitlocation_id = result["id"];
-      /* verify if a location exist via ajax GET request
-      to the location controller*/
-      
+
+      //console.log(<%= @userid%>);
+
+/*
+      $.ajax({
+        type: 'GET',
+        url: "/subscriptions/exists",
+        dataType: "JSON",
+        data: {'location_id': mitlocation_id, 'user_id': <%= @userid%> },
+        success: function(res){
+          subscribed = data;
+          console.log(subscribed);
+        }
+      });
+*/
+
+
       var epsilon = 0.000001;
       var marker = null;
       //search in existing markers
@@ -94,6 +108,7 @@
       "<div>Food Description: <input id='food-description' type='text' /></div>",
       '<input type="button" value="Post Byte" onClick="saveData(\'' + lat + '\',\'' + lng +
        '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" />',
+      '<input type="button" value="Subscribe" onClick="subscribe()" />',
       "</form>"].join("");    
     }
     else{
@@ -163,4 +178,11 @@
     var locationDetails = document.getElementById("location-details").value;
     var foodDescription = document.getElementById("food-description").value;
     create_location(lat, lng, mitlocation_id, location_name, bldgnum,locationDetails,foodDescription);
+  };
+
+  /*
+    subscribe or unsubscribe to a location
+  */
+  function subscribe(is_subscribed){
+
   };

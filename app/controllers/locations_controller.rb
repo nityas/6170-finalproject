@@ -6,6 +6,16 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def index
     setup_locations
+    @is_signed_in = signed_in?
+    if @is_signed_in
+      @userid = current_user.id
+      @cansubscribe = current_user.can_subscribe?()
+    else
+      @userid = -1
+      @cansubscribe = false
+    end
+
+    puts @userid
     respond_to do |format|
       format.html
       format.js 

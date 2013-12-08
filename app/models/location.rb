@@ -5,17 +5,18 @@ class Location < ActiveRecord::Base
 
 	#get a locaion id if the location already exists in the location table. Otherwise, creates the location
 	#@param - given a location object
-	# return the location id
+	#return the location id
 	def self.get_or_create_id(location) 
 		if !Location.exists?(customid: location.customid)
 			location.save()
 			locationid = location.id
 		else
-			locationid = Location.where(:customid => location.customid).first.id
+			locationid = location.id
 		end
 		return locationid
 	end
 
+	#get location display string for infowindow
 	def get_title_description()
 		if !self.building_number.nil?
 			if self.title.include? self.building_number
