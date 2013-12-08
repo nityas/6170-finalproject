@@ -14,7 +14,7 @@
   <tbody>
     <% @subscriptions.each do |subscription| %>
       <tr>
-        <td><%= subscription.location_id %></td>
+        <td><%= subscription.mitlocation_id %></td>
         <td><%= subscription.user_id %></td>
         <td><%= link_to 'Show', subscription %></td>
         <td><%= link_to 'Edit', edit_subscription_path(subscription) %></td>

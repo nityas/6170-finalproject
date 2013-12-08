@@ -7,19 +7,26 @@
 	<div id="accordion">
 	  <h3>Click for All Available Bytes!</h3>
 	  <div id="accordioncontent">
-	  <%= render partial: 'activities/newsfeed', locals: {:@activities => PublicActivity::Activity.order("created_at desc")}%>
+	  	<%= render partial: 'activities/newsfeed', locals: {:@activities => PublicActivity::Activity.order("created_at desc")}%>
 	  </div>
 	</div>
 </span>
 
 <div id="mapcontent">
-	<%= render partial: 'map.html.erb'%>
+	<%= render partial: 'locations/map.html.erb'%>
 </div>
 
-
 <script type="text/javascript">
+<<<<<<< HEAD
 	<%= render "search.js" %>
 	<%= render "gmap.js" %>
 	<%= render "refresh.js" %>
 	<%= render "autocomplete.js" %> 
 </script>
+=======
+	<%= render "locations/search.js" %>
+	<%= render "locations/gmap.js" %>
+	<%= render "locations/refresh.js" %>
+	<%= render "locations/autocomplete.js" %> 
+</script>
+>>>>>>> 434accc0a74b7f90074226d90272fb6b1ed1f6df

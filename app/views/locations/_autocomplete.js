@@ -1,6 +1,4 @@
-
-    $(function() {
-
+$(function() {
     $('#queryField').autocomplete({
            minLength: 1,
             // This is the source of the autocomplete suggestions. Fetched from whereis.mit.edu.
@@ -29,6 +27,5 @@
                 $('#queryField').val(ui.item.label);
                 return false;
             }
-        });
-
-     });
+    });
+});

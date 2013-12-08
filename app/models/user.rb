@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-	#Regex source: Michael Hartl Tutorial
     validates :email, presence: true, uniqueness: true
     has_many :offerings
     has_secure_password
@@ -62,6 +61,17 @@ class User < ActiveRecord::Base
 	def get_text_address()
 		email = self.phoneNumber.to_s + self.provider
 		return email
+    end
+
+    #get the userid and if the user can subscribe to a location
+    def self.get_subscriptionInfo(current_user)
+    	if current_user.nil?
+    		info = [-1, false]
+    		return info
+    	else
+    		info = [current_user.id, current_user.can_subscribe?()]
+    		return info
+    	end
     end
 
 	private

@@ -47,4 +47,28 @@ class UserTest < ActiveSupport::TestCase
         assert_equal false, user4.can_subscribe?()
      end
 
+     #get the userid and if the user can subscribe to a location
+     test "get_subscriptionInfo" do
+        user1 = nil
+        user2 = users(:user_one)
+        user3 = users(:user_four)
+        user4 = users(:user_three)
+
+        info1 = User.get_subscriptionInfo(user1)
+        info2 = User.get_subscriptionInfo(user2)
+        info3 = User.get_subscriptionInfo(user3)
+        info4 = User.get_subscriptionInfo(user4)
+
+        assert_equal info1[0], -1
+        assert_equal info1[1], false
+
+        assert_equal info2[0], user2.id
+        assert_equal info2[1], true
+
+        assert_equal info3[0], user3.id
+        assert_equal info3[1], false
+
+        assert_equal info4[0], user4.id
+        assert_equal info4[1], true
+     end
 end

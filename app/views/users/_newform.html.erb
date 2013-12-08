@@ -1,4 +1,6 @@
 <%= form_for(@user) do |f| %>
+  <span id="flash" style="display:inline;"><%= raw render(:partial => 'layouts/partials/flash').html_safe %></span>
+  <br>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <div class="alert alert-error">

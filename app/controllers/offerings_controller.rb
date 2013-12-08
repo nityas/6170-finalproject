@@ -28,7 +28,7 @@ class OfferingsController < ApplicationController
           @offering.create_activity :create, owner: current_user
           format.html { redirect_to root_url, notice: 'Byte was successfully created.' }
           format.json { render action: 'show', status: :created, location: @offering }
-          OffersMailer.offer_mail(@offering)
+          OffersMailer.offer_mail(@offering, location)
         else
           format.html { render action: 'new' }
           format.json { render json: @offering.errors, status: :unprocessable_entity }
