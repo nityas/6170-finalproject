@@ -9,27 +9,31 @@ class User < ActiveRecord::Base
 	validates :provider, presence: true, if: lambda{ |record| record.phoneNumber.present? }
 	before_create :create_remember_token
 
+	#initiates email with password resend link
     def send_password_reset
-    	generate_token(:password_reset_token)
+    	generate_reset_token(:password_reset_token)
     	self.password_reset_sent_at = Time.zone.now
     	save!(validate: false)
     	UserMailer.password_reset(self).deliver
     end
 
-    def generate_token(column)
+	def User.new_remember_token
+	  SecureRandom.urlsafe_base64
+	end
+
+	#used to encrypt passwords to create password_digest
+	def User.encrypt(token)
+	  Digest::SHA1.hexdigest(token.to_s)
+	end
+
+	#creates a new token for a password reset
+    def generate_reset_token(column)
 	  begin
 	    self[column] = SecureRandom.urlsafe_base64
 	  end while User.exists?(column => self[column])
 	end
 
-	def User.new_remember_token
-	  SecureRandom.urlsafe_base64
-	end
-
-	def User.encrypt(token)
-	  Digest::SHA1.hexdigest(token.to_s)
-	end
-
+	#converts phone number to email address based on provider to enable free texting via email
 	def provider_to_email(providerName)		 
 		if providerName.eql? "T-Mobile"
 			return "@tmomail.net"
@@ -49,17 +53,19 @@ class User < ActiveRecord::Base
     	return info.downcase
 	end
 
-
+	#checks if we have all the needed information to create a subscription
 	def can_subscribe?()
     	return self.phoneNumber.nil? || self.provider.nil?
 	end
 
+	#email address that can be used to send text message
 	def get_text_address()
 		email = self.phoneNumber.to_s + self.provider
 		return email
     end
 
 	private
+		#the remember token is used to store a session hash
 		def create_remember_token
 	      self.remember_token = User.encrypt(User.new_remember_token)
 	    end

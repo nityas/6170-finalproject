@@ -11,11 +11,13 @@ class Location < ActiveRecord::Base
 			location.save()
 			locationid = location.id
 		else
-			locationid = Location.where(:customid => location.customid).first.id
+			#locationid = Location.find_by_customid(location.customid).id
+			locationid = location.id
 		end
 		return locationid
 	end
 
+	#get location display string for infowindow
 	def get_title_description()
 		if !self.building_number.nil?
 			if self.title.include? self.building_number
