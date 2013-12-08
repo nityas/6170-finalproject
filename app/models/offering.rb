@@ -46,6 +46,6 @@ class Offering < ActiveRecord::Base
 	end
 	# the numbr of votes that an offering should to be deleted 
 	def sufficient_votes?
-		return self.numDeleteVotes >= 2
+		return self.numDeleteVotes >= 3
 	end
 end
