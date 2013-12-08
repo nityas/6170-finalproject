@@ -16,6 +16,21 @@ class Location < ActiveRecord::Base
 		return locationid
 	end
 
+
+	#create from the response, if the location already exists, then don't save
+  	#return the location_id
+	def self.create_from_whereis(response)
+		@newLocation = Location.new
+        @newLocation.latitude = response["lat_wgs84"]
+        @newLocation.longitude = response["long_wgs84"]
+        @newLocation.title = response["name"]
+        @newLocation.customid = response["id"]
+        @newLocation.building_number = response["bldgnum"]
+        @newLocationid = Location.get_or_create_id(@newLocation)
+
+        return @newLocationid
+	end
+
 	#get location display string for infowindow
 	def get_title_description()
 		if !self.building_number.nil?

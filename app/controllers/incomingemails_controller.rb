@@ -23,21 +23,15 @@ class IncomingemailsController < ApplicationController
       #if the location returns a valid mit location
       if !response.nil?
         #creating a new location or getting the current location
-        @newLocation = Location.new
-        @newLocation.latitude = response["lat_wgs84"]
-        @newLocation.longitude = response["long_wgs84"]
-        @newLocation.title = response["name"]
-        @newLocation.customid = response["id"]
-        @newLocation.building_number = response["bldgnum"]
-        @newLocationId = Location.get_or_create_id(@newLocation)
-        successful_email = true;
+        @locationid = Location.create_from_whereis(response)
         #create the offering, should probably do a redirect to preserve rails security
         @offering = Offering.new
         @offering.sub_location = @sublocation
         @offering.description = @description
-        @offering.location_id = @newLocationId
+        @offering.location_id = @locationid
         if @offering.save
           OffersMailer.offer_mail(@offering, @newLocation.customid)
+          successful_email = true;
         end
       end
     end
