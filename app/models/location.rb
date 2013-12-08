@@ -9,6 +9,7 @@ class Location < ActiveRecord::Base
 	def self.get_or_create_id(location) 
 		if !Location.exists?(customid: location.id)
 			location.save()
+			puts("aaaaaaaaaaa")
 			locationid = location.id
 		else
 			@mylocation = Location.find_by(customid: location.id)
