@@ -11,7 +11,8 @@ class Location < ActiveRecord::Base
 			location.save()
 			locationid = location.id
 		else
-			locationid = Location.where(:customid => location.customid).first.id
+			#locationid = Location.where(:customid => location.customid).first.id
+			locationid = location.id
 		end
 		return locationid
 	end
