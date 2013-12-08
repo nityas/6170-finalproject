@@ -24,7 +24,7 @@
         <%= link_to "Enable Texting!", edit_user_path(current_user), :class => "submit_byte btn btn-primary",:id => "unsubscribe" %>
       <%end%>
     <%else%> <!-- already subscribed , can unsubscribe-->
-      <button class="btn btn-primary"><%=link_to 'unsubscribe', Subscription.where(mitlocation_id:@location.customid , user_id: current_user.id).first,:id => "unsubscribe", method: :delete, data: { confirm: 'Are you sure?' }  %></button>
+      <%=link_to 'unsubscribe', Subscription.where(mitlocation_id:@location.customid , user_id: current_user.id).first,:id => "unsubscribe", :class => "btn btn-primary", method: :delete, data: { confirm: 'Are you sure?' }  %>
     <%end%>  
   </div>
 <% end %>
