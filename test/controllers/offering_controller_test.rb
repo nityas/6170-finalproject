@@ -1,7 +1,7 @@
-require 'test_helper'
+#require 'test_helper'
 
-class OfferingControllerTest < ActionController::TestCase
+#class OfferingControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
-end
+#end

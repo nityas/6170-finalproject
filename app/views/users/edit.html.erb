@@ -15,7 +15,8 @@
 	      </ul>
 	    </div>
 	  <% end %>
-
+	  
+	  <p>Note: you must add a Phone Number and indicate your Cellular Provider to subscribe via text message</p>
 	  <%= f.text_field :name , :placeholder => "Name"%>
 	  <%= f.text_field :phoneNumber , :placeholder => "Phone Number"%>
       <%= f.select :provider, options_for_select(%w[AT&T T-Mobile Verizon]), :include_blank => "Select Cellular Provider",:selected => nil%>

@@ -1,7 +1,7 @@
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: [:destroy]
 
-
+  #source: railscasts 206
   # GET /subscriptions/new
   def new
     @subscription = Subscription.new
@@ -11,7 +11,6 @@ class SubscriptionsController < ApplicationController
   # POST /subscriptions.json
   def create
     @subscription = Subscription.new(subscription_params)
-
     respond_to do |format|
       if @subscription.save
         format.html { redirect_to root_url, notice: 'Subscription was successfully created.' }
@@ -23,13 +22,25 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-  # DELETE /subscriptions/1
-  # DELETE /subscriptions/1.json
+  # DELETE /subscriptions/1/destroy
+  # DELETE /subscriptions/1/destroy.json
   def destroy
     @subscription.destroy
     respond_to do |format|
-      format.html { redirect_to root_url }
+      format.html { render :template => 'locations/index' }
       format.json { head :no_content }
+    end
+  end
+
+
+  #GET /subscriptions/exists
+  #@param mitlocation_id from whereismit custom id
+  #check if a subdcription exists, if it does, return the id, otherwise return -1
+  def exists
+    subscriptionId = Subscription.getSubscribedId(params[:mitlocation_id], params[:user_id])
+    respond_to do |format|
+      format.html
+      format.json {render json: subscriptionId}
     end
   end
 
@@ -41,6 +52,6 @@ class SubscriptionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subscription_params
-      params.require(:subscription).permit(:location_id, :user_id)
+      params.require(:subscription).permit(:mitlocation_id, :user_id)
     end
 end

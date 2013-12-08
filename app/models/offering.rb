@@ -15,11 +15,9 @@ class Offering < ActiveRecord::Base
       # destroy location if no more offerings in this location
       location = Location.find(self.location_id)
 	  if location.isEmpty?
-        puts "EMPTY LOCATION"
         location.destroy
         return true
       else
-      	puts "NONEMPTY LOCATION"
         return false
       end
 	end
@@ -29,7 +27,6 @@ class Offering < ActiveRecord::Base
 	def self.remove_stale
 		self.all.each do |offer|
 			if offer.is_stale?(300)
-				#offer.destroy
 				offer.custom_destroy
 			end
 		end
@@ -42,11 +39,12 @@ class Offering < ActiveRecord::Base
 		return seconds_elapsed > grace_period
 	end
 
+	#registers a vote and marks the user as having voted
 	def vote_to_destroy(session)
 		self.increment!(:numDeleteVotes)
 		session[:votes].push(self.id)
 	end
-
+	# the numbr of votes that an offering should to be deleted 
 	def sufficient_votes?
 		return self.numDeleteVotes >= 2
 	end

@@ -1,7 +1,6 @@
 IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
 
   resources :password_resets
-  resources :subscriptions
   resources :offerings
   
   resources :sessions, only: [:new, :create, :destroy]
@@ -22,11 +21,17 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
       get 'exists'
     end
   end 
+
+  resources :subscriptions do
+    collection do
+      get 'exists'
+    end
+  end 
   
   resources :activities
   resources :users 
-
   resources :incomingemails
+  resources :subscriptions
 
 
   root 'locations#index'

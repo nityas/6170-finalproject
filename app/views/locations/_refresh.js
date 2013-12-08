@@ -1,4 +1,4 @@
-//refreshes the interface every 2 minutes
+//refreshes the interface every 4 minutes
 
 setInterval(function(){
   // do not refresh if focus is currently on an input element
@@ -11,15 +11,4 @@ setInterval(function(){
         success: function(res){
          }
     });
-}, 120000);
-
-
-// TODO: REMOVE THIS BEFORE SUBMITTING
-$("#test_ajax_refresh").click(function(){
-  $.ajax({
-        url: "refresh",
-        type: 'GET',
-        success: function(res){
-         }
-    });
-});
+}, 240000);
