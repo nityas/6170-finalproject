@@ -1,23 +1,20 @@
 class Incomingemail < ActiveRecord::Base
 	def self.parseEmail(subject, body)
-		parse = subject.split[","]
+		parse = subject.split(",")
 		location = nil;
 		sublocation = nil;
 		description = nil;
 
-		puts("parsing email")
 		parse.each do |item|
 			puts(item)
-			id = item.split[":"][0]
-			what = item.split[":"][1]
+			id = item.split(":"])[0]
+			what = item.split(":")[1]
 			id.downcase!
 			if id.include?("what")
 				description = what
-				puts("description")
 			elsif id.include?("where")
 				location =  what
 				sublocation = what
-				puts("location")
 			end
 		end
 
