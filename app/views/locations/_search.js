@@ -70,9 +70,7 @@
             show_location(latitude, longitude, mitlocation_id, result["name"], result["bldgnum"], <%= @is_signed_in %>, data);
           }
         }
-      });
-
-      
+      });      
     }
   }
 
@@ -94,12 +92,12 @@
     if(signed_in){
       var infoWindowContent = [
       "<h2><b> "+String(location_name) + "</b></h2>",
-      "<h2>Post A New Byte "+ '<span class="tab"></span>' + '<input type="button" value="'+ buttonName +'" onClick="subscribe(\'' + mitlocation_id  + '\', \'' + subscriptionId  + '\')" /> </h2>',
+      "<h2>Post A New Byte "+ '<span class="tab"></span>' + '<input type="button" class="btn btn-primary" value="'+ buttonName +'" onClick="subscribe(\'' + mitlocation_id  + '\', \'' + subscriptionId  + '\')" /> </h2>',
       "<form id='map-form'>",
       "<div>Location Details: <input id='location-details' type='text' /></div>",
       "<div>Food Description: <input id='food-description' type='text' /></div>",
-      '<input type="button" value="Post Byte" onClick="saveData(\'' + lat + '\',\'' + lng +
-       '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" />',
+      '<center><input type="button" class="btn btn-primary" value="Post Byte" onClick="saveData(\'' + lat + '\',\'' + lng +
+       '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" /></center>',
       "</form>"].join("");    
     }
     else{

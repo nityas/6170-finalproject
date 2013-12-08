@@ -44,7 +44,7 @@ class Offering < ActiveRecord::Base
 		self.increment!(:numDeleteVotes)
 		session[:votes].push(self.id)
 	end
-
+	# the numbr of votes that an offering should to be deleted 
 	def sufficient_votes?
 		return self.numDeleteVotes >= 2
 	end
