@@ -28,7 +28,7 @@ class Location < ActiveRecord::Base
         @newLocation.building_number = response["bldgnum"]
         @newLocationid = Location.get_or_create_id(@newLocation)
 
-        return @newLocationid
+        return [@newLocationid, @newLocation.customid]
 	end
 
 	#get location display string for infowindow

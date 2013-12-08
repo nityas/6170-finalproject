@@ -32,22 +32,23 @@ class LocationTest < ActiveSupport::TestCase
   #create from the response, if the location already exists, then don't save
   #return the location_id
   test "create_from_whereis" do
-    @location = Location.create_from_whereis("")
-    assert @info == nil
 
-    @locationid = Location.create_from_whereis('{long_wgs84":-71.092013719999997,"name":"Maclaurin Buildings (10)","lat_wgs84":42.35967402,"id":"object-10"')
-    assert @locationid = 0;
+    @location = Location.create_from_whereis('{long_wgs84":-71.092013719999997,"name":"Maclaurin Buildings (10)","lat_wgs84":42.35967402,"id":"object-10"')
+    assert @location[0] = 0;
+    assert @location[1] = "object-10";
 
-    @locationid = Location.create_from_whereis('{long_wgs84":-71.092013719999997,"name":"Maclaurin Buildings (10)","lat_wgs84":42.35967402,"id":"object-11"')
-    assert @locationid = 1;
+    @location = Location.create_from_whereis('{long_wgs84":-71.092013719999997,"name":"Maclaurin Buildings (10)","lat_wgs84":42.35967402,"id":"object-11"')
+    assert @location[0] = 1;
 
     make_location;
 
-    @locationid = Location.create_from_whereis('{long_wgs84":-71.092013719999997,"name":"Maclaurin Buildings (10)","lat_wgs84":42.35967402,"id":"test"')
-    assert @locationid = 2;
+    @location = Location.create_from_whereis('{long_wgs84":-71.092013719999997,"name":"Maclaurin Buildings (10)","lat_wgs84":42.35967402,"id":"test"')
+    assert @location[0] = 2;
+    assert @location[1] = "test";
 
-    @locationid = Location.create_from_whereis('{long_wgs84":-71.092013719999997,"name":"Maclaurin Buildings (10)","lat_wgs84":42.35967402,"id":"test1"')
-    assert @locationid = 3;
+    @location = Location.create_from_whereis('{long_wgs84":-71.092013719999997,"name":"Maclaurin Buildings (10)","lat_wgs84":42.35967402,"id":"test1"')
+    assert @location[0] = 3;
+    assert @location[1] = "test1";
   end
   
   # create a location with just the title and building number
