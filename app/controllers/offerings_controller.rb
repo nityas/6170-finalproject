@@ -40,15 +40,11 @@ class OfferingsController < ApplicationController
     # because this user's page has not refreshed yet
     else
       respond_to do |format|
-<<<<<<< HEAD
-        format.html {redirect_to root_url, alert: "Sorry, this location no longer exists because it has been deleted by another user."}
-=======
         if (params[:offering][:from_email]).nil?
           format.html {redirect_to root_url, alert: "Sorry, this location no longer exists because it has been deleted by another user."}
         else
           format.html {render :text => 'success', :status => 200}
         end
->>>>>>> 780e40644175ea815cb0fed9338a5a337a470a13
       end
     end
   end

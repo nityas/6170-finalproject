@@ -11,7 +11,6 @@ class Location < ActiveRecord::Base
 			location.save()
 			locationid = location.id
 		else
-			#locationid = Location.find_by_customid(location.customid).id
 			locationid = location.id
 		end
 		return locationid

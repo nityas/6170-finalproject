@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
 
 	#checks if we have all the needed information to create a subscription
 	def can_subscribe?()
-    	return self.phoneNumber.nil? || self.provider.nil?
+    	return !(self.phoneNumber.nil?)
 	end
 
 	#email address that can be used to send text message
