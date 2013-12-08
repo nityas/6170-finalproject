@@ -1,7 +1,7 @@
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: [:destroy]
 
-
+  #source: railscasts 206
   # GET /subscriptions/new
   def new
     @subscription = Subscription.new
