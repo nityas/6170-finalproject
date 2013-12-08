@@ -1,5 +1,4 @@
   tempmarker = null; 
-  is_subscribed = false;
   /*
     Handles when user hits "submit" to search a location on the map.
   */
@@ -77,16 +76,6 @@
     }
   }
 
-
- // Gets html for all locations and updates the view.
-  function ajax_show_locations(){
-
-  }
-
-  function ajax_show_location(){
-
-  }
-
   /*If a location does not exist in the database, create a temporary location
   on the map that will allow the user to commit it to the database with a new
   active offer.*/
@@ -105,13 +94,12 @@
     if(signed_in){
       var infoWindowContent = [
       "<h2><b> "+String(location_name) + "</b></h2>",
-      "<h2>Post A New Byte </h2>",
+      "<h2>Post A New Byte "+ '<span class="tab"></span>' + '<input type="button" value="'+ buttonName +'" onClick="subscribe(\'' + mitlocation_id  + '\', \'' + subscriptionId  + '\')" /> </h2>',
       "<form id='map-form'>",
       "<div>Location Details: <input id='location-details' type='text' /></div>",
       "<div>Food Description: <input id='food-description' type='text' /></div>",
       '<input type="button" value="Post Byte" onClick="saveData(\'' + lat + '\',\'' + lng +
        '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" />',
-      '<input type="button" value='+ buttonName +' onClick="subscribe(\'' + mitlocation_id  + '\', \'' + subscriptionId  + '\')" />',
       "</form>"].join("");    
     }
     else{
@@ -184,10 +172,11 @@
   };
 
   /*
-    subscribe to a location
+    subscribe/unsubscribe to a location
   */
   function subscribe(mitlocation_id, subscriptionsId){
     if (<%= @cansubscribe%>){
+      //if you already have a subscription, delete it
       if (subscriptionsId!=-1){
         $.ajax({
           url: "/subscriptions/"+subscriptionsId,
@@ -197,7 +186,7 @@
             location.reload();
           }
         });
-      }else{
+      }else{  //create a subscription
         $.ajax({
           url: "/subscriptions",
           type: 'POST',
@@ -207,23 +196,7 @@
           }
         });
       }
-    }else{
+    }else{//didn't have a valid phone number
       window.location.replace("/users/"+ <%= @userid%> + "/edit");
     }
-    
-  };
-
-
-  /*
-    unsubscribe to a location
-  */
-  function unsubscribe(subscriptionsId){
-    $.ajax({
-      url: "/subscriptions/"+subscriptionsId.toString(),
-      type: 'DELETE',
-      data: { },
-      success: function(res){ 
-        location.reload();
-      }
-    })
   };
