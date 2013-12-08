@@ -6,13 +6,21 @@ class IncomingemailsController < ApplicationController
 
   def create
     #Get the subject line and parse for location
-    subjectString = params[:headers]['Subject']
-    @location = subjectString.match(/(\w?\d{1,2}\w?[-]?\d{0,3})/)
-    @sublocation = subjectString
-    @description = params[:plain]
+    @information = Incomingemail.parseEmail(params[:headers]['Subject'], params[:plain])
+
+    puts(@information[0])
+    puts(@information[1])
+    puts(@information[2])
+
+    @location = @information[0]
+    @sublocation = @information[1]
+    @description = @information[2]
+    @to = params[:envelope][:to]
+
+
     #if the location was parse create the location. 
     successful_email = false
-    if !@location.nil?
+    if !@location.nil? && correctToEmail(@to)
       response = RestClient.get 'http://whereis.mit.edu/search', {:params => {:type => 'query', :q => @location, :output =>'json'}}
       response = JSON.parse(response)[0]
 
@@ -36,6 +44,7 @@ class IncomingemailsController < ApplicationController
         end
       end
     end
+
     respond_to do |format|
       format.html{render :text => 'success', :status => 200}
       format.json{}

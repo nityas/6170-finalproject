@@ -11,7 +11,6 @@ class SubscriptionsController < ApplicationController
   # POST /subscriptions.json
   def create
     @subscription = Subscription.new(subscription_params)
-
     respond_to do |format|
       if @subscription.save
         format.html { redirect_to root_url, notice: 'Subscription was successfully created.' }
@@ -30,6 +29,22 @@ class SubscriptionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to root_url }
       format.json { head :no_content }
+    end
+  end
+
+
+  #GET /subscriptions/exists
+  #@param mitlocation_id from whereismit custom id
+  #check if a location already exist in the database or not
+  def exists
+    #puts(params[:location_id])
+    #puts(params[:user_id])
+    #puts("a")
+    subscription_exists = !!Subscription.subscribedMitId(params[:location_id], params[:user_id])
+    puts(subscription_exists)
+    respond_to do |format|
+      format.html
+      format.json {render json: subscription_exists }
     end
   end
 
