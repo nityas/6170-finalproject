@@ -8,12 +8,6 @@ class IncomingemailsController < ApplicationController
     #Get the subject line and parse for location
     @information = Incomingemail.parseEmail(params[:headers]['Subject'], params[:plain])
 
-    puts(@information)
-    puts(@information[0])
-    puts(@information[1])
-    puts(@information[2])
-    puts("aaaa")
-
     @location = @information[0]
     @sublocation = @information[1]
     @description = @information[2]
@@ -22,7 +16,7 @@ class IncomingemailsController < ApplicationController
 
     #if the location was parse create the location. 
     successful_email = false
-    if !@location.nil? && correctToEmail(@to)
+    if !@location.nil? && Incomingemail.correctToEmail(@to)
       response = RestClient.get 'http://whereis.mit.edu/search', {:params => {:type => 'query', :q => @location, :output =>'json'}}
       response = JSON.parse(response)[0]
 
