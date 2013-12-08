@@ -1,5 +1,5 @@
 class Incomingemail < ActiveRecord::Base
-	def parseEmail(subject, body)
+	def self.parseEmail(subject, body)
 		@info = Array.new(3)
 		parse = subject.split[","]
 
@@ -16,7 +16,7 @@ class Incomingemail < ActiveRecord::Base
 		end
 	end
 
-	def correctToEmail(email)
+	def self.correctToEmail(email)
 		return email == "3dcfe1f5df7214a766f7@cloudmailin.net"
 	end
 end
