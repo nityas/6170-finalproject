@@ -43,9 +43,6 @@
       var latitude = result.lat_wgs84;
       var longitude = result.long_wgs84;
       var mitlocation_id = result["id"];
-
-      //console.log(<%= @userid%>);
-
 /*
       $.ajax({
         type: 'GET',
