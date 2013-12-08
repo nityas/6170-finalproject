@@ -26,7 +26,7 @@ class Offering < ActiveRecord::Base
 	# This method is called by a cron job every 10 minutes (made short for testing purposes)
 	def self.remove_stale
 		self.all.each do |offer|
-			if offer.is_stale?(300)
+			if offer.is_stale?(1200)
 				offer.custom_destroy
 			end
 		end
