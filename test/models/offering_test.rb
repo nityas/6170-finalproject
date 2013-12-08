@@ -1,12 +1,10 @@
 require 'test_helper'
 
 class OfferingTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
 
+  #test that we can only destroy a location if it does not have
+  #any offferings
   test "custom_destroy" do
-
   	# location with one offering
   	@location = make_location()
   	@offering = make_offering(@location.id)
@@ -21,6 +19,8 @@ class OfferingTest < ActiveSupport::TestCase
    	assert @offering2.custom_destroy == true
   end
 
+  #test if an offering is older than 5 mins. so we will be able
+  #to destroy it later
   test "is_stale" do
   	#create an offering and save it
   	@offering = make_offering(1)
@@ -30,6 +30,7 @@ class OfferingTest < ActiveSupport::TestCase
   	assert @offering.is_stale?(30) == false
   end
 
+  #test that we can register the votes of a user
   test "vote to destroy" do
   	session = {}
   	session[:votes] = []
@@ -48,6 +49,7 @@ class OfferingTest < ActiveSupport::TestCase
   	assert session[:votes].index(@offering.id) >= 0
   end
 
+  #test if we have enough votes to clear an offering
   test "sufficient_votes" do
   	session = {}
   	session[:votes] = []
