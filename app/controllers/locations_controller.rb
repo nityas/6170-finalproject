@@ -7,7 +7,12 @@ class LocationsController < ApplicationController
   def index
     setup_locations
     @is_signed_in = signed_in?
-    @userid = current_user.id
+    if @is_signed_in
+      @userid = current_user.id
+    else
+      @userid = -1
+    end
+
     @cansubscribe = current_user.can_subscribe?
 
     puts @userid
