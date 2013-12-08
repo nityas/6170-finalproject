@@ -20,10 +20,12 @@
   <div class="actions">
     <%if @subscription.subscribed(@location,current_user.id)%>
       <% unless current_user.can_subscribe?()%>
-        <%= f.submit "subscribe", :class => "submit_byte" %>
+        <%= f.submit "subscribe", :class => "submit_byte btn btn-primary" %>
+      <%else%>
+        <%= link_to "Enable Texting!", edit_user_path(current_user), :class => "submit_byte btn btn-primary",:id => "unsubscribe" %>
       <%end%>
     <%else%>
-    <button><%=link_to 'unsubscribe', Subscription.where(location_id:@location.id , user_id: current_user.id).first, method: :delete, data: { confirm: 'Are you sure?' }  %></button>
+    <button class="btn btn-primary"><%=link_to 'unsubscribe', Subscription.where(location_id:@location.id , user_id: current_user.id).first,:id => "unsubscribe", method: :delete, data: { confirm: 'Are you sure?' }  %></button>
 
     <%end%>  
   </div>

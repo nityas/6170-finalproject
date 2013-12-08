@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+	#if a session already exist send user to the home_path
 	def new
 	  if signed_in?
 	    redirect_to home_path

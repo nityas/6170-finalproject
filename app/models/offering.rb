@@ -48,6 +48,6 @@ class Offering < ActiveRecord::Base
 	end
 
 	def sufficient_votes?
-		return self.numDeleteVotes >= 3
+		return self.numDeleteVotes >= 2
 	end
 end

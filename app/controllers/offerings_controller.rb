@@ -8,16 +8,21 @@ class OfferingsController < ApplicationController
   # @params location - custom id gotten from whereismit
   # @params sublocation - text descriptor of location
   # @params description - description of food offered
+
+  #handles posting to an existing location
   def create
+    #assign attributes passed from the create form window
     @offering = Offering.new
     @offering.owner_id = @current_user.id
     @offering.sub_location = params[:offering][:sub_location]
     @offering.description = params[:offering][:description]
     @offering.numDeleteVotes = 0
 
-    if Location.exists?(:customid => params[:offering][:location])
-      @offering.location_id = Location.where(:customid => params[:offering][:location]).first.id
-      puts @offering.location_id
+    location = params[:offering][:location]
+
+    #if we already have an entry for our location, get the id and assign it to offering
+    if Location.exists?(:customid => location)
+      @offering.location_id = Location.find_by_customid(location).id
       respond_to do |format|
         if @offering.save
           @offering.create_activity :create, owner: current_user
@@ -30,11 +35,20 @@ class OfferingsController < ApplicationController
         end
       end
 
-    # another user deleted the last offering at this location so the location no longer exists,
-    # but this user tried to create a new offering at this location because this user's page has not refreshed yet
+    # concurrency workaround: another user deleted the last offering at this location so the 
+    # location no longer exists, but this user tried to create a new offering at this location 
+    # because this user's page has not refreshed yet
     else
       respond_to do |format|
+<<<<<<< HEAD
         format.html {redirect_to root_url, alert: "Sorry, this location no longer exists because it has been deleted by another user."}
+=======
+        if (params[:offering][:from_email]).nil?
+          format.html {redirect_to root_url, alert: "Sorry, this location no longer exists because it has been deleted by another user."}
+        else
+          format.html {render :text => 'success', :status => 200}
+        end
+>>>>>>> 780e40644175ea815cb0fed9338a5a337a470a13
       end
     end
   end
@@ -66,8 +80,8 @@ class OfferingsController < ApplicationController
 
     # offering no longer exists due to other users deleting it before this user's page refreshed
     if not defined? @offering
-      puts "OFFERING NO LONGER EXISTS"
       @offering_exists = false
+
     # offering exists
     else
       @offering_exists = true
@@ -76,12 +90,11 @@ class OfferingsController < ApplicationController
 
       # destroy offering if enough votes cast
       if @offering.sufficient_votes?
-        puts "SUFFICIENT VOTES"
 
-        # true if location was destroyed as a result of this offering being destroyed
+        # destroys offering and/or location if empty, returns true if location was destroyed 
+        # as a result of this offering being destroyed
         @emptylocation = @offering.custom_destroy()
       end
-      puts session[:votes].index(@offering.id) >= 0
       @alreadyvoted = (session[:votes].index(@offering.id) >= 0)
     end
     respond_to do |format|  

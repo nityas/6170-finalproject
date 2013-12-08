@@ -6,10 +6,12 @@ class OffersMailer < ActionMailer::Base
 
 		# send mail if location has at least 1 subscriber
 		unless potentialMails.empty?
-			mails = potentialMails.collect { |user| User.find(user.user_id).phoneNumber.to_s + User.find(user.user_id).provider}
+			#for each user that is subscribed to a building find the user instance and put the
+			#user's email in a list, the mailer can use this list to send all the emails
+			users_emails = potentialMails.collect { |subscription| User.find(subscription.user_id).get_text_address()}
 			@offer = offer
-			@mail = mail(:to => mails,:subject => "")
-			@mail.deliver
+			@mailing_list = mail(:to => users_emails,:subject => "")
+			@mailing_list.deliver
 		end
 	end
 end
