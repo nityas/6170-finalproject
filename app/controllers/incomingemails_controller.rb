@@ -7,14 +7,10 @@ class IncomingemailsController < ApplicationController
   def create
     #Get the subject line and parse for location
     @information = Incomingemail.parseEmail(params[:headers]['Subject'], params[:plain])
-
     @location = @information[0]
-    @sublocation = @information[1]
-    @description = @information[2]
     @to = params[:envelope][:to]
 
-
-    #if the location was parse create the location. 
+    #if the location was able to be parsed create the location. 
     successful_email = false
     if !@location.nil? && Incomingemail.correctToEmail(@to)
       response = RestClient.get 'http://whereis.mit.edu/search', {:params => {:type => 'query', :q => @location, :output =>'json'}}
@@ -26,8 +22,8 @@ class IncomingemailsController < ApplicationController
         @locationid = Location.create_from_whereis(response)
         #create the offering, should probably do a redirect to preserve rails security
         @offering = Offering.new
-        @offering.sub_location = @sublocation
-        @offering.description = @description
+        @offering.sub_location = @information[1]
+        @offering.description = @information[2]
         @offering.location_id = @locationid
         if @offering.save
           OffersMailer.offer_mail(@offering, @newLocation.customid)

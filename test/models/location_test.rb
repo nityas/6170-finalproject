@@ -46,10 +46,10 @@ class LocationTest < ActiveSupport::TestCase
     @locationid = Location.create_from_whereis('{long_wgs84":-71.092013719999997,"name":"Maclaurin Buildings (10)","lat_wgs84":42.35967402,"id":"test"')
     assert @locationid = 2;
 
-    @locationid = Location.create_from_whereis('{long_wgs84":-71.092013719999997,"name":"Maclaurin Buildings (10)","lat_wgs84":42.35967402,"id":"test"')
-    assert @locationid = 2;
-
+    @locationid = Location.create_from_whereis('{long_wgs84":-71.092013719999997,"name":"Maclaurin Buildings (10)","lat_wgs84":42.35967402,"id":"test1"')
+    assert @locationid = 3;
   end
+  
   # create a location with just the title and building number
   def make_location_lite(title, bldg_num)
   	@location = Location.new
