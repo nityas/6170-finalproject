@@ -46,17 +46,18 @@
 
       //console.log(<%= @userid%>);
 
+/*
       $.ajax({
         type: 'GET',
         url: "/subscriptions/exists",
         dataType: "JSON",
-        data: {subscription: {'location_id': mitlocation_id, 'user_id': <%= @userid%> }},
+        data: {'location_id': mitlocation_id, 'user_id': <%= @userid%> },
         success: function(res){
           subscribed = data;
           console.log(subscribed);
         }
       });
-
+*/
 
 
       var epsilon = 0.000001;

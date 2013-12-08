@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
 			return nil
 		end
 	end
-
+	
 	def can_subscribe?()
     	return self.phoneNumber.nil? || self.provider.nil?
 	end
