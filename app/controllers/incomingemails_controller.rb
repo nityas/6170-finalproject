@@ -37,7 +37,7 @@ class IncomingemailsController < ApplicationController
         @offering.description = @description
         @offering.location_id = @newLocationId
         if @offering.save
-          OffersMailer.offer_mail(@offering)
+          OffersMailer.offer_mail(@offering, @newLocation.customid)
         end
       end
     end

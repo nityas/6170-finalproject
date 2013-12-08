@@ -1,11 +1,9 @@
 require 'test_helper'
 
 class LocationTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end	
 
-
+  #test if we are not creating duplicated names as well as 
+  #undefined names, if a building does not have a building number 
   test "get_title_description" do
   	@location = make_location_lite('Stata 32', '32')
   	assert @location.get_title_description() == "Building 32"
@@ -13,11 +11,13 @@ class LocationTest < ActiveSupport::TestCase
   	@location = make_location_lite('Stata', '32')
   	assert @location.get_title_description() == "Building 32- Stata"
 
-  	@location = make_location_lite('Stata', nil)
-  	assert @location.get_title_description() == "Stata"
+  	@location = make_location_lite('pika', nil)
+  	assert @location.get_title_description() == "pika"
  
   end
 
+  # test if the location does not contain any offers.
+  # return ture if empty, and false otherwise.
   test "isEmpty" do
   	@location = make_location
   	assert @location.isEmpty? == true
@@ -30,7 +30,7 @@ class LocationTest < ActiveSupport::TestCase
   end
 
 
-
+  # create a location with just the title and building number
   def make_location_lite(title, bldg_num)
   	@location = Location.new
   	@location.title = title
@@ -38,6 +38,7 @@ class LocationTest < ActiveSupport::TestCase
   	return @location
   end
 
+  #creeate a location
   def make_location
   	@location = Location.new
   	@location.latitude = 1.1
@@ -49,6 +50,7 @@ class LocationTest < ActiveSupport::TestCase
   	return @location
   end
 
+  #create an offering
   def make_offering(loc_id)
     @offering = Offering.new
     @offering.owner_id = 1

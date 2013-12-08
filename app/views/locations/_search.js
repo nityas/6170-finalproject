@@ -1,4 +1,5 @@
   tempmarker = null; 
+  is_subscribed = false;
   /*
     Handles when user hits "submit" to search a location on the map.
   */
@@ -48,32 +49,31 @@
         type: 'GET',
         url: "/subscriptions/exists",
         dataType: "JSON",
-        data: {'location_id': mitlocation_id, 'user_id': <%= @userid%> },
-        success: function(res){
-          subscribed = data;
-          console.log(subscribed);
+        data: {'mitlocation_id': mitlocation_id, 'user_id': <%= @userid%> },
+        success: function(data){
+          var epsilon = 0.000001;
+          var marker = null;
+          //search in existing markers
+          marker = _.find(markers, function(obj) {
+            return (Math.abs(obj.serviceObject.position.lat() - latitude) < epsilon && Math.abs(obj.serviceObject.position.lng() - longitude) < epsilon)
+          });
+          var centerpoint = new google.maps.LatLng(latitude,longitude);
+          handler.getMap().setCenter(centerpoint)
+
+          //remove any previous temp marker
+          if (tempmarker!=null){
+            handler.removeMarker(tempmarker); 
+          }
+
+          if (marker!=null){
+            google.maps.event.trigger(marker.serviceObject, 'click', {latLng: new google.maps.LatLng(0, 0)});
+          }else{
+            show_location(latitude, longitude, mitlocation_id, result["name"], result["bldgnum"], <%= @is_signed_in %>, data);
+          }
         }
       });
 
-      var epsilon = 0.000001;
-      var marker = null;
-      //search in existing markers
-      marker = _.find(markers, function(obj) {
-        return (Math.abs(obj.serviceObject.position.lat() - latitude) < epsilon && Math.abs(obj.serviceObject.position.lng() - longitude) < epsilon)
-      });
-      var centerpoint = new google.maps.LatLng(latitude,longitude);
-      handler.getMap().setCenter(centerpoint)
-
-      //remove any previous temp marker
-      if (tempmarker!=null){
-        handler.removeMarker(tempmarker); 
-      }
-
-      if (marker!=null){
-        google.maps.event.trigger(marker.serviceObject, 'click', {latLng: new google.maps.LatLng(0, 0)});
-      }else{
-        show_location(latitude, longitude, mitlocation_id, result["name"], result["bldgnum"], <%= @is_signed_in %>);
-      }
+      
     }
   }
 
@@ -90,10 +90,18 @@
   /*If a location does not exist in the database, create a temporary location
   on the map that will allow the user to commit it to the database with a new
   active offer.*/
-  function show_location(lat, lng, mitlocation_id, location_name,bldgnum, signed_in){
+  function show_location(lat, lng, mitlocation_id, location_name,bldgnum, signed_in, subscriptionId){
     /*from google map api: https://developers.google.com/maps/articles/phpsqlinfo_v3*/
     
     /*the content of the inital byte form*/
+    var buttonName = "Subscribe";
+    if (subscriptionId!=-1){
+      buttonName = "Unsubscribe";
+    }
+    if (!<%= @cansubscribe%>){
+        buttonName = "Enable Texting!";
+    }
+
     if(signed_in){
       var infoWindowContent = [
       "<h2><b> "+String(location_name) + "</b></h2>",
@@ -103,7 +111,7 @@
       "<div>Food Description: <input id='food-description' type='text' /></div>",
       '<input type="button" value="Post Byte" onClick="saveData(\'' + lat + '\',\'' + lng +
        '\', \'' + mitlocation_id + '\', \'' + location_name + '\',\'' + bldgnum + '\')" />',
-      '<input type="button" value="Subscribe" onClick="subscribe()" />',
+      '<input type="button" value='+ buttonName +' onClick="subscribe(\'' + mitlocation_id  + '\', \'' + subscriptionId  + '\')" />',
       "</form>"].join("");    
     }
     else{
@@ -176,8 +184,46 @@
   };
 
   /*
-    subscribe or unsubscribe to a location
+    subscribe to a location
   */
-  function subscribe(is_subscribed){
+  function subscribe(mitlocation_id, subscriptionsId){
+    if (<%= @cansubscribe%>){
+      if (subscriptionsId!=-1){
+        $.ajax({
+          url: "/subscriptions/"+subscriptionsId,
+          type: 'DELETE',
+          data: {},
+          success: function(res){ 
+            location.reload();
+          }
+        });
+      }else{
+        $.ajax({
+          url: "/subscriptions",
+          type: 'POST',
+          data: {subscription: {mitlocation_id: mitlocation_id, user_id: <%= @userid%>}},
+          success: function(res){ 
+            location.reload();
+          }
+        });
+      }
+    }else{
+      window.location.replace("/users/"+ <%= @userid%> + "/edit");
+    }
+    
+  };
 
+
+  /*
+    unsubscribe to a location
+  */
+  function unsubscribe(subscriptionsId){
+    $.ajax({
+      url: "/subscriptions/"+subscriptionsId.toString(),
+      type: 'DELETE',
+      data: { },
+      success: function(res){ 
+        location.reload();
+      }
+    })
   };
