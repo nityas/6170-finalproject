@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-	#Regex source: Michael Hartl Tutorial
     validates :email, presence: true, uniqueness: true
     has_many :offerings
     has_secure_password

@@ -7,27 +7,18 @@
 	<div id="accordion">
 	  <h3>Click for All Available Bytes!</h3>
 	  <div id="accordioncontent">
-	  <%= render partial: 'activities/newsfeed', locals: {:@activities => PublicActivity::Activity.order("created_at desc")}%>
+	  	<%= render partial: 'activities/newsfeed', locals: {:@activities => PublicActivity::Activity.order("created_at desc")}%>
 	  </div>
 	</div>
 </span>
 
-<!--<%= button_tag "test_ajax_refresh", :id => "test_ajax_refresh" %>-->
-
-
 <div id="mapcontent">
 	<%= render partial: 'locations/map.html.erb'%>
 </div>
-
 
 <script type="text/javascript">
 	<%= render "locations/search.js" %>
 	<%= render "locations/gmap.js" %>
 	<%= render "locations/refresh.js" %>
 	<%= render "locations/autocomplete.js" %> 
-</script>
-
-
-
-
 </script>
