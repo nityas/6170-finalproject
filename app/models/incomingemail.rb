@@ -1,5 +1,5 @@
 class Incomingemail < ActiveRecord::Base
-	def self.parseEmailLocation(subject, body)
+	def self.parseEmail(subject, body)
 		parse = subject.split[","]
 		location = nil;
 		sublocation = nil;
