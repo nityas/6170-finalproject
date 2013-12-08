@@ -12,6 +12,9 @@
  *= require_tree .
  */
 
+span.tab{
+    padding: 0 20px; /* Or desired space*/
+}
 
 .alert, .notice{
 	margin-left: 30px;
