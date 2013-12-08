@@ -5,8 +5,8 @@ class IncomingemailTest < ActiveSupport::TestCase
 	#undefined names, if a building does not have a building number 
 	test "parse_email_subject" do
 		@info = Incomingemail.parseEmail("where:a, what:cookies")
-		assert @info[0] == "a", "where should be at a"
-		assert @info[2] == "cookies", "what should be cookies"
+		assert @info[0] == "a"
+		assert @info[2] == "cookies"
 
 		@info = Incomingemail.parseEmail("Where:a, what   :cookies")
 		assert @info[0] == "a"

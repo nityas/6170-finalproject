@@ -9,7 +9,6 @@ class Incomingemail < ActiveRecord::Base
 		description = nil;
 
 		parse.each do |item|
-			puts(item)
 			id = item.split(":")[0]
 			what = item.split(":")[1]
 			id.downcase!

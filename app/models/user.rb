@@ -63,6 +63,17 @@ class User < ActiveRecord::Base
 		return email
     end
 
+    #get the userid and if the user can subscribe to a location
+    def self.get_subscriptionInfo(current_user)
+    	if current_user.nil?
+    		info = [-1, false]
+    		return info
+    	else
+    		info = [current_user.id, current_user.can_subscribe?()]
+    		return info
+    	end
+    end
+
 	private
 		#the remember token is used to store a session hash
 		def create_remember_token

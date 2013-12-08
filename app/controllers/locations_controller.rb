@@ -7,14 +7,9 @@ class LocationsController < ApplicationController
   def index
     setup_locations
     @is_signed_in = signed_in?
-
-    if @is_signed_in
-      @userid = current_user.id
-      @cansubscribe = current_user.can_subscribe?()
-    else
-      @userid = -1
-      @cansubscribe = false
-    end
+    info = User.get_subscriptionInfo(current_user)
+    @userid = info[0]
+    @cansubscribe = info[1]
 
     respond_to do |format|
       format.html
