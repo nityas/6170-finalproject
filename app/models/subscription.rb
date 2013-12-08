@@ -4,8 +4,9 @@ class Subscription < ActiveRecord::Base
 		return !Subscription.exists?(location_id:location.id , user_id: user_id)
 	end
 
-	def subscribedMitId(mitlocation,user_id)
+	def self.subscribedMitId(mitlocation,user_id)
 		locationId = Location.where(customid: mitlocation).first.id
+		puts(locationId)
 		return !Subscription.exists?(location_id:locationId , user_id: user_id)
 	end
 end

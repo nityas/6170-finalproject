@@ -43,7 +43,7 @@
       var latitude = result.lat_wgs84;
       var longitude = result.long_wgs84;
       var mitlocation_id = result["id"];
-/*
+
       $.ajax({
         type: 'GET',
         url: "/subscriptions/exists",
@@ -54,8 +54,6 @@
           console.log(subscribed);
         }
       });
-*/
-
 
       var epsilon = 0.000001;
       var marker = null;

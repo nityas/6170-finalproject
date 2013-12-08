@@ -20,6 +20,7 @@ class IncomingemailsController < ApplicationController
       response = RestClient.get 'http://whereis.mit.edu/search', {:params => {:type => 'query', :q => @location, :output =>'json'}}
       response = JSON.parse(response)[0]
 
+      #if the location returns a valid mit location
       if !response.nil?
         #creating a new location or getting the current location
         @newLocation = Location.new

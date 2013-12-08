@@ -37,9 +37,6 @@ class SubscriptionsController < ApplicationController
   #@param mitlocation_id from whereismit custom id
   #check if a location already exist in the database or not
   def exists
-    #puts(params[:location_id])
-    #puts(params[:user_id])
-    #puts("a")
     subscription_exists = !!Subscription.subscribedMitId(params[:location_id], params[:user_id])
     puts(subscription_exists)
     respond_to do |format|
