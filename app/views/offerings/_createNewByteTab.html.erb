@@ -10,24 +10,26 @@
     </div>
   <% end %>
 
-<table>
-  <div class="field">
-    <%= f.hidden_field :location, :value => @location.customid %>
-  </div>  
+  <table>
+    <div class="field">
+      <%= f.hidden_field :location, :value => @location.customid %>
+    </div>  
 
-  <tr>
-    <div class="field">
-      <td><%= f.label :description, "Food Description" %></td>
-      <td><%= f.text_field :description, :placeholder => "i.e. chips & cookies" %></td>
-    </div>   
-  </tr> 
-  <tr>  
-    <div class="field">
-      <td><%= f.label :sub_location, "Location Detail" %></td>
-      <td><%= f.text_field :sub_location,  :placeholder => "i.e. 3rd floor" %></td>
-    </div>
-  </tr>
-</table>
+    <tr>
+      <div class="field">
+        <td><%= f.label :description, "Food Description" %></td>
+        <td><%= f.text_field :description, :placeholder => "i.e. chips & cookies" %></td>
+      </div>   
+    </tr> 
+    
+    <tr>  
+      <div class="field">
+        <td><%= f.label :sub_location, "Location Detail" %></td>
+        <td><%= f.text_field :sub_location,  :placeholder => "i.e. 3rd floor" %></td>
+      </div>
+    </tr>
+  </table>
+
   <div class="actions">
     <%= f.submit "Post byte", :class => "submit_byte btn btn-primary" %>
   </div>

@@ -3,7 +3,7 @@
 
     $('#queryField').autocomplete({
            minLength: 1,
- // This is the source of the auocomplete suggestions. Fetched from whereis.mit.edu.
+            // This is the source of the autocomplete suggestions. Fetched from whereis.mit.edu.
             source: function(request, response){ 
                 $.ajax({
                     url: "http://whereis.mit.edu/search",
