@@ -26,7 +26,7 @@ class IncomingemailsController < ApplicationController
         @offering.description = @information[2]
         @offering.location_id = @locationid
         if @offering.save
-          OffersMailer.offer_mail(@offering, @newLocation.customid)
+          OffersMailer.offer_mail(@offering, @locationid)
           successful_email = true;
         end
       end
