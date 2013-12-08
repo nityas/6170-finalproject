@@ -9,6 +9,6 @@ class Subscription < ActiveRecord::Base
 	#first gets the id from the location and call subscribed. This is for incoming emails only
 	def subscribedMitId(mitlocation,user_id)
 		location = Location.find_by_customid(mitlocation)
-		return subscribed(location,user_id)#!Subscription.exists?(location_id:locationId , user_id: user_id)
+		return subscribed(location,user_id)
 	end
 end
