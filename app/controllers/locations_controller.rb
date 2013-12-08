@@ -7,6 +7,7 @@ class LocationsController < ApplicationController
   def index
     setup_locations
     @is_signed_in = signed_in?
+    
     if @is_signed_in
       @userid = current_user.id
       @cansubscribe = current_user.can_subscribe?()
@@ -15,7 +16,6 @@ class LocationsController < ApplicationController
       @cansubscribe = false
     end
 
-    puts @userid
     respond_to do |format|
       format.html
       format.js 
@@ -32,7 +32,6 @@ class LocationsController < ApplicationController
 
   def setup_locations
     @locations = Location.all
-    @is_signed_in = signed_in?
     #building the map of markers for the index.
     # for each location create a marker.
     # a marker has latitude,longitude, infowindow with offerings,

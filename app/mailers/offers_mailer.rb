@@ -1,8 +1,8 @@
 class OffersMailer < ActionMailer::Base
 	default :from => "offers@bytemap.com"
 
-	def offer_mail(offer)
-		potentialMails = Subscription.select("user_id").where(location_id: offer.location_id)
+	def offer_mail(offer, mitlocation_id)
+		potentialMails = Subscription.select("user_id").where(mitlocation_id: mitlocation_id)
 
 		# send mail if location has at least 1 subscriber
 		unless potentialMails.empty?
