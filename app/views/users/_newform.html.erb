@@ -13,6 +13,7 @@
       </ul>
     </div>
   <% end %>
+
   <%= f.text_field :name , :placeholder => "Name"%>
 
   <%= f.text_field :email , :placeholder => "Email Address"%>
@@ -26,4 +27,5 @@
   <%= f.password_field :password_confirmation , :placeholder => "Confirmation"%>
   </br>
   <%= f.submit "Create my account", class: "btn btn-primary" %>
+  
 <% end %>
