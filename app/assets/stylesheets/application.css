@@ -41,8 +41,8 @@ span.tab{
 }
 
 .username_navbar{
-	color:white; 
-	padding-top:30px;
+	color:white !important; 
+	padding-top:30px !important;
 }
 
 .vote{
@@ -63,7 +63,8 @@ span.tab{
 }
 
 .link_navbar{
-		padding-top:20px;
+		padding-top:20px !important;
 
 }
+
 
