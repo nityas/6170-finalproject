@@ -7,6 +7,7 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
+  get "about/about"
 
   resources :locations do
     collection do
@@ -27,7 +28,7 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
       get 'exists'
     end
   end 
-  
+
   resources :activities
   resources :users 
   resources :incomingemails
