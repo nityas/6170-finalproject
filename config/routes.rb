@@ -29,10 +29,12 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
     end
   end 
 
+  match '/subscriptions/:id/destroyViaAjax', :controller => 'subscriptions', :action => 'destroyViaAjax', via: 'post'
   resources :activities
   resources :users 
   resources :incomingemails
   resources :subscriptions
+
 
 
   root 'locations#index'

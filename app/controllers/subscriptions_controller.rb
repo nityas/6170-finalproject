@@ -7,6 +7,7 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.new
   end
 
+
   # POST /subscriptions
   # POST /subscriptions.json
   def create
@@ -27,7 +28,17 @@ class SubscriptionsController < ApplicationController
   def destroy
     @subscription.destroy
     respond_to do |format|
-      format.html { render "/locations/index" }
+      format.html { redirect_to root_url}
+      format.json { head :no_content }
+    end
+  end
+
+  #ajax needs to not have a redirect
+  def destroyViaAjax
+    @subscription = Subscription.find(params[:id])
+    @subscription.destroy
+    respond_to do |format|
+      format.html { render :template => 'locations/index'}
       format.json { head :no_content }
     end
   end
