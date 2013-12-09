@@ -13,8 +13,6 @@ class Location < ActiveRecord::Base
 		else
 			@mylocation = Location.find_by_customid(location.customid)
 			locationid = @mylocation.id
-			puts(locationid)
-			puts("aaa")
 		end
 		return locationid
 	end

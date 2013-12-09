@@ -9,7 +9,9 @@
     <div class="nav-collapse collapse">
       <ul class="nav">
       </ul>
+
       <ul class="nav pull-right">
+        <li><a herf = "/layouts/about.html" >About</a></li>
         <% if signed_in? %>
           <li class="username_navbar">Welcome <%= current_user.name %></li>
           <li><%= link_to "Edit Profile", edit_user_path(current_user) %></li>
