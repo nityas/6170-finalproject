@@ -27,9 +27,9 @@ class IncomingemailsController < ApplicationController
         @offering.sub_location = @information[1]
         @offering.description = @information[2]
         @offering.location_id = @location[0]
-        #if @offering.save
-        #  OffersMailer.offer_mail(@offering, @location[1])
-        #end
+        if @offering.save
+          OffersMailer.offer_mail(@offering, @location[1])
+        end
       end
     end
 
