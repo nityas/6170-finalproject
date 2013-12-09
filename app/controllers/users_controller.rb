@@ -82,11 +82,11 @@ class UsersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-
     def set_user
       @user = User.find(params[:id])
     end
 
+    # verifies that people can only access their own information and edit their profile
     def correct_user
       @user = User.find(params[:id])
       redirect_to root_url, notice: "Can't edit that page" unless current_user?(@user)
@@ -97,6 +97,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email,:phoneNumber, :provider, :password,:password_confirmation)
     end
 
+    #verify that the user is signed in before allowing offering creation
     def signed_in_user
       redirect_to signin_url, notice: "Please sign in." unless signed_in?
     end
