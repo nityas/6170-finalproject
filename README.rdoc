@@ -1,7 +1,7 @@
 == README
 
 Our app is located at
-http://glacial-thicket-7191.herokuapp.com
+http://fierce-cove-4801.herokuapp.com/
 
 Our presentation:
 https://www.youtube.com/watch?v=FhuI5n5z3N0
