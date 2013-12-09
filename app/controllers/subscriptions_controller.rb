@@ -27,7 +27,7 @@ class SubscriptionsController < ApplicationController
   def destroy
     @subscription.destroy
     respond_to do |format|
-      format.html { redirect_to root_path }
+      format.html { render "/locations/index" }
       format.json { head :no_content }
     end
   end
