@@ -44,33 +44,33 @@
       var longitude = result.long_wgs84;
       var mitlocation_id = result["id"];
 
-      $.ajax({
-        type: 'GET',
-        url: "/subscriptions/exists",
-        dataType: "JSON",
-        data: {'mitlocation_id': mitlocation_id, 'user_id': <%= @userid%> },
-        success: function(data){
-          var epsilon = 0.000001;
-          var marker = null;
-          //search in existing markers
-          marker = _.find(markers, function(obj) {
-            return (Math.abs(obj.serviceObject.position.lat() - latitude) < epsilon && Math.abs(obj.serviceObject.position.lng() - longitude) < epsilon)
-          });
-          var centerpoint = new google.maps.LatLng(latitude,longitude);
-          handler.getMap().setCenter(centerpoint)
+      var epsilon = 0.000001;
+      var marker = null;
+      //search in existing markers
+      marker = _.find(markers, function(obj) {
+        return (Math.abs(obj.serviceObject.position.lat() - latitude) < epsilon && Math.abs(obj.serviceObject.position.lng() - longitude) < epsilon)
+      });
+      var centerpoint = new google.maps.LatLng(latitude,longitude);
+      handler.getMap().setCenter(centerpoint)
 
-          //remove any previous temp marker
-          if (tempmarker!=null){
-            handler.removeMarker(tempmarker); 
-          }
+      //remove any previous temp marker
+      if (tempmarker!=null){
+        handler.removeMarker(tempmarker); 
+      }
 
-          if (marker!=null){
-            google.maps.event.trigger(marker.serviceObject, 'click', {latLng: new google.maps.LatLng(0, 0)});
-          }else{
-            show_location(latitude, longitude, mitlocation_id, result["name"], result["bldgnum"], <%= @is_signed_in %>, data);
+      if (marker!=null){
+        google.maps.event.trigger(marker.serviceObject, 'click', {latLng: new google.maps.LatLng(0, 0)});
+      }else{
+        $.ajax({
+          type: 'GET',
+          url: "/subscriptions/exists",
+          dataType: "JSON",
+          data: { mitlocation_id: mitlocation_id, user_id: <%= @userid%> },
+          success: function(data){
+              show_location(latitude, longitude, mitlocation_id, result["name"], result["bldgnum"], <%= @is_signed_in %>, data);
           }
-        }
-      });      
+        });   
+      }
     }
   }
 
@@ -177,8 +177,8 @@
       //if you already have a subscription, delete it
       if (subscriptionsId!=-1){
         $.ajax({
-          url: "/subscriptions/"+subscriptionsId,
-          type: 'DELETE',
+          url: "/subscriptions/"+subscriptionsId + "/destroyViaAjax",
+          type: 'POST',
           data: {},
           success: function(res){ 
             location.reload();

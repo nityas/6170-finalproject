@@ -41,8 +41,8 @@ span.tab{
 }
 
 .username_navbar{
-	color:white; 
-	padding-top:10px;
+	color:white !important; 
+	padding-top:30px !important;
 }
 
 .vote{
@@ -53,3 +53,18 @@ span.tab{
 #unsubscribe{
 	color:white;
 }
+
+.tagline{
+	font-family: 'Alegreya SC', serif;
+	color:white;
+	padding-top:30px;
+	display:inline-block;
+	font-size:120%;
+}
+
+.link_navbar{
+		padding-top:20px !important;
+
+}
+
+

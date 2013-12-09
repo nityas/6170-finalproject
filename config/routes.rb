@@ -7,6 +7,7 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
+  get "about/about"
 
   resources :locations do
     collection do
@@ -27,11 +28,13 @@ IdoEfratiCyjingNityaSubramanianCjcaiFinal::Application.routes.draw do
       get 'exists'
     end
   end 
-  
+
+  match '/subscriptions/:id/destroyViaAjax', :controller => 'subscriptions', :action => 'destroyViaAjax', via: 'post'
   resources :activities
   resources :users 
   resources :incomingemails
   resources :subscriptions
+
 
 
   root 'locations#index'
