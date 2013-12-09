@@ -11,8 +11,10 @@ class Location < ActiveRecord::Base
 			location.save()
 			locationid = location.id
 		else
-			@mylocation = Location.find_by(customid: location.customid)
+			@mylocation = Location.find_by_customid(location.customid)
 			locationid = @mylocation.id
+			puts(locationid)
+			puts("aaa")
 		end
 		return locationid
 	end
